@@ -54,9 +54,9 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -65,14 +65,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -81,9 +83,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -243,8 +245,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="ve-biu-" class="section level1">
 <h1><span class="header-section-number">3</span> Vẽ biểu đồ</h1>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1"><span class="co"># load sẵn ggplot2 (đã bao gồm trong tidyverse)</span></a>
-<a class="sourceLine" id="cb70-2" title="2"><span class="kw">library</span>(tidyverse, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="ve-biu-.html#cb70-1"></a><span class="co"># load sẵn ggplot2 (đã bao gồm trong tidyverse)</span></span>
+<span id="cb70-2"><a href="ve-biu-.html#cb70-2"></a><span class="kw">library</span>(tidyverse, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <p>Do vẽ biểu đồ (graphing) là một mảng phức tạp trong R nói riêng và data analysis/statistics nói chung nên phần này sẽ chỉ dừng ở mức cơ bản.</p>
 <p>Có một số loại biểu đồ quan trọng nhất như sau:</p>
 <ol style="list-style-type: decimal">
@@ -257,8 +259,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 <p>Các biểu đồ đề cập tới trong phần 3 này là scatterplot và boxplot. Các bộ dữ liệu được sử dụng minh họa là <code>iris</code> và <code>mpg</code>.</p>
 <p><code>iris</code> là một dataset chứa các observation của 3 loài hoa thuộc chi <a href="https://vi.wikipedia.org/wiki/Chi_Di%C3%AAn_v%C4%A9">iris</a>, trong đó độ dài và rộng của cách hoa (petal) và đài hoa (sepal) được đo và ghi lại.</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" title="1"><span class="kw">data</span>(iris)</a>
-<a class="sourceLine" id="cb71-2" title="2"><span class="kw">str</span>(iris)  <span class="co"># xem loại dữ liệu</span></a></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="ve-biu-.html#cb71-1"></a><span class="kw">data</span>(iris)</span>
+<span id="cb71-2"><a href="ve-biu-.html#cb71-2"></a><span class="kw">str</span>(iris)  <span class="co"># xem loại dữ liệu</span></span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    150 obs. of  5 variables:
 ##  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
 ##  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
@@ -267,10 +269,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  $ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
 <p>Package được sử dụng trong phần này là <strong>ggplot2</strong>. <strong>ggplot2</strong> có rất nhiều công cụ (các hàm) để giúp người dùng vẽ được loại biểu đồ mong muốn (danh sách đầy đủ có ở <a href="https://ggplot2.tidyverse.org/reference/">https://ggplot2.tidyverse.org/reference/</a>).</p>
 <p>Một biểu đồ sẽ được dựng lên theo từng layer (lớp), với lớp ban đầu là:</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> iris)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length,<span class="dt">y =</span> Sepal.Width))</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-32-2.png" width="672" /></p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="ve-biu-.html#cb73-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> iris)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="ve-biu-.html#cb74-1"></a><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length,<span class="dt">y =</span> Sepal.Width))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-31-2.png" width="672" /></p>
 <p>Có thể thấy cả 2 kết quả trả về là một biểu đồ trống, với kết quả ở dưới có thêm 2 trục x (trục tung) và y (trục hoành). Để thêm một lớp, ta dùng cú pháp chung như sau:</p>
 <pre><code>ggplot(data = &lt;DATA&gt;) + 
   &lt;GEOM_FUNCTION&gt;(mapping = aes(&lt;MAPPINGS&gt;))</code></pre>
@@ -279,11 +281,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   &lt;GEOM_FUNCTION&gt;()</code></pre>
 <p>Phân biệt cụ thể giữa 2 cú pháp này sẽ giải thích kĩ hơn ở phần nâng cao.</p>
 <p>Ví dụ với <code>geom_point</code>:</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" title="1">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length,<span class="dt">y =</span> Sepal.Width))</a>
-<a class="sourceLine" id="cb77-2" title="2">p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" title="1">p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>() <span class="co"># Thêm 1 lớp geom_smooth()</span></a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-33-2.png" width="672" /></p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="ve-biu-.html#cb77-1"></a>p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length,<span class="dt">y =</span> Sepal.Width))</span>
+<span id="cb77-2"><a href="ve-biu-.html#cb77-2"></a>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="ve-biu-.html#cb78-1"></a>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>() <span class="co"># Thêm 1 lớp geom_smooth()</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-32-2.png" width="672" /></p>
 <p>Lưu ý:</p>
 <ul>
 <li>Các hàm <code>geom_point()</code> và <code>geom_smooth()</code> không nhận argument nào, và R sẽ tự động thừa kế các argument của hàm <code>ggplot</code> phía trước.</li>
@@ -314,13 +316,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Trước mắt, chúng ta sẽ chỉ quan tâm đến 2 argument là <code>mapping</code> và <code>data</code>. Ngoài ra argument <code>stat</code> cũng nên được chú ý.</p>
 <p>Vẽ biểu đồ với <code>x=Sepal.Length</code> và <code>y=Petal.Length</code>:</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" title="1">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Petal.Length)) </a>
-<a class="sourceLine" id="cb80-2" title="2">p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="ve-biu-.html#cb80-1"></a>p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Petal.Length)) </span>
+<span id="cb80-2"><a href="ve-biu-.html#cb80-2"></a>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
 <p>Như đã nói ở trên, geom_point không nhận argument nào, tức là thừa kế từ ggplot (hay nói cách khác, <code>mapping</code> và <code>data</code> bằng NULL và thừa kế từ <code>ggplot</code>, còn các argument còn lại nhận giá trị mặc định).</p>
 <p>Ta có thể thêm đặc tính (attribute) về màu sắc, với màu sắc thay đổi dựa theo một trường dữ liệu thứ 3 là <em>Species</em>:</p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" title="1">p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Species))</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="ve-biu-.html#cb81-1"></a>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Species))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
 <p>Như vậy, không chỉ có trục tung/hoành là có thể nhận dữ liệu mà ta còn gán thêm được các trường dữ liệu khác vào trục.</p>
 <p><strong>Các tham số về hình dạng của biểu đồ</strong>:</p>
 <ul>
@@ -333,8 +335,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p><code>stroke</code>: Kích thước viền</p></li>
 </ul>
 <p>Tuy nhiên, nếu muốn, chúng ta cũng hoàn toàn có thể chỉ gán một giá trị cố định vào các tham số trên, thay vì gán theo trường dữ liệu:</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" title="1">p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>( <span class="dt">color =</span> <span class="st">&#39;blue&#39;</span>, <span class="dt">size =</span> <span class="dv">3</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="ve-biu-.html#cb82-1"></a>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>( <span class="dt">color =</span> <span class="st">&#39;blue&#39;</span>, <span class="dt">size =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
 <p>Có thể thấy, nếu gán theo giá trị cố định, các tham số <code>color</code> hay <code>size</code> sẽ không nằm trong hàm <code>aes()</code>:</p>
 <ol style="list-style-type: decimal">
 <li>Các tham số bên trong <code>aes()</code> sẽ nhận giá trị là 1 trường dữ liệu (<code>attribute=Column_Name</code>), và thay đổi theo dữ liệu.</li>
@@ -342,13 +344,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 <p><strong>Một số ví dụ khác</strong>:</p>
 <p>Thay đổi <code>shape</code> dựa theo <em>Species</em>:</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" title="1">p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">shape =</span> Species))</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="ve-biu-.html#cb83-1"></a>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">shape =</span> Species))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
 <p>Lồng thêm 3 layer vào nhau:</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" title="1">p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">color =</span> <span class="st">&#39;black&#39;</span>, <span class="dt">size =</span> <span class="fl">4.5</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb84-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">color =</span> <span class="st">&#39;pink&#39;</span>, <span class="dt">size =</span> <span class="dv">4</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb84-3" title="3"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">color =</span> <span class="st">&#39;black&#39;</span>, <span class="dt">size =</span> <span class="fl">1.8</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="ve-biu-.html#cb84-1"></a>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">color =</span> <span class="st">&#39;black&#39;</span>, <span class="dt">size =</span> <span class="fl">4.5</span>) <span class="op">+</span></span>
+<span id="cb84-2"><a href="ve-biu-.html#cb84-2"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">color =</span> <span class="st">&#39;pink&#39;</span>, <span class="dt">size =</span> <span class="dv">4</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb84-3"><a href="ve-biu-.html#cb84-3"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">color =</span> <span class="st">&#39;black&#39;</span>, <span class="dt">size =</span> <span class="fl">1.8</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
 </div>
 <div id="boxplot" class="section level3">
 <h3><span class="header-section-number">3.1.2</span> Boxplot</h3>

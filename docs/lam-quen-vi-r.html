@@ -54,9 +54,9 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -65,14 +65,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -81,9 +83,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -256,30 +258,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="tinh-toan-co-ban-trong-r" class="section level2">
 <h2><span class="header-section-number">1.1</span> Tính toán cơ bản trong R</h2>
 <p>R có thể sử dụng để tính toán cơ bản bằng cách chạy code từ console (cửa sổ mặc định bên dưới, tay trái trong RStudio, gõ code từ dấu <code>&gt;</code>) như sau:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># phép cộng</span></a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="dv">173</span><span class="op">+</span><span class="dv">179</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="lam-quen-vi-r.html#cb1-1"></a><span class="co"># phép cộng</span></span>
+<span id="cb1-2"><a href="lam-quen-vi-r.html#cb1-2"></a><span class="dv">173</span><span class="op">+</span><span class="dv">179</span></span></code></pre></div>
 <pre><code>## [1] 352</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># phép trừ</span></a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="dv">173-179</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="lam-quen-vi-r.html#cb3-1"></a><span class="co"># phép trừ</span></span>
+<span id="cb3-2"><a href="lam-quen-vi-r.html#cb3-2"></a><span class="dv">173-179</span></span></code></pre></div>
 <pre><code>## [1] -6</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># phép nhân</span></a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="dv">179</span><span class="op">*</span><span class="dv">173</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="lam-quen-vi-r.html#cb5-1"></a><span class="co"># phép nhân</span></span>
+<span id="cb5-2"><a href="lam-quen-vi-r.html#cb5-2"></a><span class="dv">179</span><span class="op">*</span><span class="dv">173</span></span></code></pre></div>
 <pre><code>## [1] 30967</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co">#phép chia</span></a>
-<a class="sourceLine" id="cb7-2" title="2"><span class="dv">179</span><span class="op">/</span><span class="dv">173</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="lam-quen-vi-r.html#cb7-1"></a><span class="co">#phép chia</span></span>
+<span id="cb7-2"><a href="lam-quen-vi-r.html#cb7-2"></a><span class="dv">179</span><span class="op">/</span><span class="dv">173</span></span></code></pre></div>
 <pre><code>## [1] 1.034682</code></pre>
 <p>Tương tự với các phép tính phức tạp hơn:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="dv">17</span><span class="op">^</span><span class="dv">9</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="lam-quen-vi-r.html#cb9-1"></a><span class="dv">17</span><span class="op">^</span><span class="dv">9</span></span></code></pre></div>
 <pre><code>## [1] 118587876497</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">exp</span>(<span class="dv">1</span>)  <span class="co"># exponetial function - hàm mũ</span></a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="lam-quen-vi-r.html#cb11-1"></a><span class="kw">exp</span>(<span class="dv">1</span>)  <span class="co"># exponetial function - hàm mũ</span></span></code></pre></div>
 <pre><code>## [1] 2.718282</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">pi   <span class="co"># 3.14159265...</span></a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="lam-quen-vi-r.html#cb13-1"></a>pi   <span class="co"># 3.14159265...</span></span></code></pre></div>
 <pre><code>## [1] 3.141593</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">sin</span>(<span class="dv">0</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="lam-quen-vi-r.html#cb15-1"></a><span class="kw">sin</span>(<span class="dv">0</span>) </span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">log</span>(<span class="dv">5</span>) <span class="co"># nếu không chỉ định rõ cơ số, R sẽ lấy cơ số là e</span></a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="lam-quen-vi-r.html#cb17-1"></a><span class="kw">log</span>(<span class="dv">5</span>) <span class="co"># nếu không chỉ định rõ cơ số, R sẽ lấy cơ số là e</span></span></code></pre></div>
 <pre><code>## [1] 1.609438</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">log</span>(<span class="dv">5</span>, <span class="dt">base=</span><span class="dv">10</span>)  <span class="co"># base 10</span></a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="lam-quen-vi-r.html#cb19-1"></a><span class="kw">log</span>(<span class="dv">5</span>, <span class="dt">base=</span><span class="dv">10</span>)  <span class="co"># base 10</span></span></code></pre></div>
 <pre><code>## [1] 0.69897</code></pre>
 <p>Các function trong R khi được gọi ra luôn có các argument (tham số, viết tắt là arg), trong số một số arg là bắt buộc, một số không, và các arg được tách biệt bằng dấu phẩy. Trong ví dụ trên, hàm log yêu cầu tối thiểu 1 arg là giá trị để lấy giá trị nghịch đảo lũy thừa. Arg <code>base</code> là tham số không bắt buộc, và nếu không chỉ rõ, R sẽ dùng giá trị mặc định (default value) được định nghĩa sẵn trong hàm, ở trường hợp này là <span class="math inline">\(e\)</span>. Người dùng có thể đọc thêm về hàm <code>log</code> bằng cách gõ <code>help(log)</code> hoặc <code>?log</code> ở console. Phần giải thích (documentation) sẽ hiện ra ở cửa sổ góc dưới bên phải.</p>
 <p>Trong trường hợp của hàm log, 2 arg đầu tiên (và duy nhất) là:</p>
@@ -288,14 +290,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>base: a positive or complex number: the base with respect to which logarithms are computed. Defaults to e=exp(1) -&gt; cơ số</p></li>
 </ul>
 <p>Các arg có thứ tự được định nghĩa sẵn theo hàm. Nếu người dùng không chỉ rõ tên của arg, ví dụ: <code>base=10</code>, R sẽ tự hiểu giá trị đưa vào hàm đầu tiên là cho <code>x</code>, giá trị thứ 2 là cho <code>base</code>.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="kw">log</span>(<span class="dv">3</span>, <span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="lam-quen-vi-r.html#cb21-1"></a><span class="kw">log</span>(<span class="dv">3</span>, <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## [1] 0.4771213</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="kw">log</span>(<span class="dv">10</span>, <span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="lam-quen-vi-r.html#cb23-1"></a><span class="kw">log</span>(<span class="dv">10</span>, <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## [1] 2.095903</code></pre>
 <p>Nếu có chỉ rõ tên của arg, thứ tự đưa vào hàm không còn quan trọng nữa:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="kw">log</span>(<span class="dt">x=</span><span class="dv">3</span>, <span class="dt">base=</span><span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="lam-quen-vi-r.html#cb25-1"></a><span class="kw">log</span>(<span class="dt">x=</span><span class="dv">3</span>, <span class="dt">base=</span><span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## [1] 0.4771213</code></pre>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw">log</span>(<span class="dt">base=</span><span class="dv">10</span>, <span class="dt">x=</span><span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="lam-quen-vi-r.html#cb27-1"></a><span class="kw">log</span>(<span class="dt">base=</span><span class="dv">10</span>, <span class="dt">x=</span><span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## [1] 0.4771213</code></pre>
 <p>Chú ý: khi đặt giá trị cho tham số, phải sử dụng cú pháp <code>arg_name=value</code>, không phải ngược lại. Đồng thời, dấu <code>=</code> trong trường hợp này được sử dụng để gán giá trị tạm thời, vì vậy không sử dụng dấu <code>&lt;-</code> (sẽ nói ở phần sau).</p>
 </div>
@@ -305,25 +307,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>The operators &lt;- and = assign into the environment in which they are evaluated. The operator &lt;- can be used anywhere, whereas the operator = is only allowed at the top level (e.g., in the complete expression typed at the command prompt) or as one of the subexpressions in a braced list of expressions.</code></pre>
 <p>Bạn đọc vui lòng google để hiểu rõ hơn = )). Tuy nhiên, bài học rút ra là: chỉ sử dụng dấu bằng <code>=</code> để khai báo tham số trong hàm, còn các trường hợp gán biến khác thì luôn dùng <code>&lt;-</code>.</p>
 <p>Tên hàm không thể bắt đầu bằng số, không được bao gồm khoảng trống, và có phân biệt giữa viết hoa và viết thường (case-sensitive).</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1">test_var &lt;-<span class="st"> </span><span class="dv">100</span></a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="lam-quen-vi-r.html#cb30-1"></a>test_var &lt;-<span class="st"> </span><span class="dv">100</span></span></code></pre></div>
 <p>Biến đã được khai báo sẽ hiện ra ở phần Environment (góc trên bên phải).</p>
 </div>
 <div id="vector" class="section level2">
 <h2><span class="header-section-number">1.3</span> Vector</h2>
 <p>Vector là một phần tất yếu trong R, và cũng là một trong những thứ khiến R có khả năng khai phá dữ liệu cực kì mạnh mẽ. Trong R, mọi thứ đều là một vector. Ví dụ, khi chúng ta khai báo <code>x &lt;- 7</code> hoặc <code>x = 7</code>, R sẽ hiểu rằng x đã nhận một vector có độ dài bằng 1. Tuy nhiên, các ngôn ngữ khác sẽ chỉ hiểu biến <code>x</code> đã nhận giá trị 7 mà thôi.</p>
 <p>Để tạo 1 vector, ta sử dụng hàm <code>c()</code>:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">7</span>,<span class="dv">9</span>)</a>
-<a class="sourceLine" id="cb31-2" title="2">y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">7</span>,<span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="lam-quen-vi-r.html#cb31-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">7</span>,<span class="dv">9</span>)</span>
+<span id="cb31-2"><a href="lam-quen-vi-r.html#cb31-2"></a>y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">7</span>,<span class="dv">3</span>)</span></code></pre></div>
 <p>Ở phần 1.1, khi chúng ta dùng R để tính toán phép cộng của 2 giá trị, thực chất R đã làm phép cộng giữa 2 vector có độ dài = 1. Như vậy, hoàn toàn có thể lấy 2 biến <code>x</code> và <code>y</code> vừa gán ở trên để làm phép cộng.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">7</span>,<span class="dv">9</span>)</a>
-<a class="sourceLine" id="cb32-2" title="2">y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">7</span>,<span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb32-3" title="3">x<span class="op">+</span>y</a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="lam-quen-vi-r.html#cb32-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">7</span>,<span class="dv">9</span>)</span>
+<span id="cb32-2"><a href="lam-quen-vi-r.html#cb32-2"></a>y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">7</span>,<span class="dv">3</span>)</span>
+<span id="cb32-3"><a href="lam-quen-vi-r.html#cb32-3"></a>x<span class="op">+</span>y</span></code></pre></div>
 <pre><code>## [1]  2 14 12</code></pre>
 <p>Tương tự, có thể áp dụng với hàm <code>log</code>:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="kw">log</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dt">base=</span><span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="lam-quen-vi-r.html#cb34-1"></a><span class="kw">log</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dt">base=</span><span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## [1] 0.0000000 0.3010300 0.4771213</code></pre>
 <p>R còn có thể tạo ra vector là dãy số nguyên liên tục bằng cách viết <code>A:B</code> để tạo vector bắt đầu từ A, tăng 1 dần đều và kết thúc ở B:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1"><span class="dv">1</span><span class="op">:</span><span class="dv">7</span></a></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="lam-quen-vi-r.html#cb36-1"></a><span class="dv">1</span><span class="op">:</span><span class="dv">7</span></span></code></pre></div>
 <pre><code>## [1] 1 2 3 4 5 6 7</code></pre>
 <p>Vì tính chất “vectorized” này của R, việc sử dụng vòng lặp (như <code>for loop</code>) giống trong 1 số ngôn ngữ khác (như VBA) là gần như không cần thiết, có thể khiến code chậm đi, trừ trong những trường hợp đặc biệt (sẽ lấy ví dụ sau).</p>
 </div>
@@ -331,10 +333,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">1.4</span> Các gói thư viện (packages)</h2>
 <p>Giống 1 số ngôn ngữ khác như Python, người dùng R có thể cài đặt thêm các thư viện bổ sung (gọi là package hoặc library) để thực hiện các công việc phức tạp hơn. Một trong số những package phổ biến nhất là <code>dplyr</code>, nằm trong nhóm các thư viện <code>tidyverse</code>. <code>tidyverse</code> cho phép người dùng khai phá dữ liệu mạnh mẽ và tiện dụng hơn, cũng như rất dễ học. Người ta thường gọi R cơ bản là <strong>base R</strong>, để phân biệt với <strong>tidyverse R</strong>. Tác giả của <code>tidyverse</code> là <a href="http://hadley.nz/">Hadley Wickham</a>, và người dùng R có thể tham khảo thêm cuốn <a href="https://r4ds.had.co.nz/data-visualisation.html">R for Data Science</a> cũng có tác giả là Hadkey để hiểu hơn về <code>tidyverse</code>.</p>
 <p>Các package được cài đặt bằng cách vào menu <code>Tools -&gt; Install Packages...</code>, hoặc gõ hàm <code>install.packages()</code> vào console. Nếu muốn cài đặt nhiều package cùng 1 lúc, ta có thể dùng thêm hàm <code>c()</code>:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&#39;dplyr&#39;</span>, <span class="st">&#39;ggplot2&#39;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="lam-quen-vi-r.html#cb38-1"></a><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&#39;dplyr&#39;</span>, <span class="st">&#39;ggplot2&#39;</span>))</span></code></pre></div>
 <p>Ngoài các thư viện để bổ sung hàm mới, một số package còn cung cấp cho người dùng các bộ dữ liệu mẫu để phục vụ việc học và thí nghiệm, ví dụ như package <code>nycflights13</code></p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1"><span class="kw">library</span>(nycflights13)</a>
-<a class="sourceLine" id="cb39-2" title="2"><span class="kw">head</span>(flights,<span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="lam-quen-vi-r.html#cb39-1"></a><span class="kw">library</span>(nycflights13)</span>
+<span id="cb39-2"><a href="lam-quen-vi-r.html#cb39-2"></a><span class="kw">head</span>(flights,<span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 10 x 19
 ##     year month   day dep_time sched_dep_time dep_delay arr_time
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
@@ -373,7 +375,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="stackoverflow" class="section level3">
 <h3><span class="header-section-number">1.5.2</span> Stackoverflow</h3>
 <p>Đối với các vấn đề cụ thể khác, bạn có thể sử dụng Google để tìm kiếm, và thường các kết quả đầu tiên trả về sẽ đến từ trang <strong>Stackoverflow</strong>. Khi đọc câu trả lời ở đây, tốt nhất bạn nên dành thời gian và hiểu rõ đoạn code có sẵn, thay vì copy về để sử dụng luôn. Ngoài ra, khi copy code về, hãy comment lại phía trên (sử dụng dấu thăng <code>#</code> ở đầu) nguồn gốc của code để sau này khi kiểm tra/debug, có thể dễ dàng tra cứu nguồn gốc.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="co"># ví dụ về comment</span></a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="lam-quen-vi-r.html#cb41-1"></a><span class="co"># ví dụ về comment</span></span></code></pre></div>
 </div>
 </div>
 <div id="workflow-co-ban-trong-r" class="section level2">
@@ -381,10 +383,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Trong các phần trên, chúng ta chủ yếu lấy ví dụ bằng cách nhập code trực tiếp vào console và đưa ra kết quả ngay sau mỗi dòng lệnh. Việc này cũng không khác sử dụng máy tính bỏ túi, vốn không tiện lợi cho lắm.</p>
 <p>Để khiến việc sử dụng R dễ dàng và hiệu quả hơn, chúng ta có thể sử dụng R script, R Markdown hoặc R Notebook, trong đó hai định dạng phổ biến nhất là Script và Markdown (Tài liệu này cũng được soạn thảo bằng R Markdown).</p>
 <p>R Script là một dạng “văn bản” để lưu lại các câu lệnh đã soạn thảo, sau đó chúng ta có thể chạy (run) toàn bộ script này để đưa ra kết quả cuối cùng, thay vì chạy từng dòng lệnh từ console, hoặc thậm chí chạy từng phần một của script. Tuy nhiên, R Script chỉ có thể lưu chữ được code và các comment đi kèm, và không có khả năng trình bày, phân tách để tạo ra báo cáo/nghiên cứu hoàn chỉnh. Vì vậy R Script phù hợp với các quy trình làm việc/nghiên cứu nội bộ, không cần trình bày/xuất bản ra ngoài.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1"><span class="co"># ví dụ về comment: có thể dùng để giải thích ý nghĩa đoạn code ở dưới</span></a>
-<a class="sourceLine" id="cb42-2" title="2"><span class="co"># nguồn tham khảo của code</span></a>
-<a class="sourceLine" id="cb42-3" title="3"><span class="co"># ghi chú khác</span></a>
-<a class="sourceLine" id="cb42-4" title="4">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">+</span><span class="dv">1</span><span class="op">*</span><span class="dv">2-3</span><span class="op">/</span><span class="dv">4</span></a></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="lam-quen-vi-r.html#cb42-1"></a><span class="co"># ví dụ về comment: có thể dùng để giải thích ý nghĩa đoạn code ở dưới</span></span>
+<span id="cb42-2"><a href="lam-quen-vi-r.html#cb42-2"></a><span class="co"># nguồn tham khảo của code</span></span>
+<span id="cb42-3"><a href="lam-quen-vi-r.html#cb42-3"></a><span class="co"># ghi chú khác</span></span>
+<span id="cb42-4"><a href="lam-quen-vi-r.html#cb42-4"></a>x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">+</span><span class="dv">1</span><span class="op">*</span><span class="dv">2-3</span><span class="op">/</span><span class="dv">4</span></span></code></pre></div>
 <p>R Markdown là một dạng của ngôn ngữ Markdown (Đọc thêm về Markdown ở <a href="https://en.wikipedia.org/wiki/Markdown">wiki</a>). Ở đây mình sẽ không giải thích cụ thể về R Markdown (tham khảo tại <a href="https://rmarkdown.rstudio.com/lesson-1.html">website của RStudio</a>), chỉ nêu ra 1 số điểm lợi như sau:</p>
 <ul>
 <li>Biến code và phân tích thành một văn bản/báo cáo/thuyết trình có trình bày sạch đẹp, bao gồm cả bảng biểu/dashboard.</li>
@@ -401,13 +403,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Để chạy toàn bộ cả script, ấn nút <code>Source</code>, hoặc highlight (<code>Ctrl+A</code>) toàn bộ code rồi dùng <code>Ctrl+Enter</code>.</li>
 </ul>
 <p>Thông thường một R Script sẽ nhìn như thế này:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1"><span class="co"># ví dụ về comment: có thể dùng để giải thích ý nghĩa đoạn code ở dưới</span></a>
-<a class="sourceLine" id="cb43-2" title="2"><span class="co"># nguồn tham khảo của code</span></a>
-<a class="sourceLine" id="cb43-3" title="3"><span class="co"># ghi chú khác</span></a>
-<a class="sourceLine" id="cb43-4" title="4">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>)</a>
-<a class="sourceLine" id="cb43-5" title="5"></a>
-<a class="sourceLine" id="cb43-6" title="6"><span class="co"># vẽ biểu đồ</span></a>
-<a class="sourceLine" id="cb43-7" title="7"><span class="kw">plot</span>(x, <span class="kw">exp</span>(x))</a></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="lam-quen-vi-r.html#cb43-1"></a><span class="co"># ví dụ về comment: có thể dùng để giải thích ý nghĩa đoạn code ở dưới</span></span>
+<span id="cb43-2"><a href="lam-quen-vi-r.html#cb43-2"></a><span class="co"># nguồn tham khảo của code</span></span>
+<span id="cb43-3"><a href="lam-quen-vi-r.html#cb43-3"></a><span class="co"># ghi chú khác</span></span>
+<span id="cb43-4"><a href="lam-quen-vi-r.html#cb43-4"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>)</span>
+<span id="cb43-5"><a href="lam-quen-vi-r.html#cb43-5"></a></span>
+<span id="cb43-6"><a href="lam-quen-vi-r.html#cb43-6"></a><span class="co"># vẽ biểu đồ</span></span>
+<span id="cb43-7"><a href="lam-quen-vi-r.html#cb43-7"></a><span class="kw">plot</span>(x, <span class="kw">exp</span>(x))</span></code></pre></div>
 <p>Có thể thấy, đoạn code trên bao gồm 1 số comment giải thích và cuối cùng là một hàm để vẽ biểu đồ. Tuy nhiên, biểu đồ này không được bao gồm luôn trong script mà người dùng phải chạy lại toàn bộ script mỗi lần mở lên xem. Ngoài ra, việc trình bày và giải thích với comment khá rối mắt và luôn phải kèm theo ký tự <code>#</code>.</p>
 </div>
 <div id="r-markdown-file-uoi-.rmd" class="section level3">

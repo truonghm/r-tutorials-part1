@@ -54,9 +54,9 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -65,14 +65,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -81,9 +83,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -243,8 +245,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="faqs-ngn-gon-v-r" class="section level1">
 <h1><span class="header-section-number">7</span> FAQs ngắn gọn về R</h1>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb200-1" title="1"><span class="co"># load sẵn tidyverse</span></a>
-<a class="sourceLine" id="cb200-2" title="2"><span class="kw">library</span>(tidyverse, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="faqs-ngn-gon-v-r.html#cb200-1"></a><span class="co"># load sẵn tidyverse</span></span>
+<span id="cb200-2"><a href="faqs-ngn-gon-v-r.html#cb200-2"></a><span class="kw">library</span>(tidyverse, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <p>Phần này có mục đích trả lời 1 số câu hỏi về R, chủ yếu là những quy chuẩn đặc biệt hay những điểm khác biệt của R so với các ngôn gnwx lập trình khác.</p>
 <div id="cac-ky-hiu-c-bit-trong-r" class="section level2">
 <h2><span class="header-section-number">7.1</span> Các ký hiệu đặc biệt trong R</h2>
@@ -256,8 +258,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4><span class="header-section-number">7.1.1.1</span> Nguồn gốc</h4>
 <p>Ngôn ngữ R có nguồn gốc từ một ngôn ngữ lập trình khác là <a href="https://en.wikipedia.org/wiki/S_(programming_language)">S</a>. R thừa hưởng rất nhiều từ S, trong đó có ký hiệu <code>&lt;-</code>.</p>
 <p>Trước đó, S lại thừa hưởng từ một ngôn ngữ khác là <a href="https://en.wikipedia.org/wiki/APL_(programming_language)">APL</a>. APL sử dụng <code>&lt;-</code> vì ngôn ngữ này được phát triển trên một cỗ máy có <a href="https://en.wikipedia.org/wiki/APL_syntax_and_symbols">sử dụng bàn phím chứa nút <code>&lt;-</code></a>. Vì vậy, các nhà phát triển đã sử dụng luôn ký hiệu này cho mục đích gán biến (<a href="http://www.softwarepreservation.org/projects/apl/Books/APL360ReferenceManual">Tham khảo thêm tại APL Reference Manual</a>).</p>
-<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb201-1" title="1">knitr<span class="op">::</span><span class="kw">include_graphics</span>(<span class="st">&#39;images/APL2-nappaimisto.png&#39;</span>)</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-94"></span>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="faqs-ngn-gon-v-r.html#cb201-1"></a>knitr<span class="op">::</span><span class="kw">include_graphics</span>(<span class="st">&#39;images/APL2-nappaimisto.png&#39;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-93"></span>
 <img src="images/APL2-nappaimisto.png" alt="Source: Wikipedia" width="50%" />
 <p class="caption">
 Figure 7.1: Source: Wikipedia
@@ -267,43 +269,43 @@ Figure 7.1: Source: Wikipedia
 <div id="cach-s-dung" class="section level4">
 <h4><span class="header-section-number">7.1.1.2</span> Cách sử dụng</h4>
 <p><code>&lt;-</code> vốn được sử dụng rộng rãi hơn trong R, và <code>=</code> không được sử dụng với mục đích gán biến cho tới 2001. Trước đó, <code>=</code> chỉ được dùng để đặt tham số trong function:</p>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb202-1" title="1"><span class="cf">function</span>(<span class="dt">arg =</span> <span class="st">&#39;value&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="faqs-ngn-gon-v-r.html#cb202-1"></a><span class="cf">function</span>(<span class="dt">arg =</span> <span class="st">&#39;value&#39;</span>)</span></code></pre></div>
 <p>Vào <a href="https://developer.r-project.org/equalAssign.html">năm 2001</a>, dấu <code>=</code> bắt đầu được đưa vào sử dụng để gán biến, nhằm giúp việc học và dùng R dễ dàng hơn, do rất nhiều các ngôn ngữ lập trình khác cũng dùng dấu <code>=</code> với mục đích tương tự.</p>
 <p>Ban đầu, dấu <code>&lt;-</code> vẫn có ích hơn dấu <code>=</code> vì một số chức năng chỉ có thể thực hiện với dấu <code>&lt;-</code>, do dấu <code>=</code> còn được sử dụng để gán tham số trong function.</p>
 <p>Hiện nay, hầu hết các điểm khác biệt giữa 2 dấu <code>&lt;-</code> và <code>=</code> đã không còn tồn tại, và ta có thể sử dụng 2 ký hiệu này thay cho nhau ở <em>hầu hết</em> mọi chỗ.</p>
 <p>Tuy nhiên, do dấu <code>=</code> vẫn được sử dụng để đặt tham số cho function nên luôn có xung đột về chức năng, vì R sẽ luôn hiểu dấu <code>=</code> trong code đang được dùng để đặt tham số <em>trước tiên</em>, sau đó mới hiểu là dùng để gán biến. Ví dụ:</p>
-<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb203-1" title="1"><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb203-2" title="2">  <span class="dt">a =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>),</a>
-<a class="sourceLine" id="cb203-3" title="3">  b &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb203-4" title="4">)</a></code></pre></div>
-<pre><code>##              a b....rnorm.10.
-## 1  -0.09392060    -1.04127267
-## 2   0.49375885     1.04079559
-## 3   1.68320251     1.52637442
-## 4   0.07224029    -1.45715261
-## 5   0.97596964     1.22428940
-## 6   0.22186206    -0.58620769
-## 7  -0.13594810    -0.04136881
-## 8   0.90043916    -0.06180476
-## 9   1.54455061     0.15957848
-## 10  0.39606586    -0.05946232</code></pre>
-<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb205-1" title="1"><span class="co">#Print a</span></a>
-<a class="sourceLine" id="cb205-2" title="2">a</a></code></pre></div>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="faqs-ngn-gon-v-r.html#cb203-1"></a><span class="kw">data.frame</span>(</span>
+<span id="cb203-2"><a href="faqs-ngn-gon-v-r.html#cb203-2"></a>  <span class="dt">a =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>),</span>
+<span id="cb203-3"><a href="faqs-ngn-gon-v-r.html#cb203-3"></a>  b &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</span>
+<span id="cb203-4"><a href="faqs-ngn-gon-v-r.html#cb203-4"></a>)</span></code></pre></div>
+<pre><code>##             a b....rnorm.10.
+## 1   0.4612361    0.103792152
+## 2   0.8914588    0.665972769
+## 3   3.4305949    0.127401059
+## 4  -1.1023414    1.453135247
+## 5  -0.9442286   -1.651037757
+## 6  -0.9605770    0.900842787
+## 7  -0.5386642    0.872390908
+## 8   0.6603486   -0.006359598
+## 9  -2.3265019   -0.332394720
+## 10 -0.3209618   -0.401468937</code></pre>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="faqs-ngn-gon-v-r.html#cb205-1"></a><span class="co">#Print a</span></span>
+<span id="cb205-2"><a href="faqs-ngn-gon-v-r.html#cb205-2"></a>a</span></code></pre></div>
 <pre><code>## Error in eval(expr, envir, enclos): object &#39;a&#39; not found</code></pre>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb207-1" title="1"><span class="co">#Print b</span></a>
-<a class="sourceLine" id="cb207-2" title="2">b</a></code></pre></div>
-<pre><code>##  [1] -1.04127267  1.04079559  1.52637442 -1.45715261  1.22428940
-##  [6] -0.58620769 -0.04136881 -0.06180476  0.15957848 -0.05946232</code></pre>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="faqs-ngn-gon-v-r.html#cb207-1"></a><span class="co">#Print b</span></span>
+<span id="cb207-2"><a href="faqs-ngn-gon-v-r.html#cb207-2"></a>b</span></code></pre></div>
+<pre><code>##  [1]  0.103792152  0.665972769  0.127401059  1.453135247 -1.651037757
+##  [6]  0.900842787  0.872390908 -0.006359598 -0.332394720 -0.401468937</code></pre>
 <p>Để tránh tình trạng này, ta sẽ phải lồng thêm một lần dấu ngoặc nữa như sau:</p>
-<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb209-1" title="1"><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb209-2" title="2">  (<span class="dt">a =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>)),</a>
-<a class="sourceLine" id="cb209-3" title="3">  b &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb209-4" title="4">)</a></code></pre></div>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="faqs-ngn-gon-v-r.html#cb209-1"></a><span class="kw">data.frame</span>(</span>
+<span id="cb209-2"><a href="faqs-ngn-gon-v-r.html#cb209-2"></a>  (<span class="dt">a =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>)),</span>
+<span id="cb209-3"><a href="faqs-ngn-gon-v-r.html#cb209-3"></a>  b &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</span>
+<span id="cb209-4"><a href="faqs-ngn-gon-v-r.html#cb209-4"></a>)</span></code></pre></div>
 <p>Việc này khiến code dài và khó đọc hơn.</p>
 <p>Ngoài ra, khi sử dụng dấu <code>=</code> để gán biến trong function, biến sẽ chỉ tồn tại ở function level/function scope, và không thể gọi biến ở global scope:</p>
-<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb210-1" title="1"><span class="kw">median</span>(<span class="dt">x=</span><span class="dv">1</span><span class="op">:</span><span class="dv">20</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="faqs-ngn-gon-v-r.html#cb210-1"></a><span class="kw">median</span>(<span class="dt">x=</span><span class="dv">1</span><span class="op">:</span><span class="dv">20</span>)</span></code></pre></div>
 <pre><code>## [1] 10.5</code></pre>
-<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb212-1" title="1">x</a></code></pre></div>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="faqs-ngn-gon-v-r.html#cb212-1"></a>x</span></code></pre></div>
 <pre><code>## Error in eval(expr, envir, enclos): object &#39;x&#39; not found</code></pre>
 <p>Tóm lại, có thể sử dụng hai dấu <code>=</code> và <code>&lt;-</code> tùy thích theo ý muốn, tuy nhiên vẫn cần lưu ý một số điểm liên quan đến tính thống nhất/tính dễ đọc của code:</p>
 <ol style="list-style-type: decimal">
@@ -318,7 +320,7 @@ gán biến theo chiều <code>5 -&gt; x</code>. Tuy nhiên cách thứ 2 <a hre
 <div id="du-." class="section level3">
 <h3><span class="header-section-number">7.1.2</span> Dấu <code>.</code></h3>
 <p>Dấu chấm <code>.</code> trong R xuất hiện rất nhiều, ví dụ như:</p>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb214-1" title="1"><span class="kw">mean</span>(x, <span class="dt">trim =</span> <span class="dv">0</span>, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>, ...)</a></code></pre></div>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="faqs-ngn-gon-v-r.html#cb214-1"></a><span class="kw">mean</span>(x, <span class="dt">trim =</span> <span class="dv">0</span>, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>, ...)</span></code></pre></div>
 <p>Trong đó, <code>na.rm</code> có nghĩa là “remove NAs”. Dấu <code>.</code> trong trường hợp này được dùng để ngăn cách tên biến có nhiều từ. Trong nhiều tài liệu hướng dẫn về R, các tác giả cũng thường chọn đặt tên biến nhiều từ có dấu <code>.</code> để ngăn cách, thay vì dùng dấu <code>_</code> hoặc đặt tên theo kiểu <code>FooBarFooBar</code>, với các chữ cái đầu tiên của từng từ viết hoa.</p>
 <p>Đây là một quy chuẩn được thừa hưởng từ ngôn ngữ S. Trong S, và trong các phiên bản cũ của R, dấu <code>_</code> được sử dụng để gán biến, giống dấu <code>&lt;-</code> ở trên, cho đến phiên bản <a href="https://cran.r-project.org/src/base/NEWS.1">R 1.8</a>. Vì vậy, dấu <code>.</code> được dùng để tách các chữ khi đặt tên.</p>
 <p>Nếu chuyển từ VBA sang R, chúng ta có thể sẽ thấy lạ vì trong VBA, dấu <code>.</code> được sử dụng để <a href="https://docs.microsoft.com/en-us/office/vba/language/concepts/getting-started/understanding-objects-properties-methods-and-events#properties">gọi method</a>.</p>
@@ -329,7 +331,7 @@ gán biến theo chiều <code>5 -&gt; x</code>. Tuy nhiên cách thứ 2 <a hre
 <p>Lần đầu đọc code R, nhiều người sẽ thấy khó hiểu và không quen được vì có sự xuất hiện của dấu phần trăm <code>%</code>, ví dụ như <code>%in%</code>, <code>%&gt;%</code>, <code>%*%</code>.</p>
 <p>Các operator có cú pháp <code>%abc%</code> với hai dấu phần trăm bên ngoài cùng là loại hàm <em>trung tố</em> (infix, giống như <em>hậu tố</em> là suffix và <em>tiền tố</em> là prefix), tức là hàm này sẽ nhận 2 (và chỉ 2) toán hạng (operand) ở trước và ở sau. Ví dụ: dấu <code>+</code> là một hàm infix, và có thể được sử dụng theo kiểu <code>a+b</code>, tức là nhận <code>a</code> ở trước và <code>b</code> ở sau.</p>
 <p>Tương tự với <code>%in%</code>:</p>
-<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb215-1" title="1"><span class="dv">1</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="faqs-ngn-gon-v-r.html#cb215-1"></a><span class="dv">1</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>Một số infix operator có sẵn trong R:</p>
 <table>
@@ -359,11 +361,11 @@ gán biến theo chiều <code>5 -&gt; x</code>. Tuy nhiên cách thứ 2 <a hre
 </tbody>
 </table>
 <p>Để tự tạo các infix operator, ta cũng sử dụng 2 dấu <code>%</code> giống các operator ở trên:</p>
-<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb217-1" title="1"><span class="st">`</span><span class="dt">%concat%</span><span class="st">`</span> &lt;-<span class="st"> </span><span class="cf">function</span>(x,y) {</a>
-<a class="sourceLine" id="cb217-2" title="2">  <span class="kw">paste0</span>(x, y)</a>
-<a class="sourceLine" id="cb217-3" title="3">}</a>
-<a class="sourceLine" id="cb217-4" title="4"></a>
-<a class="sourceLine" id="cb217-5" title="5"><span class="st">&quot;Hello&quot;</span> <span class="op">%concat%</span><span class="st"> &quot; World!&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="faqs-ngn-gon-v-r.html#cb217-1"></a><span class="st">`</span><span class="dt">%concat%</span><span class="st">`</span> &lt;-<span class="st"> </span><span class="cf">function</span>(x,y) {</span>
+<span id="cb217-2"><a href="faqs-ngn-gon-v-r.html#cb217-2"></a>  <span class="kw">paste0</span>(x, y)</span>
+<span id="cb217-3"><a href="faqs-ngn-gon-v-r.html#cb217-3"></a>}</span>
+<span id="cb217-4"><a href="faqs-ngn-gon-v-r.html#cb217-4"></a></span>
+<span id="cb217-5"><a href="faqs-ngn-gon-v-r.html#cb217-5"></a><span class="st">&quot;Hello&quot;</span> <span class="op">%concat%</span><span class="st"> &quot; World!&quot;</span></span></code></pre></div>
 <pre><code>## [1] &quot;Hello World!&quot;</code></pre>
 <p>Nhờ vậy mà các package như <strong>magrittr</strong> đã tận dụng dấu <code>%</code> và chúng ta nhìn thấy ký hiệu này nhiều như vậy.</p>
 <p>Một điểm đặc biệt là dấu phần trăm <code>%</code> được sử dụng cho phép toán modulo trong toán học, nên để thống nhất với các operator khác, R dùng <code>%%</code> thay thế.</p>
@@ -371,7 +373,7 @@ gán biến theo chiều <code>5 -&gt; x</code>. Tuy nhiên cách thứ 2 <a hre
 <div id="du-va" class="section level3">
 <h3><span class="header-section-number">7.1.4</span> Dấu <code>:</code> và <code>::</code></h3>
 <p>Dấu <code>:</code> được dụng cho dãy số; đây cũng là <a href="https://en.wikipedia.org/wiki/Colon_%28punctuation%29#Mathematics_and_logic">ý nghĩa chung trong toán học</a> của <code>:</code>.</p>
-<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb219-1" title="1"><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></a></code></pre></div>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="faqs-ngn-gon-v-r.html#cb219-1"></a><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></span></code></pre></div>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
 <p>Dấu <code>::</code> thực tế không chỉ được áp dụng trong R mà còn có ở 1 số ngôn ngữ khác như C++ và Ruby. <code>::</code> dùng để gọi ra các function/method/object có thể gọi được từ một namespace (không gian tên), ví dụ như 1 package. Ví dụ: <code>dplyr::select</code>. Cú pháp kiểu này giống với VBA, ví dụ như <code>Cell(1,1).Select</code>, thay dấu <code>.</code> bằng dấu <code>::</code>.</p>
 </div>

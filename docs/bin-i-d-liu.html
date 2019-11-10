@@ -54,9 +54,9 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -65,14 +65,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -81,9 +83,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -243,8 +245,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="bin-i-d-liu" class="section level1">
 <h1><span class="header-section-number">4</span> Biến đổi dữ liệu</h1>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" title="1"><span class="co"># load sẵn tidyverse</span></a>
-<a class="sourceLine" id="cb85-2" title="2"><span class="kw">library</span>(tidyverse, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="bin-i-d-liu.html#cb85-1"></a><span class="co"># load sẵn tidyverse</span></span>
+<span id="cb85-2"><a href="bin-i-d-liu.html#cb85-2"></a><span class="kw">library</span>(tidyverse, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <p>Các tool có sẵn trong <strong>base R</strong> thường không thống nhất và khó sử dụng, nhất là cho người mới học. Vì vậy, chúng ta sẽ sử dụng package<strong>dplyr</strong> (Đọc mô tả package tại <a href="http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html">[http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html]</a>).</p>
 <div id="gii-thiu-chung-v-dplyr-va-tibble" class="section level2">
 <h2><span class="header-section-number">4.1</span> Giới thiệu chung về <strong>dplyr</strong> và <code>tibble</code></h2>
@@ -304,15 +306,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Các hàm trên có cú pháp giống nhau, đều bắt đầu bằng 1 argument dataset đầu vào.</p>
 <p>Để lấy ví dụ, chúng ta sẽ tạo ra 1 data frame đơn giản làm mẫu, sử dụng hàm <code>tribble()</code> để tạo ra 1 <code>tibble</code>:</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" title="1">grades &lt;-<span class="st"> </span><span class="kw">tribble</span>(</a>
-<a class="sourceLine" id="cb86-2" title="2">  <span class="op">~</span>Ten,     <span class="op">~</span>GioiTinh, <span class="op">~</span>HS1, <span class="op">~</span>HS2, <span class="op">~</span>CuoiKi,</a>
-<a class="sourceLine" id="cb86-3" title="3">  <span class="st">&#39;Nguyet&#39;</span>    , <span class="st">&#39;F&#39;</span>,     <span class="dv">93</span>,  <span class="dv">98</span>,     <span class="dv">96</span>,</a>
-<a class="sourceLine" id="cb86-4" title="4">  <span class="st">&#39;Truong&#39;</span>    , <span class="st">&#39;M&#39;</span>,     <span class="dv">99</span>,  <span class="dv">90</span>,     <span class="dv">80</span>,</a>
-<a class="sourceLine" id="cb86-5" title="5">  <span class="st">&#39;Mat&#39;</span>       , <span class="st">&#39;M&#39;</span>,     <span class="dv">89</span>,  <span class="dv">70</span>,     <span class="dv">85</span>,</a>
-<a class="sourceLine" id="cb86-6" title="6">  <span class="st">&#39;Chuoi&#39;</span>     , <span class="st">&#39;M&#39;</span>,     <span class="dv">80</span>,  <span class="dv">82</span>,     <span class="dv">81</span>,</a>
-<a class="sourceLine" id="cb86-7" title="7">  <span class="st">&#39;SoyaBean&#39;</span>  , <span class="st">&#39;F&#39;</span>,     <span class="dv">70</span>,  <span class="dv">85</span>,     <span class="dv">92</span>,</a>
-<a class="sourceLine" id="cb86-8" title="8">  <span class="st">&#39;KhungLong&#39;</span> , <span class="st">&#39;F&#39;</span>,     <span class="dv">77</span>,  <span class="dv">86</span>,     <span class="dv">72</span>)</a>
-<a class="sourceLine" id="cb86-9" title="9">grades</a></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="bin-i-d-liu.html#cb86-1"></a>grades &lt;-<span class="st"> </span><span class="kw">tribble</span>(</span>
+<span id="cb86-2"><a href="bin-i-d-liu.html#cb86-2"></a>  <span class="op">~</span>Ten,     <span class="op">~</span>GioiTinh, <span class="op">~</span>HS1, <span class="op">~</span>HS2, <span class="op">~</span>CuoiKi,</span>
+<span id="cb86-3"><a href="bin-i-d-liu.html#cb86-3"></a>  <span class="st">&#39;Nguyet&#39;</span>    , <span class="st">&#39;F&#39;</span>,     <span class="dv">93</span>,  <span class="dv">98</span>,     <span class="dv">96</span>,</span>
+<span id="cb86-4"><a href="bin-i-d-liu.html#cb86-4"></a>  <span class="st">&#39;Truong&#39;</span>    , <span class="st">&#39;M&#39;</span>,     <span class="dv">99</span>,  <span class="dv">90</span>,     <span class="dv">80</span>,</span>
+<span id="cb86-5"><a href="bin-i-d-liu.html#cb86-5"></a>  <span class="st">&#39;Mat&#39;</span>       , <span class="st">&#39;M&#39;</span>,     <span class="dv">89</span>,  <span class="dv">70</span>,     <span class="dv">85</span>,</span>
+<span id="cb86-6"><a href="bin-i-d-liu.html#cb86-6"></a>  <span class="st">&#39;Chuoi&#39;</span>     , <span class="st">&#39;M&#39;</span>,     <span class="dv">80</span>,  <span class="dv">82</span>,     <span class="dv">81</span>,</span>
+<span id="cb86-7"><a href="bin-i-d-liu.html#cb86-7"></a>  <span class="st">&#39;SoyaBean&#39;</span>  , <span class="st">&#39;F&#39;</span>,     <span class="dv">70</span>,  <span class="dv">85</span>,     <span class="dv">92</span>,</span>
+<span id="cb86-8"><a href="bin-i-d-liu.html#cb86-8"></a>  <span class="st">&#39;KhungLong&#39;</span> , <span class="st">&#39;F&#39;</span>,     <span class="dv">77</span>,  <span class="dv">86</span>,     <span class="dv">72</span>)</span>
+<span id="cb86-9"><a href="bin-i-d-liu.html#cb86-9"></a>grades</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 5
 ##   Ten       GioiTinh   HS1   HS2 CuoiKi
 ##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
@@ -325,7 +327,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="add_row" class="section level3">
 <h3><span class="header-section-number">4.2.1</span> <code>add_row()</code></h3>
 <p>Thêm dòng vào dữ liệu <code>grades</code> ở trên như sau:</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" title="1">grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_row</span>(<span class="dt">Ten=</span><span class="st">&#39;Cuu&#39;</span>, <span class="dt">HS1=</span><span class="dv">96</span>, <span class="dt">HS2=</span><span class="dv">90</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="bin-i-d-liu.html#cb88-1"></a>grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_row</span>(<span class="dt">Ten=</span><span class="st">&#39;Cuu&#39;</span>, <span class="dt">HS1=</span><span class="dv">96</span>, <span class="dt">HS2=</span><span class="dv">90</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 7 x 5
 ##   Ten       GioiTinh   HS1   HS2 CuoiKi
 ##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
@@ -336,7 +338,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 SoyaBean  F           70    85     92
 ## 6 KhungLong F           77    86     72
 ## 7 Cuu       &lt;NA&gt;        96    90     NA</code></pre>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" title="1">grades</a></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="bin-i-d-liu.html#cb90-1"></a>grades</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 5
 ##   Ten       GioiTinh   HS1   HS2 CuoiKi
 ##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
@@ -347,9 +349,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 SoyaBean  F           70    85     92
 ## 6 KhungLong F           77    86     72</code></pre>
 <p>Các trường thông tin không được thiết lập (như giới tính và điểm cuối kì) sẽ nhận giá trị <code>NA</code>. Vì chúng ta không assign kết quả của câu lệnh trên vào object nào cả, R sẽ in ra luôn kết quả. Dataset <code>grades</code> gốc vẫn không có gì thay đổi.</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" title="1">grades &lt;-<span class="st"> </span>grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb92-2" title="2"><span class="st">  </span><span class="kw">add_row</span>(<span class="dt">Ten=</span><span class="st">&#39;Cuu&#39;</span>, <span class="dt">GioiTinh =</span> <span class="st">&#39;F&#39;</span>, <span class="dt">HS1=</span><span class="dv">96</span>, <span class="dt">HS2=</span><span class="dv">90</span>, <span class="dt">CuoiKi =</span> <span class="dv">69</span>)</a>
-<a class="sourceLine" id="cb92-3" title="3">grades</a></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="bin-i-d-liu.html#cb92-1"></a>grades &lt;-<span class="st"> </span>grades <span class="op">%&gt;%</span></span>
+<span id="cb92-2"><a href="bin-i-d-liu.html#cb92-2"></a><span class="st">  </span><span class="kw">add_row</span>(<span class="dt">Ten=</span><span class="st">&#39;Cuu&#39;</span>, <span class="dt">GioiTinh =</span> <span class="st">&#39;F&#39;</span>, <span class="dt">HS1=</span><span class="dv">96</span>, <span class="dt">HS2=</span><span class="dv">90</span>, <span class="dt">CuoiKi =</span> <span class="dv">69</span>)</span>
+<span id="cb92-3"><a href="bin-i-d-liu.html#cb92-3"></a>grades</span></code></pre></div>
 <pre><code>## # A tibble: 7 x 5
 ##   Ten       GioiTinh   HS1   HS2 CuoiKi
 ##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
@@ -369,8 +371,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4><span class="header-section-number">4.2.2.1</span> <code>select()</code></h4>
 <p>Hàm <code>select()</code> cho phép chọn ra các cột (hoặc bỏ đi), tương đương với <code>SELECT</code> trong SQL.</p>
 <p><strong>Chọn cột theo tên</strong>:</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" title="1">grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb94-2" title="2"><span class="st">  </span><span class="kw">select</span>(HS1, HS2)      <span class="co"># select by name</span></a></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="bin-i-d-liu.html#cb94-1"></a>grades <span class="op">%&gt;%</span></span>
+<span id="cb94-2"><a href="bin-i-d-liu.html#cb94-2"></a><span class="st">  </span><span class="kw">select</span>(HS1, HS2)      <span class="co"># select by name</span></span></code></pre></div>
 <pre><code>## # A tibble: 7 x 2
 ##     HS1   HS2
 ##   &lt;dbl&gt; &lt;dbl&gt;
@@ -382,8 +384,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 6    77    86
 ## 7    96    90</code></pre>
 <p><strong>Chọn các cột liên tiếp</strong>:</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" title="1">grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb96-2" title="2"><span class="st">  </span><span class="kw">select</span>(HS1<span class="op">:</span>CuoiKi)    <span class="co"># select consecutively</span></a></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="bin-i-d-liu.html#cb96-1"></a>grades <span class="op">%&gt;%</span></span>
+<span id="cb96-2"><a href="bin-i-d-liu.html#cb96-2"></a><span class="st">  </span><span class="kw">select</span>(HS1<span class="op">:</span>CuoiKi)    <span class="co"># select consecutively</span></span></code></pre></div>
 <pre><code>## # A tibble: 7 x 3
 ##     HS1   HS2 CuoiKi
 ##   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
@@ -395,8 +397,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 6    77    86     72
 ## 7    96    90     69</code></pre>
 <p><strong>Loại ra một hoặc nhiều cột</strong> khỏi dataset ban đầu (negative indexing):</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" title="1">grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb98-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>HS2)         <span class="co"># negative indexing</span></a></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="bin-i-d-liu.html#cb98-1"></a>grades <span class="op">%&gt;%</span></span>
+<span id="cb98-2"><a href="bin-i-d-liu.html#cb98-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>HS2)         <span class="co"># negative indexing</span></span></code></pre></div>
 <pre><code>## # A tibble: 7 x 4
 ##   Ten       GioiTinh   HS1 CuoiKi
 ##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;
@@ -408,8 +410,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 6 KhungLong F           77     72
 ## 7 Cuu       F           96     69</code></pre>
 <p><strong>Chọn cột theo thứ tự/vị trí</strong>:</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" title="1">grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb100-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)          <span class="co"># select by index/position</span></a></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="bin-i-d-liu.html#cb100-1"></a>grades <span class="op">%&gt;%</span></span>
+<span id="cb100-2"><a href="bin-i-d-liu.html#cb100-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)          <span class="co"># select by index/position</span></span></code></pre></div>
 <pre><code>## # A tibble: 7 x 2
 ##   Ten       GioiTinh
 ##   &lt;chr&gt;     &lt;chr&gt;   
@@ -421,8 +423,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 6 KhungLong F       
 ## 7 Cuu       F</code></pre>
 <p><strong>Dùng hàm <code>starts_with()</code></strong> để chọn cột theo điều kiện tên cột:</p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" title="1">grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb102-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&#39;HS&#39;</span>)) <span class="co"># select by patterns of col name</span></a></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="bin-i-d-liu.html#cb102-1"></a>grades <span class="op">%&gt;%</span></span>
+<span id="cb102-2"><a href="bin-i-d-liu.html#cb102-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&#39;HS&#39;</span>)) <span class="co"># select by patterns of col name</span></span></code></pre></div>
 <pre><code>## # A tibble: 7 x 2
 ##     HS1   HS2
 ##   &lt;dbl&gt; &lt;dbl&gt;
@@ -433,8 +435,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5    70    85
 ## 6    77    86
 ## 7    96    90</code></pre>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" title="1">grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb104-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&#39;HS&#39;</span>), <span class="kw">starts_with</span>(<span class="st">&#39;C&#39;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="bin-i-d-liu.html#cb104-1"></a>grades <span class="op">%&gt;%</span></span>
+<span id="cb104-2"><a href="bin-i-d-liu.html#cb104-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&#39;HS&#39;</span>), <span class="kw">starts_with</span>(<span class="st">&#39;C&#39;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 7 x 3
 ##     HS1   HS2 CuoiKi
 ##   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
@@ -445,8 +447,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5    70    85     92
 ## 6    77    86     72
 ## 7    96    90     69</code></pre>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" title="1">grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb106-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="kw">ends_with</span>(<span class="st">&#39;1&#39;</span>))   <span class="co"># áp dụng tương tự với ends_with</span></a></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="bin-i-d-liu.html#cb106-1"></a>grades <span class="op">%&gt;%</span></span>
+<span id="cb106-2"><a href="bin-i-d-liu.html#cb106-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="kw">ends_with</span>(<span class="st">&#39;1&#39;</span>))   <span class="co"># áp dụng tương tự với ends_with</span></span></code></pre></div>
 <pre><code>## # A tibble: 7 x 1
 ##     HS1
 ##   &lt;dbl&gt;
@@ -461,22 +463,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="filter" class="section level4">
 <h4><span class="header-section-number">4.2.2.2</span> <code>filter()</code></h4>
 <p>Hàm <code>filter()</code> giúp lọc ra các dòng theo điều kiện, giống chức năng filter trong Excel và <code>WHERE</code> trong SQL:</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" title="1">grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb108-2" title="2"><span class="st">  </span><span class="kw">filter</span>(CuoiKi <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="bin-i-d-liu.html#cb108-1"></a>grades <span class="op">%&gt;%</span></span>
+<span id="cb108-2"><a href="bin-i-d-liu.html#cb108-2"></a><span class="st">  </span><span class="kw">filter</span>(CuoiKi <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 5
 ##   Ten      GioiTinh   HS1   HS2 CuoiKi
 ##   &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
 ## 1 Nguyet   F           93    98     96
 ## 2 SoyaBean F           70    85     92</code></pre>
 <p><strong>Kết hợp nhiều điều kiện</strong> với nhau dùng dấu phẩy <code>,</code> hoặc dùng dấu <code>&amp;</code>:</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" title="1">grades <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb110-2" title="2"><span class="st">  </span><span class="kw">filter</span>(HS2 <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>, CuoiKi <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="bin-i-d-liu.html#cb110-1"></a>grades <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb110-2"><a href="bin-i-d-liu.html#cb110-2"></a><span class="st">  </span><span class="kw">filter</span>(HS2 <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>, CuoiKi <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 5
 ##   Ten    GioiTinh   HS1   HS2 CuoiKi
 ##   &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
 ## 1 Nguyet F           93    98     96</code></pre>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" title="1">grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb112-2" title="2"><span class="st">  </span><span class="kw">filter</span>(HS2 <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span> <span class="op">&amp;</span><span class="st"> </span>CuoiKi <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="bin-i-d-liu.html#cb112-1"></a>grades <span class="op">%&gt;%</span></span>
+<span id="cb112-2"><a href="bin-i-d-liu.html#cb112-2"></a><span class="st">  </span><span class="kw">filter</span>(HS2 <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span> <span class="op">&amp;</span><span class="st"> </span>CuoiKi <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 5
 ##   Ten    GioiTinh   HS1   HS2 CuoiKi
 ##   &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
@@ -534,8 +536,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><em>exclusive OR</em>: hoặc cái này hoặc cái kia, nhưng không thể là cả hai. Ví dụ: Mọi số tự nhiên là số chẵn hoặc số lẻ, nhưng không thể là cả hai.</li>
 </ul>
 <p>Ví dụ:</p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" title="1">grades <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb114-2" title="2"><span class="st">  </span><span class="kw">filter</span>(HS2 <span class="op">&lt;</span><span class="st"> </span><span class="dv">90</span> <span class="op">|</span><span class="st"> </span>CuoiKi <span class="op">&lt;</span><span class="st"> </span><span class="dv">90</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="bin-i-d-liu.html#cb114-1"></a>grades <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb114-2"><a href="bin-i-d-liu.html#cb114-2"></a><span class="st">  </span><span class="kw">filter</span>(HS2 <span class="op">&lt;</span><span class="st"> </span><span class="dv">90</span> <span class="op">|</span><span class="st"> </span>CuoiKi <span class="op">&lt;</span><span class="st"> </span><span class="dv">90</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 5
 ##   Ten       GioiTinh   HS1   HS2 CuoiKi
 ##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
@@ -545,8 +547,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4 SoyaBean  F           70    85     92
 ## 5 KhungLong F           77    86     72
 ## 6 Cuu       F           96    90     69</code></pre>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" title="1">grades <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb116-2" title="2"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">xor</span>(HS2 <span class="op">&lt;</span><span class="st"> </span><span class="dv">90</span>, CuoiKi <span class="op">&lt;</span><span class="st"> </span><span class="dv">90</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="bin-i-d-liu.html#cb116-1"></a>grades <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb116-2"><a href="bin-i-d-liu.html#cb116-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="kw">xor</span>(HS2 <span class="op">&lt;</span><span class="st"> </span><span class="dv">90</span>, CuoiKi <span class="op">&lt;</span><span class="st"> </span><span class="dv">90</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 5
 ##   Ten      GioiTinh   HS1   HS2 CuoiKi
 ##   &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
@@ -557,24 +559,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="slice" class="section level4">
 <h4><span class="header-section-number">4.2.2.3</span> <code>slice()</code></h4>
 <p>Hàm <code>slice()</code> cũng lọc ra dòng giống <code>filter()</code>, nhưng dựa vào số thứ tự của dòng (row number):</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" title="1"><span class="co"># Lấy dòng đầu tiên</span></a>
-<a class="sourceLine" id="cb118-2" title="2">grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb118-3" title="3"><span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="bin-i-d-liu.html#cb118-1"></a><span class="co"># Lấy dòng đầu tiên</span></span>
+<span id="cb118-2"><a href="bin-i-d-liu.html#cb118-2"></a>grades <span class="op">%&gt;%</span></span>
+<span id="cb118-3"><a href="bin-i-d-liu.html#cb118-3"></a><span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 5
 ##   Ten    GioiTinh   HS1   HS2 CuoiKi
 ##   &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
 ## 1 Nguyet F           93    98     96</code></pre>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" title="1"><span class="co"># Lấy 2 dòng đầu tiên</span></a>
-<a class="sourceLine" id="cb120-2" title="2">grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb120-3" title="3"><span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="bin-i-d-liu.html#cb120-1"></a><span class="co"># Lấy 2 dòng đầu tiên</span></span>
+<span id="cb120-2"><a href="bin-i-d-liu.html#cb120-2"></a>grades <span class="op">%&gt;%</span></span>
+<span id="cb120-3"><a href="bin-i-d-liu.html#cb120-3"></a><span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 5
 ##   Ten    GioiTinh   HS1   HS2 CuoiKi
 ##   &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
 ## 1 Nguyet F           93    98     96
 ## 2 Truong M           99    90     80</code></pre>
 <p><strong>Kết hợp với hàm <code>n()</code></strong>; hàm <code>n()</code> dùng để đếm số lượng quan sát:</p>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" title="1">grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb122-2" title="2"><span class="st">  </span><span class="kw">slice</span>(<span class="dv">2</span><span class="op">:</span><span class="kw">n</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="bin-i-d-liu.html#cb122-1"></a>grades <span class="op">%&gt;%</span></span>
+<span id="cb122-2"><a href="bin-i-d-liu.html#cb122-2"></a><span class="st">  </span><span class="kw">slice</span>(<span class="dv">2</span><span class="op">:</span><span class="kw">n</span>())</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 5
 ##   Ten       GioiTinh   HS1   HS2 CuoiKi
 ##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
@@ -585,8 +587,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 KhungLong F           77    86     72
 ## 6 Cuu       F           96    90     69</code></pre>
 <p><strong>Loại bỏ dòng</strong> với index âm:</p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" title="1">grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb124-2" title="2"><span class="st">  </span><span class="kw">slice</span>(<span class="op">-</span><span class="dv">3</span><span class="op">:-</span><span class="kw">n</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="bin-i-d-liu.html#cb124-1"></a>grades <span class="op">%&gt;%</span></span>
+<span id="cb124-2"><a href="bin-i-d-liu.html#cb124-2"></a><span class="st">  </span><span class="kw">slice</span>(<span class="op">-</span><span class="dv">3</span><span class="op">:-</span><span class="kw">n</span>())</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 5
 ##   Ten    GioiTinh   HS1   HS2 CuoiKi
 ##   &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
@@ -598,8 +600,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="arrange" class="section level3">
 <h3><span class="header-section-number">4.2.3</span> <code>arrange()</code></h3>
 <p>Cú pháp của hàm: <code>arrange(data, ...)</code>. Hàm <code>arrange()</code> mặc định sắp xếp theo thứ tự tăng dần (ascending). Hàm này tương đương với <code>ORDER BY</code> trong SQL.</p>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" title="1">grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb126-2" title="2"><span class="st">  </span><span class="kw">arrange</span>(Ten)</a></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="bin-i-d-liu.html#cb126-1"></a>grades <span class="op">%&gt;%</span></span>
+<span id="cb126-2"><a href="bin-i-d-liu.html#cb126-2"></a><span class="st">  </span><span class="kw">arrange</span>(Ten)</span></code></pre></div>
 <pre><code>## # A tibble: 7 x 5
 ##   Ten       GioiTinh   HS1   HS2 CuoiKi
 ##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
@@ -611,8 +613,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 6 SoyaBean  F           70    85     92
 ## 7 Truong    M           99    90     80</code></pre>
 <p><strong>Sắp xếp giảm dần với <code>desc()</code></strong>:</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" title="1">grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb128-2" title="2"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(CuoiKi))</a></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="bin-i-d-liu.html#cb128-1"></a>grades <span class="op">%&gt;%</span></span>
+<span id="cb128-2"><a href="bin-i-d-liu.html#cb128-2"></a><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(CuoiKi))</span></code></pre></div>
 <pre><code>## # A tibble: 7 x 5
 ##   Ten       GioiTinh   HS1   HS2 CuoiKi
 ##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
@@ -624,8 +626,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 6 KhungLong F           77    86     72
 ## 7 Cuu       F           96    90     69</code></pre>
 <p><strong>Kết hợp nhiều điều kiện xếp</strong>:</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" title="1">grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb130-2" title="2"><span class="st">  </span><span class="kw">arrange</span>(HS2, <span class="kw">desc</span>(CuoiKi))</a></code></pre></div>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="bin-i-d-liu.html#cb130-1"></a>grades <span class="op">%&gt;%</span></span>
+<span id="cb130-2"><a href="bin-i-d-liu.html#cb130-2"></a><span class="st">  </span><span class="kw">arrange</span>(HS2, <span class="kw">desc</span>(CuoiKi))</span></code></pre></div>
 <pre><code>## # A tibble: 7 x 5
 ##   Ten       GioiTinh   HS1   HS2 CuoiKi
 ##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
@@ -643,13 +645,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4><span class="header-section-number">4.2.4.1</span> <code>mutate()</code></h4>
 <p>Hàm <code>mutate()</code> tạo ra cột mới hoặc update cột có sẵn trong dataset. Ta có thể tạo ra nhiều cột trong cùng 1 hàm <code>mutate()</code>, và thậm chí có thể dùng cột vừa tạo ở trước đó để làm cơ sở tính cho cột tiếp theo. Ta có thể thêm những cột đơn giản như <code>mutate(random_col = 1)</code> để thêm cột chỉ có giá trị 1, hoặc kết hợp với các hàm <code>if_else</code> và <code>case_when</code> để đưa vào các điều kiện phức tạp hơn.</p>
 <p>Tạo thêm cột điểm tổng kết và xếp hạng, sau đó gán lại vào dataset cũ:</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" title="1">grades &lt;-<span class="st"> </span>grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb132-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(</a>
-<a class="sourceLine" id="cb132-3" title="3">    <span class="dt">TongKet =</span> (HS1 <span class="op">+</span><span class="st"> </span>HS2<span class="op">*</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>CuoiKi<span class="op">*</span><span class="dv">3</span>)<span class="op">/</span><span class="dv">6</span>,</a>
-<a class="sourceLine" id="cb132-4" title="4">    <span class="dt">XepHang =</span> <span class="kw">cut</span>(TongKet, <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>, <span class="dv">90</span>, <span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb132-5" title="5">                           <span class="kw">c</span>(<span class="st">&#39;Yeu&#39;</span>, <span class="st">&#39;TB&#39;</span>, <span class="st">&#39;TB Kha&#39;</span>, <span class="st">&#39;Kha&#39;</span>, <span class="st">&#39;Gioi&#39;</span>, <span class="st">&#39;XS&#39;</span>))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb132-6" title="6"><span class="st">  </span><span class="kw">arrange</span>(TongKet)</a>
-<a class="sourceLine" id="cb132-7" title="7">grades</a></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="bin-i-d-liu.html#cb132-1"></a>grades &lt;-<span class="st"> </span>grades <span class="op">%&gt;%</span></span>
+<span id="cb132-2"><a href="bin-i-d-liu.html#cb132-2"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
+<span id="cb132-3"><a href="bin-i-d-liu.html#cb132-3"></a>    <span class="dt">TongKet =</span> (HS1 <span class="op">+</span><span class="st"> </span>HS2<span class="op">*</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>CuoiKi<span class="op">*</span><span class="dv">3</span>)<span class="op">/</span><span class="dv">6</span>,</span>
+<span id="cb132-4"><a href="bin-i-d-liu.html#cb132-4"></a>    <span class="dt">XepHang =</span> <span class="kw">cut</span>(TongKet, <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>, <span class="dv">90</span>, <span class="dv">100</span>),</span>
+<span id="cb132-5"><a href="bin-i-d-liu.html#cb132-5"></a>                           <span class="kw">c</span>(<span class="st">&#39;Yeu&#39;</span>, <span class="st">&#39;TB&#39;</span>, <span class="st">&#39;TB Kha&#39;</span>, <span class="st">&#39;Kha&#39;</span>, <span class="st">&#39;Gioi&#39;</span>, <span class="st">&#39;XS&#39;</span>))) <span class="op">%&gt;%</span></span>
+<span id="cb132-6"><a href="bin-i-d-liu.html#cb132-6"></a><span class="st">  </span><span class="kw">arrange</span>(TongKet)</span>
+<span id="cb132-7"><a href="bin-i-d-liu.html#cb132-7"></a>grades</span></code></pre></div>
 <pre><code>## # A tibble: 7 x 7
 ##   Ten       GioiTinh   HS1   HS2 CuoiKi TongKet XepHang
 ##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;  
@@ -660,7 +662,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 SoyaBean  F           70    85     92    86   Gioi   
 ## 6 Truong    M           99    90     80    86.5 Gioi   
 ## 7 Nguyet    F           93    98     96    96.2 XS</code></pre>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" title="1"><span class="kw">str</span>(grades)</a></code></pre></div>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="bin-i-d-liu.html#cb134-1"></a><span class="kw">str</span>(grades)</span></code></pre></div>
 <pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    7 obs. of  7 variables:
 ##  $ Ten     : chr  &quot;KhungLong&quot; &quot;Cuu&quot; &quot;Mat&quot; &quot;Chuoi&quot; ...
 ##  $ GioiTinh: chr  &quot;F&quot; &quot;F&quot; &quot;M&quot; &quot;M&quot; ...
@@ -670,11 +672,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  $ TongKet : num  77.5 80.5 80.7 81.2 86 ...
 ##  $ XepHang : Factor w/ 6 levels &quot;Yeu&quot;,&quot;TB&quot;,&quot;TB Kha&quot;,..: 4 5 5 5 5 5 6</code></pre>
 <p><strong>Kết hợp với <code>if_else</code></strong>:</p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb136-1" title="1"><span class="co"># Thay đổi giá trị của 1 observation nhất định - đổi điểm HS1 của Chuối thành 75</span></a>
-<a class="sourceLine" id="cb136-2" title="2"><span class="co"># Lưu ý, cột TongKet đã tạo ra trước đó sẽ không tự đổng thay đổi them giá trị HS1 mới</span></a>
-<a class="sourceLine" id="cb136-3" title="3">grades &lt;-<span class="st"> </span>grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb136-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">HS1 =</span> <span class="kw">if_else</span>(Ten <span class="op">==</span><span class="st"> &#39;Chuoi&#39;</span>, <span class="dv">75</span>, HS1))  <span class="co"># Nếu Ten không phải là Chuoi, giữ nguyên giá trị của HS1</span></a>
-<a class="sourceLine" id="cb136-5" title="5">grades</a></code></pre></div>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="bin-i-d-liu.html#cb136-1"></a><span class="co"># Thay đổi giá trị của 1 observation nhất định - đổi điểm HS1 của Chuối thành 75</span></span>
+<span id="cb136-2"><a href="bin-i-d-liu.html#cb136-2"></a><span class="co"># Lưu ý, cột TongKet đã tạo ra trước đó sẽ không tự đổng thay đổi them giá trị HS1 mới</span></span>
+<span id="cb136-3"><a href="bin-i-d-liu.html#cb136-3"></a>grades &lt;-<span class="st"> </span>grades <span class="op">%&gt;%</span></span>
+<span id="cb136-4"><a href="bin-i-d-liu.html#cb136-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">HS1 =</span> <span class="kw">if_else</span>(Ten <span class="op">==</span><span class="st"> &#39;Chuoi&#39;</span>, <span class="dv">75</span>, HS1))  <span class="co"># Nếu Ten không phải là Chuoi, giữ nguyên giá trị của HS1</span></span>
+<span id="cb136-5"><a href="bin-i-d-liu.html#cb136-5"></a>grades</span></code></pre></div>
 <pre><code>## # A tibble: 7 x 7
 ##   Ten       GioiTinh   HS1   HS2 CuoiKi TongKet XepHang
 ##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;  
@@ -686,8 +688,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 6 Truong    M           99    90     80    86.5 Gioi   
 ## 7 Nguyet    F           93    98     96    96.2 XS</code></pre>
 <p>Thay đổi toàn cột giới tính:</p>
-<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb138-1" title="1">grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb138-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">GioiTinh =</span> <span class="kw">if_else</span>(GioiTinh <span class="op">==</span><span class="st"> &#39;M&#39;</span>, <span class="st">&#39;Male&#39;</span>,<span class="st">&#39;Female&#39;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="bin-i-d-liu.html#cb138-1"></a>grades <span class="op">%&gt;%</span></span>
+<span id="cb138-2"><a href="bin-i-d-liu.html#cb138-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">GioiTinh =</span> <span class="kw">if_else</span>(GioiTinh <span class="op">==</span><span class="st"> &#39;M&#39;</span>, <span class="st">&#39;Male&#39;</span>,<span class="st">&#39;Female&#39;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 7 x 7
 ##   Ten       GioiTinh   HS1   HS2 CuoiKi TongKet XepHang
 ##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;  
@@ -699,13 +701,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 6 Truong    Male        99    90     80    86.5 Gioi   
 ## 7 Nguyet    Female      93    98     96    96.2 XS</code></pre>
 <p>Kết hợp nhiều điều kiện:</p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb140-1" title="1"><span class="co"># Lồng (nest) các hàm if_else lại với nhau:</span></a>
-<a class="sourceLine" id="cb140-2" title="2">grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb140-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Grade =</span> <span class="kw">if_else</span>(XepHang <span class="op">==</span><span class="st"> &#39;Yeu&#39;</span>, <span class="st">&#39;F&#39;</span>,</a>
-<a class="sourceLine" id="cb140-4" title="4">                         <span class="kw">if_else</span>(XepHang <span class="op">==</span><span class="st"> &#39;TB&#39;</span>, <span class="st">&#39;D&#39;</span>,</a>
-<a class="sourceLine" id="cb140-5" title="5">                                 <span class="kw">if_else</span>(XepHang <span class="op">==</span><span class="st"> &#39;TB Kha&#39;</span>, <span class="st">&#39;C&#39;</span>,</a>
-<a class="sourceLine" id="cb140-6" title="6">                                         <span class="kw">if_else</span>(XepHang <span class="op">==</span><span class="st"> &#39;Kha&#39;</span>, <span class="st">&#39;B&#39;</span>,</a>
-<a class="sourceLine" id="cb140-7" title="7">                                                 <span class="kw">if_else</span>(XepHang <span class="op">==</span><span class="st"> &#39;Gioi&#39;</span>, <span class="st">&#39;A&#39;</span>, <span class="st">&#39;A+&#39;</span>))))))</a></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="bin-i-d-liu.html#cb140-1"></a><span class="co"># Lồng (nest) các hàm if_else lại với nhau:</span></span>
+<span id="cb140-2"><a href="bin-i-d-liu.html#cb140-2"></a>grades <span class="op">%&gt;%</span></span>
+<span id="cb140-3"><a href="bin-i-d-liu.html#cb140-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Grade =</span> <span class="kw">if_else</span>(XepHang <span class="op">==</span><span class="st"> &#39;Yeu&#39;</span>, <span class="st">&#39;F&#39;</span>,</span>
+<span id="cb140-4"><a href="bin-i-d-liu.html#cb140-4"></a>                         <span class="kw">if_else</span>(XepHang <span class="op">==</span><span class="st"> &#39;TB&#39;</span>, <span class="st">&#39;D&#39;</span>,</span>
+<span id="cb140-5"><a href="bin-i-d-liu.html#cb140-5"></a>                                 <span class="kw">if_else</span>(XepHang <span class="op">==</span><span class="st"> &#39;TB Kha&#39;</span>, <span class="st">&#39;C&#39;</span>,</span>
+<span id="cb140-6"><a href="bin-i-d-liu.html#cb140-6"></a>                                         <span class="kw">if_else</span>(XepHang <span class="op">==</span><span class="st"> &#39;Kha&#39;</span>, <span class="st">&#39;B&#39;</span>,</span>
+<span id="cb140-7"><a href="bin-i-d-liu.html#cb140-7"></a>                                                 <span class="kw">if_else</span>(XepHang <span class="op">==</span><span class="st"> &#39;Gioi&#39;</span>, <span class="st">&#39;A&#39;</span>, <span class="st">&#39;A+&#39;</span>))))))</span></code></pre></div>
 <pre><code>## # A tibble: 7 x 8
 ##   Ten       GioiTinh   HS1   HS2 CuoiKi TongKet XepHang Grade
 ##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;   &lt;chr&gt;
@@ -718,13 +720,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 7 Nguyet    F           93    98     96    96.2 XS      A+</code></pre>
 <p>Lưu ý, hàm <code>dplyr::if_else()</code> khác với hàm <code>base::ifelse()</code>. Hàm thứ 2 của base 2 có rất nhiều giới hạn so với hàm cải tiến của <strong>dplyr</strong>.</p>
 <p><strong>Kết hợp với <code>case_when</code></strong> - Về cơ bản, <code>if_else</code> và <code>case_when</code> giống nhau. Điểm khác biệt lớn nhất nằm ở mặt trình bày: Có thể thấy ở ví dụ trên, cách viết nested <code>if_else</code> đọc khá rối mắt. Áp dụng lại với <code>case_when</code>:</p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb142-1" title="1">grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb142-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Grade =</span> <span class="kw">case_when</span>(XepHang <span class="op">==</span><span class="st"> &#39;Yeu&#39;</span> <span class="op">~</span><span class="st"> &#39;F&#39;</span>,</a>
-<a class="sourceLine" id="cb142-3" title="3">                           XepHang <span class="op">==</span><span class="st"> &#39;TB&#39;</span> <span class="op">~</span><span class="st"> &#39;D&#39;</span>,</a>
-<a class="sourceLine" id="cb142-4" title="4">                           XepHang <span class="op">==</span><span class="st"> &#39;TB Kha&#39;</span> <span class="op">~</span><span class="st"> &#39;C&#39;</span>,</a>
-<a class="sourceLine" id="cb142-5" title="5">                           XepHang <span class="op">==</span><span class="st"> &#39;Kha&#39;</span> <span class="op">~</span><span class="st"> &#39;B&#39;</span>,</a>
-<a class="sourceLine" id="cb142-6" title="6">                           XepHang <span class="op">==</span><span class="st"> &#39;Gioi&#39;</span> <span class="op">~</span><span class="st"> &#39;A&#39;</span>,</a>
-<a class="sourceLine" id="cb142-7" title="7">                           <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &#39;A+&#39;</span>))  <span class="co"># case cuối cùng tương đương với tất cả các trường hợp còn lại</span></a></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="bin-i-d-liu.html#cb142-1"></a>grades <span class="op">%&gt;%</span></span>
+<span id="cb142-2"><a href="bin-i-d-liu.html#cb142-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Grade =</span> <span class="kw">case_when</span>(XepHang <span class="op">==</span><span class="st"> &#39;Yeu&#39;</span> <span class="op">~</span><span class="st"> &#39;F&#39;</span>,</span>
+<span id="cb142-3"><a href="bin-i-d-liu.html#cb142-3"></a>                           XepHang <span class="op">==</span><span class="st"> &#39;TB&#39;</span> <span class="op">~</span><span class="st"> &#39;D&#39;</span>,</span>
+<span id="cb142-4"><a href="bin-i-d-liu.html#cb142-4"></a>                           XepHang <span class="op">==</span><span class="st"> &#39;TB Kha&#39;</span> <span class="op">~</span><span class="st"> &#39;C&#39;</span>,</span>
+<span id="cb142-5"><a href="bin-i-d-liu.html#cb142-5"></a>                           XepHang <span class="op">==</span><span class="st"> &#39;Kha&#39;</span> <span class="op">~</span><span class="st"> &#39;B&#39;</span>,</span>
+<span id="cb142-6"><a href="bin-i-d-liu.html#cb142-6"></a>                           XepHang <span class="op">==</span><span class="st"> &#39;Gioi&#39;</span> <span class="op">~</span><span class="st"> &#39;A&#39;</span>,</span>
+<span id="cb142-7"><a href="bin-i-d-liu.html#cb142-7"></a>                           <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &#39;A+&#39;</span>))  <span class="co"># case cuối cùng tương đương với tất cả các trường hợp còn lại</span></span></code></pre></div>
 <pre><code>## # A tibble: 7 x 8
 ##   Ten       GioiTinh   HS1   HS2 CuoiKi TongKet XepHang Grade
 ##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;   &lt;chr&gt;
@@ -739,8 +741,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="transmute" class="section level4">
 <h4><span class="header-section-number">4.2.4.2</span> <code>transmute()</code></h4>
 <p>Hàm <code>transmute()</code> cũng tạo ra cột mới, tuy nhiên kết quả đầu ra sẽ chỉ bao gồm những cột vừa được tạo:</p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" title="1">grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb144-2" title="2"><span class="st">  </span><span class="kw">transmute</span>(<span class="dt">GioiTinh.VN =</span> <span class="kw">if_else</span>(GioiTinh <span class="op">==</span><span class="st"> &#39;M&#39;</span>, <span class="st">&#39;Nam&#39;</span>,<span class="st">&#39;Nu&#39;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="bin-i-d-liu.html#cb144-1"></a>grades <span class="op">%&gt;%</span></span>
+<span id="cb144-2"><a href="bin-i-d-liu.html#cb144-2"></a><span class="st">  </span><span class="kw">transmute</span>(<span class="dt">GioiTinh.VN =</span> <span class="kw">if_else</span>(GioiTinh <span class="op">==</span><span class="st"> &#39;M&#39;</span>, <span class="st">&#39;Nam&#39;</span>,<span class="st">&#39;Nu&#39;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 7 x 1
 ##   GioiTinh.VN
 ##   &lt;chr&gt;      
@@ -756,8 +758,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="summarise" class="section level3">
 <h3><span class="header-section-number">4.2.5</span> <code>summarise()</code></h3>
 <p>Hàm <code>summarise()</code> nếu dùng riêng lẻ sẽ không thật sự hữu ích. Hàm này tính toán và tóm tắt dataset dựa vào một hoặc nhiều trường dữ liệu, sau đó trả ra kết quả là trường dữ liệu mới với 1 dòng kết quả tóm tắt tương ứng.</p>
-<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb146-1" title="1">grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb146-2" title="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">TB.HS1 =</span> <span class="kw">mean</span>(HS1), <span class="dt">STD.HS1 =</span> <span class="kw">sd</span>(HS1))</a></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="bin-i-d-liu.html#cb146-1"></a>grades <span class="op">%&gt;%</span></span>
+<span id="cb146-2"><a href="bin-i-d-liu.html#cb146-2"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">TB.HS1 =</span> <span class="kw">mean</span>(HS1), <span class="dt">STD.HS1 =</span> <span class="kw">sd</span>(HS1))</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 2
 ##   TB.HS1 STD.HS1
 ##    &lt;dbl&gt;   &lt;dbl&gt;
@@ -769,20 +771,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="group_by" class="section level3">
 <h3><span class="header-section-number">4.3.1</span> <code>group_by()</code></h3>
 <p>Do dataset đang sử dụng chỉ có 7 observation nên việc group thành các nhóm không có ý nghĩa cho lắm. Hàm <code>group_by</code> luôn kết hợp với các hàm khác như <code>mutate()</code>, <code>filter()</code> và <code>summarise()</code>, cho phép nhóm (aggregate) dữ liệu thành các nhóm khác nhau.</p>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb148-1" title="1"><span class="co"># Group theo giới tính</span></a>
-<a class="sourceLine" id="cb148-2" title="2">grades <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb148-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(GioiTinh) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb148-4" title="4"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">SL =</span> <span class="kw">n</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="bin-i-d-liu.html#cb148-1"></a><span class="co"># Group theo giới tính</span></span>
+<span id="cb148-2"><a href="bin-i-d-liu.html#cb148-2"></a>grades <span class="op">%&gt;%</span></span>
+<span id="cb148-3"><a href="bin-i-d-liu.html#cb148-3"></a><span class="st">  </span><span class="kw">group_by</span>(GioiTinh) <span class="op">%&gt;%</span></span>
+<span id="cb148-4"><a href="bin-i-d-liu.html#cb148-4"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">SL =</span> <span class="kw">n</span>())</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   GioiTinh    SL
 ##   &lt;chr&gt;    &lt;int&gt;
 ## 1 F            4
 ## 2 M            3</code></pre>
 <p>Chúng ta sẽ sử dụng dataset của OpenIntro về số lượt ném của Kobe Bryant trong series chung kết NBA 2009 (LAL - Lakers vs. ORL - Magic), kéo dài 5 games:</p>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" title="1">kobe &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&#39;https://www.openintro.org/stat/data/kobe.csv&#39;</span>,</a>
-<a class="sourceLine" id="cb150-2" title="2">                 <span class="dt">col_types =</span> <span class="kw">cols</span>(<span class="dt">game =</span> <span class="kw">col_integer</span>(),</a>
-<a class="sourceLine" id="cb150-3" title="3">                                  <span class="dt">quarter =</span> <span class="kw">col_character</span>()))</a>
-<a class="sourceLine" id="cb150-4" title="4"><span class="kw">head</span>(kobe,<span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="bin-i-d-liu.html#cb150-1"></a>kobe &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&#39;https://www.openintro.org/stat/data/kobe.csv&#39;</span>,</span>
+<span id="cb150-2"><a href="bin-i-d-liu.html#cb150-2"></a>                 <span class="dt">col_types =</span> <span class="kw">cols</span>(<span class="dt">game =</span> <span class="kw">col_integer</span>(),</span>
+<span id="cb150-3"><a href="bin-i-d-liu.html#cb150-3"></a>                                  <span class="dt">quarter =</span> <span class="kw">col_character</span>()))</span>
+<span id="cb150-4"><a href="bin-i-d-liu.html#cb150-4"></a><span class="kw">head</span>(kobe,<span class="dv">10</span>)</span></code></pre></div>
 <p>Dataset trên có các trường dữ liệu sau:</p>
 <ul>
 <li><strong>vs</strong>: thuộc kiểu <code>string</code>, gồm team mà LAL đối đầu. Dataset này chỉ có ORL.</li>
@@ -808,28 +810,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol style="list-style-type: decimal">
 <li>Đổi cột <strong>time</strong> thành số giây còn lại trong hiệp, kết hợp với hàm <code>paste0()</code> để nối các string lại:</li>
 </ol>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" title="1"><span class="co"># split cột time ra làm 3 cột minute/second/millisecond</span></a>
-<a class="sourceLine" id="cb151-2" title="2">kobe &lt;-<span class="st"> </span><span class="kw">cbind</span>(kobe, kobe <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb151-3" title="3"><span class="st">                </span><span class="kw">transmute</span>(<span class="dt">time.s =</span> <span class="kw">as.character</span>(time)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb151-4" title="4"><span class="st">                </span><span class="kw">separate</span>(time.s, <span class="dt">into =</span> <span class="kw">paste0</span>(<span class="st">&quot;T&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">sep =</span> <span class="st">&#39;:&#39;</span>, <span class="dt">remove =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb151-5" title="5"></a>
-<a class="sourceLine" id="cb151-6" title="6"><span class="co"># có thể thấy cột T3 - millisecond chỉ có giá trị 00, vì vậy ta sẽ loại cột này đi</span></a>
-<a class="sourceLine" id="cb151-7" title="7">kobe <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb151-8" title="8"><span class="st">  </span><span class="kw">group_by</span>(T3) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># kết hợp group_by và summarise, sẽ nói kĩ hơn ở phần sau</span></a>
-<a class="sourceLine" id="cb151-9" title="9"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n=</span><span class="kw">n</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="bin-i-d-liu.html#cb151-1"></a><span class="co"># split cột time ra làm 3 cột minute/second/millisecond</span></span>
+<span id="cb151-2"><a href="bin-i-d-liu.html#cb151-2"></a>kobe &lt;-<span class="st"> </span><span class="kw">cbind</span>(kobe, kobe <span class="op">%&gt;%</span></span>
+<span id="cb151-3"><a href="bin-i-d-liu.html#cb151-3"></a><span class="st">                </span><span class="kw">transmute</span>(<span class="dt">time.s =</span> <span class="kw">as.character</span>(time)) <span class="op">%&gt;%</span></span>
+<span id="cb151-4"><a href="bin-i-d-liu.html#cb151-4"></a><span class="st">                </span><span class="kw">separate</span>(time.s, <span class="dt">into =</span> <span class="kw">paste0</span>(<span class="st">&quot;T&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">sep =</span> <span class="st">&#39;:&#39;</span>, <span class="dt">remove =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb151-5"><a href="bin-i-d-liu.html#cb151-5"></a></span>
+<span id="cb151-6"><a href="bin-i-d-liu.html#cb151-6"></a><span class="co"># có thể thấy cột T3 - millisecond chỉ có giá trị 00, vì vậy ta sẽ loại cột này đi</span></span>
+<span id="cb151-7"><a href="bin-i-d-liu.html#cb151-7"></a>kobe <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb151-8"><a href="bin-i-d-liu.html#cb151-8"></a><span class="st">  </span><span class="kw">group_by</span>(T3) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># kết hợp group_by và summarise, sẽ nói kĩ hơn ở phần sau</span></span>
+<span id="cb151-9"><a href="bin-i-d-liu.html#cb151-9"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n=</span><span class="kw">n</span>())</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 2
 ##   T3        n
 ##   &lt;chr&gt; &lt;int&gt;
 ## 1 00      133</code></pre>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" title="1">kobe &lt;-<span class="st"> </span>kobe <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb153-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>T3) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># bỏ T3</span></a>
-<a class="sourceLine" id="cb153-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">time.s =</span> <span class="kw">as.integer</span>(T1) <span class="op">*</span><span class="st"> </span><span class="dv">60</span> <span class="op">+</span><span class="st"> </span><span class="kw">as.integer</span>(T2)) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># Tạo lại cột time.s ~ số giây còn lại</span></a>
-<a class="sourceLine" id="cb153-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">time =</span> <span class="kw">as.character</span>(time)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># đổi định dạng cột time thành string</span></a>
-<a class="sourceLine" id="cb153-5" title="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">T1 =</span> <span class="kw">as.integer</span>(T1)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb153-6" title="6"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">time.m =</span> T1) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># đổi tên T1 thành time.m ~ số phút còn lại</span></a>
-<a class="sourceLine" id="cb153-7" title="7"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>T2) <span class="co"># bỏ T2</span></a>
-<a class="sourceLine" id="cb153-8" title="8"></a>
-<a class="sourceLine" id="cb153-9" title="9"><span class="kw">head</span>(kobe, <span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="bin-i-d-liu.html#cb153-1"></a>kobe &lt;-<span class="st"> </span>kobe <span class="op">%&gt;%</span></span>
+<span id="cb153-2"><a href="bin-i-d-liu.html#cb153-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>T3) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># bỏ T3</span></span>
+<span id="cb153-3"><a href="bin-i-d-liu.html#cb153-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">time.s =</span> <span class="kw">as.integer</span>(T1) <span class="op">*</span><span class="st"> </span><span class="dv">60</span> <span class="op">+</span><span class="st"> </span><span class="kw">as.integer</span>(T2)) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># Tạo lại cột time.s ~ số giây còn lại</span></span>
+<span id="cb153-4"><a href="bin-i-d-liu.html#cb153-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">time =</span> <span class="kw">as.character</span>(time)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># đổi định dạng cột time thành string</span></span>
+<span id="cb153-5"><a href="bin-i-d-liu.html#cb153-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">T1 =</span> <span class="kw">as.integer</span>(T1)) <span class="op">%&gt;%</span></span>
+<span id="cb153-6"><a href="bin-i-d-liu.html#cb153-6"></a><span class="st">  </span><span class="kw">rename</span>(<span class="dt">time.m =</span> T1) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># đổi tên T1 thành time.m ~ số phút còn lại</span></span>
+<span id="cb153-7"><a href="bin-i-d-liu.html#cb153-7"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>T2) <span class="co"># bỏ T2</span></span>
+<span id="cb153-8"><a href="bin-i-d-liu.html#cb153-8"></a></span>
+<span id="cb153-9"><a href="bin-i-d-liu.html#cb153-9"></a><span class="kw">head</span>(kobe, <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>##     vs game quarter     time
 ## 1  ORL    1       1 09:47:00
 ## 2  ORL    1       1 09:07:00
@@ -864,7 +866,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 9       0
 ## 10    395</code></pre>
 <p>Ngược lại, ta cũng có thể dùng hàm <code>%/%</code> (là hàm để lấy phần nguyên của phép chia) và <code>%%</code> (lấy phần dư) để tính ngược lại từ trường <strong>time.s</strong> về dạng second:millisecond:</p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb155-1" title="1"><span class="kw">transmute</span>(kobe, <span class="dt">time.x =</span> time.s <span class="op">%/%</span><span class="st"> </span><span class="dv">60</span> <span class="op">+</span><span class="st"> </span>(time.s <span class="op">%%</span><span class="st"> </span><span class="dv">60</span>)<span class="op">/</span><span class="dv">100</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="bin-i-d-liu.html#cb155-1"></a><span class="kw">transmute</span>(kobe, <span class="dt">time.x =</span> time.s <span class="op">%/%</span><span class="st"> </span><span class="dv">60</span> <span class="op">+</span><span class="st"> </span>(time.s <span class="op">%%</span><span class="st"> </span><span class="dv">60</span>)<span class="op">/</span><span class="dv">100</span>)</span></code></pre></div>
 <pre><code>##     time.x
 ## 1     9.47
 ## 2     9.07
@@ -1002,13 +1004,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol start="2" style="list-style-type: decimal">
 <li>Sửa cột <strong>quarter</strong>, sử dụng hàm <code>nchar()</code> để đếm số ký tự trong string và hàm <code>substr()</code> để cắt string từ bên trái:</li>
 </ol>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb157-1" title="1"><span class="co"># Chuyển 1OT thành 5, 2OT thành 6 , etc.</span></a>
-<a class="sourceLine" id="cb157-2" title="2">kobe &lt;-<span class="st"> </span>kobe <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb157-3" title="3"><span class="st">  </span><span class="co"># nếu độ dài string = 1 -&gt; đổi thành dạng numeric</span></a>
-<a class="sourceLine" id="cb157-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">quarter.n =</span> <span class="kw">case_when</span>(<span class="kw">nchar</span>(quarter) <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(quarter),  </a>
-<a class="sourceLine" id="cb157-5" title="5">                               <span class="co"># nếu độ dài string = 3 -&gt; cột thêm 4</span></a>
-<a class="sourceLine" id="cb157-6" title="6">                             <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">substr</span>(quarter, <span class="dv">1</span>, <span class="dv">1</span>)) <span class="op">+</span><span class="st"> </span><span class="dv">4</span>))</a>
-<a class="sourceLine" id="cb157-7" title="7"><span class="kw">head</span>(kobe, <span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="bin-i-d-liu.html#cb157-1"></a><span class="co"># Chuyển 1OT thành 5, 2OT thành 6 , etc.</span></span>
+<span id="cb157-2"><a href="bin-i-d-liu.html#cb157-2"></a>kobe &lt;-<span class="st"> </span>kobe <span class="op">%&gt;%</span></span>
+<span id="cb157-3"><a href="bin-i-d-liu.html#cb157-3"></a><span class="st">  </span><span class="co"># nếu độ dài string = 1 -&gt; đổi thành dạng numeric</span></span>
+<span id="cb157-4"><a href="bin-i-d-liu.html#cb157-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">quarter.n =</span> <span class="kw">case_when</span>(<span class="kw">nchar</span>(quarter) <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(quarter),  </span>
+<span id="cb157-5"><a href="bin-i-d-liu.html#cb157-5"></a>                               <span class="co"># nếu độ dài string = 3 -&gt; cột thêm 4</span></span>
+<span id="cb157-6"><a href="bin-i-d-liu.html#cb157-6"></a>                             <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">substr</span>(quarter, <span class="dv">1</span>, <span class="dv">1</span>)) <span class="op">+</span><span class="st"> </span><span class="dv">4</span>))</span>
+<span id="cb157-7"><a href="bin-i-d-liu.html#cb157-7"></a><span class="kw">head</span>(kobe, <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>##     vs game quarter     time
 ## 1  ORL    1       1 09:47:00
 ## 2  ORL    1       1 09:07:00
@@ -1051,11 +1053,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Các cú ném 3 điểm sẽ bao gồm đoạn string “3pt” hoặc “three point”, và ta chắc chắn được ra 2 đoạn string này đủ unique để indentify từng shot attempt là 2 hay 3 điểm. Đồng thời, khoảng cách từ vạch 3 điểm đến rổ là 23.75ft (22ft từ góc sân), vì vậy ở dữ liệu cho game 1-2-4-5, phần description đã bao gồm đầy đủ thông tin phân loại 3 điểm (dựa vào thông tin khoảng cách của shot).</li>
 </ul>
 <p>Từ 2 kết luận trên, ta có thể tạo thêm cột <strong>point.attempt</strong>, sử dụng hàm <code>grepl(string_to_find, value, ...)</code> trả về giá trị TRUE/FALSE để tìm kiếm các quan sát tương đương với 3 điểm:</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb159-1" title="1">kobe &lt;-<span class="st"> </span>kobe <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb159-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">point.attempt =</span> <span class="kw">case_when</span>(<span class="kw">grepl</span>(<span class="st">&#39;3pt&#39;</span>, description, <span class="dt">fixed =</span> <span class="ot">TRUE</span>) <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb159-3" title="3">                           <span class="kw">grepl</span>(<span class="st">&#39;three point&#39;</span>, description, <span class="dt">fixed =</span> <span class="ot">TRUE</span>) <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb159-4" title="4">                           <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb159-5" title="5"><span class="kw">head</span>(kobe, <span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="bin-i-d-liu.html#cb159-1"></a>kobe &lt;-<span class="st"> </span>kobe <span class="op">%&gt;%</span></span>
+<span id="cb159-2"><a href="bin-i-d-liu.html#cb159-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">point.attempt =</span> <span class="kw">case_when</span>(<span class="kw">grepl</span>(<span class="st">&#39;3pt&#39;</span>, description, <span class="dt">fixed =</span> <span class="ot">TRUE</span>) <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">3</span>,</span>
+<span id="cb159-3"><a href="bin-i-d-liu.html#cb159-3"></a>                           <span class="kw">grepl</span>(<span class="st">&#39;three point&#39;</span>, description, <span class="dt">fixed =</span> <span class="ot">TRUE</span>) <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">3</span>,</span>
+<span id="cb159-4"><a href="bin-i-d-liu.html#cb159-4"></a>                           <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">2</span>))</span>
+<span id="cb159-5"><a href="bin-i-d-liu.html#cb159-5"></a><span class="kw">head</span>(kobe, <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>##     vs game quarter     time
 ## 1  ORL    1       1 09:47:00
 ## 2  ORL    1       1 09:07:00
@@ -1090,11 +1092,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 9       0         1             2
 ## 10    395         2             2</code></pre>
 <p>Đồng thời, để tính toán dễ dàng hơn, ta đổi cột <strong>basket</strong> sang 1 và 0 để tính dễ hơn, sau đó tạo thêm cột <span class="math inline">\(point.made = point.attempt * basket.n\)</span></p>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" title="1">kobe &lt;-<span class="st"> </span>kobe <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb161-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">basket.n =</span> <span class="kw">case_when</span>(basket <span class="op">==</span><span class="st"> &#39;H&#39;</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb161-3" title="3">                              <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">0</span>),</a>
-<a class="sourceLine" id="cb161-4" title="4">         <span class="dt">point.made =</span> point.attempt <span class="op">*</span><span class="st"> </span>basket.n)</a>
-<a class="sourceLine" id="cb161-5" title="5"><span class="kw">head</span>(kobe, <span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="bin-i-d-liu.html#cb161-1"></a>kobe &lt;-<span class="st"> </span>kobe <span class="op">%&gt;%</span></span>
+<span id="cb161-2"><a href="bin-i-d-liu.html#cb161-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">basket.n =</span> <span class="kw">case_when</span>(basket <span class="op">==</span><span class="st"> &#39;H&#39;</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,</span>
+<span id="cb161-3"><a href="bin-i-d-liu.html#cb161-3"></a>                              <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">0</span>),</span>
+<span id="cb161-4"><a href="bin-i-d-liu.html#cb161-4"></a>         <span class="dt">point.made =</span> point.attempt <span class="op">*</span><span class="st"> </span>basket.n)</span>
+<span id="cb161-5"><a href="bin-i-d-liu.html#cb161-5"></a><span class="kw">head</span>(kobe, <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>##     vs game quarter     time
 ## 1  ORL    1       1 09:47:00
 ## 2  ORL    1       1 09:07:00
@@ -1132,42 +1134,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="kt-hp-toan-b-vi-pipe" class="section level4">
 <h4><span class="header-section-number">4.3.2.2</span> Kết hợp toàn bộ với pipe</h4>
 <p>Ta có thể kết hợp tất cả các ví dụ trên thành 1 đoạn script với pipe <code>%&gt;%</code> để ra kết quả cuối như sau:</p>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" title="1">kobe &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&#39;https://www.openintro.org/stat/data/kobe.csv&#39;</span>,</a>
-<a class="sourceLine" id="cb163-2" title="2">                 <span class="dt">col_types =</span> <span class="kw">cols</span>(<span class="dt">game =</span> <span class="kw">col_integer</span>(),</a>
-<a class="sourceLine" id="cb163-3" title="3">                                  <span class="dt">quarter =</span> <span class="kw">col_character</span>())) </a>
-<a class="sourceLine" id="cb163-4" title="4"></a>
-<a class="sourceLine" id="cb163-5" title="5">kobe &lt;-<span class="st"> </span><span class="kw">cbind</span>(kobe, kobe <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb163-6" title="6"><span class="st">                </span><span class="kw">transmute</span>(<span class="dt">time.s =</span> <span class="kw">as.character</span>(time)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb163-7" title="7"><span class="st">                </span><span class="kw">separate</span>(time.s, <span class="dt">into =</span> <span class="kw">paste0</span>(<span class="st">&quot;T&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">sep =</span> <span class="st">&#39;:&#39;</span>, <span class="dt">remove =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb163-8" title="8"><span class="st">        </span><span class="kw">select</span>(<span class="op">-</span>T3) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb163-9" title="9"><span class="st">        </span><span class="kw">mutate</span>(<span class="dt">time.s =</span> <span class="kw">as.integer</span>(T1) <span class="op">*</span><span class="st"> </span><span class="dv">60</span> <span class="op">+</span><span class="st"> </span><span class="kw">as.integer</span>(T2)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb163-10" title="10"><span class="st">        </span><span class="kw">mutate</span>(<span class="dt">time =</span> <span class="kw">as.character</span>(time)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb163-11" title="11"><span class="st">        </span><span class="kw">mutate</span>(<span class="dt">T1 =</span> <span class="kw">as.integer</span>(T1)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb163-12" title="12"><span class="st">        </span><span class="kw">rename</span>(<span class="dt">time.m =</span> T1) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb163-13" title="13"><span class="st">        </span><span class="kw">select</span>(<span class="op">-</span>T2) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb163-14" title="14"><span class="st">        </span><span class="kw">mutate</span>(<span class="dt">quarter.n =</span> <span class="kw">case_when</span>(<span class="kw">nchar</span>(quarter) <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(quarter),</a>
-<a class="sourceLine" id="cb163-15" title="15">                                     <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">substr</span>(quarter, <span class="dv">1</span>, <span class="dv">1</span>)) <span class="op">+</span><span class="st"> </span><span class="dv">4</span>),</a>
-<a class="sourceLine" id="cb163-16" title="16">               <span class="dt">point.attempt =</span> <span class="kw">case_when</span>(<span class="kw">grepl</span>(<span class="st">&#39;3pt&#39;</span>, description, <span class="dt">fixed =</span> <span class="ot">TRUE</span>) <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb163-17" title="17">                                         <span class="kw">grepl</span>(<span class="st">&#39;three point&#39;</span>, description, <span class="dt">fixed =</span> <span class="ot">TRUE</span>) <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb163-18" title="18">                                         <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">2</span>),</a>
-<a class="sourceLine" id="cb163-19" title="19">               <span class="dt">basket.n =</span> <span class="kw">case_when</span>(basket <span class="op">==</span><span class="st"> &#39;H&#39;</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb163-20" title="20">                                    <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">0</span>),</a>
-<a class="sourceLine" id="cb163-21" title="21">               <span class="dt">point.made =</span> point.attempt <span class="op">*</span><span class="st"> </span>basket.n)</a></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="bin-i-d-liu.html#cb163-1"></a>kobe &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&#39;https://www.openintro.org/stat/data/kobe.csv&#39;</span>,</span>
+<span id="cb163-2"><a href="bin-i-d-liu.html#cb163-2"></a>                 <span class="dt">col_types =</span> <span class="kw">cols</span>(<span class="dt">game =</span> <span class="kw">col_integer</span>(),</span>
+<span id="cb163-3"><a href="bin-i-d-liu.html#cb163-3"></a>                                  <span class="dt">quarter =</span> <span class="kw">col_character</span>())) </span>
+<span id="cb163-4"><a href="bin-i-d-liu.html#cb163-4"></a></span>
+<span id="cb163-5"><a href="bin-i-d-liu.html#cb163-5"></a>kobe &lt;-<span class="st"> </span><span class="kw">cbind</span>(kobe, kobe <span class="op">%&gt;%</span></span>
+<span id="cb163-6"><a href="bin-i-d-liu.html#cb163-6"></a><span class="st">                </span><span class="kw">transmute</span>(<span class="dt">time.s =</span> <span class="kw">as.character</span>(time)) <span class="op">%&gt;%</span></span>
+<span id="cb163-7"><a href="bin-i-d-liu.html#cb163-7"></a><span class="st">                </span><span class="kw">separate</span>(time.s, <span class="dt">into =</span> <span class="kw">paste0</span>(<span class="st">&quot;T&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">sep =</span> <span class="st">&#39;:&#39;</span>, <span class="dt">remove =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb163-8"><a href="bin-i-d-liu.html#cb163-8"></a><span class="st">        </span><span class="kw">select</span>(<span class="op">-</span>T3) <span class="op">%&gt;%</span></span>
+<span id="cb163-9"><a href="bin-i-d-liu.html#cb163-9"></a><span class="st">        </span><span class="kw">mutate</span>(<span class="dt">time.s =</span> <span class="kw">as.integer</span>(T1) <span class="op">*</span><span class="st"> </span><span class="dv">60</span> <span class="op">+</span><span class="st"> </span><span class="kw">as.integer</span>(T2)) <span class="op">%&gt;%</span></span>
+<span id="cb163-10"><a href="bin-i-d-liu.html#cb163-10"></a><span class="st">        </span><span class="kw">mutate</span>(<span class="dt">time =</span> <span class="kw">as.character</span>(time)) <span class="op">%&gt;%</span></span>
+<span id="cb163-11"><a href="bin-i-d-liu.html#cb163-11"></a><span class="st">        </span><span class="kw">mutate</span>(<span class="dt">T1 =</span> <span class="kw">as.integer</span>(T1)) <span class="op">%&gt;%</span></span>
+<span id="cb163-12"><a href="bin-i-d-liu.html#cb163-12"></a><span class="st">        </span><span class="kw">rename</span>(<span class="dt">time.m =</span> T1) <span class="op">%&gt;%</span></span>
+<span id="cb163-13"><a href="bin-i-d-liu.html#cb163-13"></a><span class="st">        </span><span class="kw">select</span>(<span class="op">-</span>T2) <span class="op">%&gt;%</span></span>
+<span id="cb163-14"><a href="bin-i-d-liu.html#cb163-14"></a><span class="st">        </span><span class="kw">mutate</span>(<span class="dt">quarter.n =</span> <span class="kw">case_when</span>(<span class="kw">nchar</span>(quarter) <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(quarter),</span>
+<span id="cb163-15"><a href="bin-i-d-liu.html#cb163-15"></a>                                     <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">substr</span>(quarter, <span class="dv">1</span>, <span class="dv">1</span>)) <span class="op">+</span><span class="st"> </span><span class="dv">4</span>),</span>
+<span id="cb163-16"><a href="bin-i-d-liu.html#cb163-16"></a>               <span class="dt">point.attempt =</span> <span class="kw">case_when</span>(<span class="kw">grepl</span>(<span class="st">&#39;3pt&#39;</span>, description, <span class="dt">fixed =</span> <span class="ot">TRUE</span>) <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">3</span>,</span>
+<span id="cb163-17"><a href="bin-i-d-liu.html#cb163-17"></a>                                         <span class="kw">grepl</span>(<span class="st">&#39;three point&#39;</span>, description, <span class="dt">fixed =</span> <span class="ot">TRUE</span>) <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">3</span>,</span>
+<span id="cb163-18"><a href="bin-i-d-liu.html#cb163-18"></a>                                         <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">2</span>),</span>
+<span id="cb163-19"><a href="bin-i-d-liu.html#cb163-19"></a>               <span class="dt">basket.n =</span> <span class="kw">case_when</span>(basket <span class="op">==</span><span class="st"> &#39;H&#39;</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,</span>
+<span id="cb163-20"><a href="bin-i-d-liu.html#cb163-20"></a>                                    <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">0</span>),</span>
+<span id="cb163-21"><a href="bin-i-d-liu.html#cb163-21"></a>               <span class="dt">point.made =</span> point.attempt <span class="op">*</span><span class="st"> </span>basket.n)</span></code></pre></div>
 </div>
 </div>
 <div id="group_by-va-summarise" class="section level3">
 <h3><span class="header-section-number">4.3.3</span> <code>group_by</code> và <code>summarise</code></h3>
 <p>Với dataset <code>kobe</code> đã biến đổi cơ bản xong, ta có thể kết hợp <code>group_by</code> và <code>summarise</code> để trả lời 1 số câu hỏi đơn giản:</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" title="1">kobe &lt;-<span class="st"> </span><span class="kw">arrange</span>(kobe, game)</a>
-<a class="sourceLine" id="cb164-2" title="2"></a>
-<a class="sourceLine" id="cb164-3" title="3"><span class="co"># group theo game</span></a>
-<a class="sourceLine" id="cb164-4" title="4">kobe <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb164-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(game) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb164-6" title="6"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">total.fg =</span> <span class="kw">sum</span>(basket.n), <span class="co"># tổng số lượt ném thành công</span></a>
-<a class="sourceLine" id="cb164-7" title="7">            <span class="dt">total.fga =</span> <span class="kw">n</span>(), <span class="co"># tổng số lượt ném</span></a>
-<a class="sourceLine" id="cb164-8" title="8">            <span class="dt">total.point =</span> <span class="kw">sum</span>(point.made), <span class="co"># tổng số điểm</span></a>
-<a class="sourceLine" id="cb164-9" title="9">            <span class="dt">point.per.fga =</span> total.point<span class="op">/</span>total.fga, <span class="co"># điểm trung bình trên mỗi lượt ném</span></a>
-<a class="sourceLine" id="cb164-10" title="10">            <span class="dt">avg.fg =</span> <span class="kw">mean</span>(basket.n)) <span class="co"># tỷ lệ ném thành công</span></a></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="bin-i-d-liu.html#cb164-1"></a>kobe &lt;-<span class="st"> </span><span class="kw">arrange</span>(kobe, game)</span>
+<span id="cb164-2"><a href="bin-i-d-liu.html#cb164-2"></a></span>
+<span id="cb164-3"><a href="bin-i-d-liu.html#cb164-3"></a><span class="co"># group theo game</span></span>
+<span id="cb164-4"><a href="bin-i-d-liu.html#cb164-4"></a>kobe <span class="op">%&gt;%</span></span>
+<span id="cb164-5"><a href="bin-i-d-liu.html#cb164-5"></a><span class="st">  </span><span class="kw">group_by</span>(game) <span class="op">%&gt;%</span></span>
+<span id="cb164-6"><a href="bin-i-d-liu.html#cb164-6"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">total.fg =</span> <span class="kw">sum</span>(basket.n), <span class="co"># tổng số lượt ném thành công</span></span>
+<span id="cb164-7"><a href="bin-i-d-liu.html#cb164-7"></a>            <span class="dt">total.fga =</span> <span class="kw">n</span>(), <span class="co"># tổng số lượt ném</span></span>
+<span id="cb164-8"><a href="bin-i-d-liu.html#cb164-8"></a>            <span class="dt">total.point =</span> <span class="kw">sum</span>(point.made), <span class="co"># tổng số điểm</span></span>
+<span id="cb164-9"><a href="bin-i-d-liu.html#cb164-9"></a>            <span class="dt">point.per.fga =</span> total.point<span class="op">/</span>total.fga, <span class="co"># điểm trung bình trên mỗi lượt ném</span></span>
+<span id="cb164-10"><a href="bin-i-d-liu.html#cb164-10"></a>            <span class="dt">avg.fg =</span> <span class="kw">mean</span>(basket.n)) <span class="co"># tỷ lệ ném thành công</span></span></code></pre></div>
 <pre><code>## # A tibble: 5 x 6
 ##    game total.fg total.fga total.point point.per.fga avg.fg
 ##   &lt;int&gt;    &lt;dbl&gt;     &lt;int&gt;       &lt;dbl&gt;         &lt;dbl&gt;  &lt;dbl&gt;
@@ -1176,14 +1178,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 3     3       11        25          26         1.04   0.44 
 ## 4     4       11        30          24         0.8    0.367
 ## 5     5       10        23          22         0.957  0.435</code></pre>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" title="1"><span class="co"># group theo game và quarter</span></a>
-<a class="sourceLine" id="cb166-2" title="2">kobe <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb166-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(game, quarter.n) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb166-4" title="4"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">total.fg =</span> <span class="kw">sum</span>(basket.n),</a>
-<a class="sourceLine" id="cb166-5" title="5">            <span class="dt">total.fga =</span> <span class="kw">n</span>(),</a>
-<a class="sourceLine" id="cb166-6" title="6">            <span class="dt">total.point =</span> <span class="kw">sum</span>(point.made),</a>
-<a class="sourceLine" id="cb166-7" title="7">            <span class="dt">point.per.fga =</span> total.point<span class="op">/</span>total.fga,</a>
-<a class="sourceLine" id="cb166-8" title="8">            <span class="dt">avg.fg =</span> <span class="kw">mean</span>(basket.n))</a></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="bin-i-d-liu.html#cb166-1"></a><span class="co"># group theo game và quarter</span></span>
+<span id="cb166-2"><a href="bin-i-d-liu.html#cb166-2"></a>kobe <span class="op">%&gt;%</span></span>
+<span id="cb166-3"><a href="bin-i-d-liu.html#cb166-3"></a><span class="st">  </span><span class="kw">group_by</span>(game, quarter.n) <span class="op">%&gt;%</span></span>
+<span id="cb166-4"><a href="bin-i-d-liu.html#cb166-4"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">total.fg =</span> <span class="kw">sum</span>(basket.n),</span>
+<span id="cb166-5"><a href="bin-i-d-liu.html#cb166-5"></a>            <span class="dt">total.fga =</span> <span class="kw">n</span>(),</span>
+<span id="cb166-6"><a href="bin-i-d-liu.html#cb166-6"></a>            <span class="dt">total.point =</span> <span class="kw">sum</span>(point.made),</span>
+<span id="cb166-7"><a href="bin-i-d-liu.html#cb166-7"></a>            <span class="dt">point.per.fga =</span> total.point<span class="op">/</span>total.fga,</span>
+<span id="cb166-8"><a href="bin-i-d-liu.html#cb166-8"></a>            <span class="dt">avg.fg =</span> <span class="kw">mean</span>(basket.n))</span></code></pre></div>
 <pre><code>## # A tibble: 22 x 7
 ## # Groups:   game [5]
 ##     game quarter.n total.fg total.fga total.point point.per.fga avg.fg
@@ -1203,15 +1205,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="kt-hp-group_by-va-mutate-filter" class="section level3">
 <h3><span class="header-section-number">4.3.4</span> Kết hợp <code>group_by</code> và <code>mutate</code> / <code>filter</code></h3>
 <p>Thêm 1 số cột accumuated points, accumulated fga, accumulated fg, fg%, point/fga:</p>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb168-1" title="1">kobe &lt;-<span class="st"> </span>kobe <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb168-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(game) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb168-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">acc.pts =</span> <span class="kw">cumsum</span>(point.made),</a>
-<a class="sourceLine" id="cb168-4" title="4">         <span class="dt">fga =</span> <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb168-5" title="5">         <span class="dt">acc.fga =</span> <span class="kw">cumsum</span>(fga),</a>
-<a class="sourceLine" id="cb168-6" title="6">         <span class="dt">acc.fg =</span> <span class="kw">cumsum</span>(basket.n),</a>
-<a class="sourceLine" id="cb168-7" title="7">         <span class="dt">pct.fg =</span> <span class="kw">cummean</span>(basket.n),</a>
-<a class="sourceLine" id="cb168-8" title="8">         <span class="dt">pts.per.fga =</span> acc.pts<span class="op">/</span>acc.fga)</a>
-<a class="sourceLine" id="cb168-9" title="9"><span class="kw">head</span>(kobe, <span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="bin-i-d-liu.html#cb168-1"></a>kobe &lt;-<span class="st"> </span>kobe <span class="op">%&gt;%</span></span>
+<span id="cb168-2"><a href="bin-i-d-liu.html#cb168-2"></a><span class="st">  </span><span class="kw">group_by</span>(game) <span class="op">%&gt;%</span></span>
+<span id="cb168-3"><a href="bin-i-d-liu.html#cb168-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">acc.pts =</span> <span class="kw">cumsum</span>(point.made),</span>
+<span id="cb168-4"><a href="bin-i-d-liu.html#cb168-4"></a>         <span class="dt">fga =</span> <span class="dv">1</span>,</span>
+<span id="cb168-5"><a href="bin-i-d-liu.html#cb168-5"></a>         <span class="dt">acc.fga =</span> <span class="kw">cumsum</span>(fga),</span>
+<span id="cb168-6"><a href="bin-i-d-liu.html#cb168-6"></a>         <span class="dt">acc.fg =</span> <span class="kw">cumsum</span>(basket.n),</span>
+<span id="cb168-7"><a href="bin-i-d-liu.html#cb168-7"></a>         <span class="dt">pct.fg =</span> <span class="kw">cummean</span>(basket.n),</span>
+<span id="cb168-8"><a href="bin-i-d-liu.html#cb168-8"></a>         <span class="dt">pts.per.fga =</span> acc.pts<span class="op">/</span>acc.fga)</span>
+<span id="cb168-9"><a href="bin-i-d-liu.html#cb168-9"></a><span class="kw">head</span>(kobe, <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 10 x 18
 ## # Groups:   game [1]
 ##    vs     game quarter time  description basket time.m time.s quarter.n
@@ -1230,13 +1232,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## #   point.made &lt;dbl&gt;, acc.pts &lt;dbl&gt;, fga &lt;dbl&gt;, acc.fga &lt;dbl&gt;,
 ## #   acc.fg &lt;dbl&gt;, pct.fg &lt;dbl&gt;, pts.per.fga &lt;dbl&gt;</code></pre>
 <p>Ta cũng có thể kết hợp với <code>filter</code> để xem performance trong crunch time (tức là 3 phút cuối của những game sát nhau, trong trường hợp này là game 2/3/4):</p>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb170-1" title="1">kobe <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb170-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(game) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb170-3" title="3"><span class="st">  </span><span class="kw">filter</span>(game <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>),</a>
-<a class="sourceLine" id="cb170-4" title="4">         quarter <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(quarter),</a>
-<a class="sourceLine" id="cb170-5" title="5">         time.m <span class="op">&lt;</span><span class="dv">3</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb170-6" title="6"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>description, <span class="op">-</span>vs, <span class="op">-</span>time, <span class="op">-</span>basket) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb170-7" title="7"><span class="st">  </span><span class="kw">head</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="bin-i-d-liu.html#cb170-1"></a>kobe <span class="op">%&gt;%</span></span>
+<span id="cb170-2"><a href="bin-i-d-liu.html#cb170-2"></a><span class="st">  </span><span class="kw">group_by</span>(game) <span class="op">%&gt;%</span></span>
+<span id="cb170-3"><a href="bin-i-d-liu.html#cb170-3"></a><span class="st">  </span><span class="kw">filter</span>(game <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>),</span>
+<span id="cb170-4"><a href="bin-i-d-liu.html#cb170-4"></a>         quarter <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(quarter),</span>
+<span id="cb170-5"><a href="bin-i-d-liu.html#cb170-5"></a>         time.m <span class="op">&lt;</span><span class="dv">3</span>) <span class="op">%&gt;%</span></span>
+<span id="cb170-6"><a href="bin-i-d-liu.html#cb170-6"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>description, <span class="op">-</span>vs, <span class="op">-</span>time, <span class="op">-</span>basket) <span class="op">%&gt;%</span></span>
+<span id="cb170-7"><a href="bin-i-d-liu.html#cb170-7"></a><span class="st">  </span><span class="kw">head</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 14
 ## # Groups:   game [2]
 ##    game quarter time.m time.s quarter.n point.attempt basket.n point.made
