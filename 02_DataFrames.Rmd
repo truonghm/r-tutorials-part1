@@ -1,0 +1,167 @@
+
+```{r, echo=FALSE}
+# Reset môi trường
+rm(list = ls())
+pkgs = names(sessionInfo()$otherPkgs)
+if( length(pkgs > 0)){
+  pkgs = paste('package:', pkgs, sep = "")
+  for( i in 1:length(pkgs)){
+    detach(pkgs[i], character.only = TRUE, force=TRUE)
+  }
+}
+```
+
+
+
+
+
+
+# Data frame
+
+Data frame là một loại dữ liệu dạng bảng (tabular data), hay còn gọi là data frames trong R. Về khái niệm, data frame giống như một sheet trong Excel, với nhiều cột và dòng, trong đó mỗi cột đại diện cho 1 trường có cùng kiểu dữ liệu, và mỗi dòng là một observation (bản ghi hoặc quan sát). Các tính chất của data frame: 
+
++ Tên cột không được trống (dòng header đầu tiên). Như vậy, khi truy cập đến các cột trong code, chúng ta sẽ gọi tên thay vì gọi số thứ tự của cột giống như trong Excel (cột A hoặc cột 1).
+
++ Tên dòng không được lặp lại.
+
++ Kiểu dữ liệu (value type) trong cột phải là character, numeric hoặc factor (sẽ nhắc đến sau).
+
++ Độ dài của các cột (số obs) phải bằng nhau.
+
++ Khi đặt tên (assign) cho data frame, chúng ta sẽ coi đây là 1 object (đối tượng) và không dùng thuật ngữ biến/variable.
+
+
+## Import dữ liệu cơ bản
+
+
+### Từ package
+
+Trong khi tự học R, nhiều giáo trình (như [R for Data Science - Hadley Wickham](https://r4ds.had.co.nz)) sẽ mở đầu bằng các bộ dữ liệu từ các package. Trong tài liệu này, chúng ta sẽ sử dụng package `nycflights13` để làm mẫu.
+
+```{r, eval=FALSE}
+install.packages('nycflights13')
+```
+
+Có 2 cách cơ bản để import dữ liệu từ package như sau:
+
++ **Load toàn bộ package chứa dữ liệu** bằng hàm ```library()```, khi đó dữ liệu cũng sẽ được import theo. Lưu ý, khi dùng hàm ```library()```, không cần dùng dấu chấm phẩy để gọi tên package giống như hàm ```install.packages()```.
+
+```{r}
+library(nycflights13)
+# Xem thử 10 dòng đầu tiên của bộ dữ liệu 'flights'
+head(flights,10)
+```
+
++ **Load riêng dữ liệu cần thiết thay vì load cả package**, giúp tiết kiệm bộ nhớ. Hàm ```data()``` nhận các arg dưới dạng `string`, vì vậy cần dấu chấm phẩy.
+
+```{r}
+data('flights', package = 'nycflights13')
+head(flights,10)
+```
+
+Có thể thấy ở trên, ngoài 2 hàm ```library()``` và ```data()```, chúng ta còn dùng hàm ```head()``` để xem một số lượng nhất định dòng đầu tiên của data frame. Ngoài ra, chúng ta cũng có thể xem toàn bộ data frame này bằng cách dùng hàm ```View()``` (lưu ý có viết hoa chữ V đầu tiên).
+
+```{r,eval=FALSE}
+View(flights)
+```
+
+Tương tự, khi chúng ta truy cập sửa sổ `Environment` ở góc trên bên phải, các data frame đã được import cũng hiện ra. Khi đưa trỏ chuột chọn 1 data frame, R cũng ngầm thực hiện hàm ```View()``` và sau đó một  cửa sổ mới hiện ra thể hiện toàn bộ data frame. 
+
+
+### Import từ Excel, file csv hoặc file txt
+
+Trong thực tế, dữ liệu thường xuyên được chia sẻ và lưu trữ ở các dạng .csv, .txt hoặc trong file Excel (.xls và .xlsx). 
+Khi mở các loại file này ở bên ngoài (ví dụ trong Excel hoặc 1 text editor nào đó), ta có thể thấy dòng đầu tiên thường là tên cột (dòng header).
+
+Khi sử dụng RStudio, chúng ta có thể  dùng chức năng `Import Dataset` ở cửa sổ `Environment` hoặc qua menu `File -> Import Dataset`, tuy nhiên cách làm này thủ công và không đáp ứng được tính năng "reproducible", vì khi chia sẻ code cho người khác, họ sẽ lại phải import data thủ công lại thay vì chỉ cần chạy code.
+
+Thay vào đó, chúng ta có thể sử dụng 1 số hàm sau (Lưu ý cách viết ```tên_package::tên_function``` là để tránh phải load toàn bộ package ra và chỉ gọi thằng function):
+
++ dùng hàm ```readxl::read_excel()```: hàm này có các argument quan trọng nhất là `path` (đường dẫn đến file), `sheet` (chọn sheet muốn import). Ngoài ra số số arg khác như `col_names`, `col_types`, `trim_ws` cũng khá hữu ích, có thể tham khảo thêm thông qua ```?read_excel```.
+
++ dùng hàm ```readr::read_csv()```: tương tự như ```read_excel```, hàm ```read_csv``` cũng có argument `file` (đường dẫn). Hàm này được sử dụng để import file csv. Lưu ý: `read_csv()` không hỗ trợ row names, nên có lúc import dữ liệu vào sẽ tự động thêm 1 cột row names đầu tiên.
+
++ dùng hàm ```readr::read_delim()```: hàm này được sử dụng để import file txt; chữ "delim" trong tên hàm là viết tắt của từ "delimiter": nếu bất kì ai đã từng sử dụng chức năng **Import from text** trong Excel sẽ hiểu nghĩa từ này. Các argument quan trọng: `file` (đường dẫn), `delim` (delimiter: kí hiệu tách cột, ví dụ đối với file csv mặc định là dấu phẩy).
+
+
+## Các loại dữ liệu (Value type)
+
+Data frame trong R yêu cầu mỗi cột có chung một loại dữ liệu thống nhất. Ví dụ, trong cột "Năm sinh", tất cả dữ liệu phải thuộc dạng số. Dưới đây là các loại dữ liệu thông dụng trong R:
+
+1. **Integers** (Số nguyên): Là các số $\left(\dots,-2,-1,0,1,2,\dots\right)$. Để chuyển đổi dữ liệu loại khác sang số nguyên, dùng hàm ```as.integer()```.
+
+2. **Numeric**: là bất kì loại số nào, kể cả số thập phân. Để chuyển đổi dữ liệu loại khác sang kiểu numeric, dùng hàm ```as.numeric()```.
+
+3. **String**: Tương ứng với kiểu dữ liệu "Text" trong Excel; là chuỗi các kí tự bất kì, thậm chí có thể là số nhưng được lưu trữ ở dạng string. Dữ liệu kiểu string có thể là tên người, username, password, etc. Sử dụng hàm ```as.character()``` để chuyển đổi.
+
+4. **Factor**: Là kiểu dữ liệu string nằm trong nhóm hữu hạn các giá trị cho trước. Thông thường factor còn được hiểu là biến nhóm (categorical values), tuy nhiên trong R chúng ta sẽ sử dụng thuật ngữ "Factor". Ví dụ: giới tính (nam, nữ), điểm (A, B, C, E, D, F). Sử dụng hàm ```as.factor()``` để chuyển đổi.
+
+5. **Logical**: Là loại dữ liệu factor đặc biệt, chỉ gồm 2 giá trị `TRUE` và `FALSE`. Dùng hàm `as.logical()` để convert `0` thành `FALSE` và mọi giá trị số còn lại thành `TRUE`.
+
+Thông thường, khi import dữ liệu, R sẽ tự động đặt kiểu giá trị cho data frame, tuy nhiên nên sử dụng argument `col_types` để tự đặt theo ý mình, tránh sai sót.
+
+
+## Truy vấn dữ liệu cơ bản
+
+Thực tế, data frame là một **list các vector cùng độ dài** (Đọc thêm về list ở mục tham khảo - data structures). Vì vậy, ta có thể tự tạo 1 data frame cơ bản bằng cách liệt kê ra các vector.
+
+
+```{r}
+animals <- data.frame(
+  Ten = c('Cho', 'Meo', 'Lon', 'Ga'),
+  Tuoi   = c(3, 5, 1, 1),
+  CanNang_kg = c(15, 8, 30, 3),
+  SoChan = c(4, 4, 4, 2)
+)
+
+# goi ra data frame
+animals
+```
+
+Để truy vấn một cột trong data frame trên, data dùng cú pháp `$`:
+
+```{r}
+animals$Tuoi
+mean(animals$Tuoi)
+```
+
+Ngoài ra, có thể dùng cú pháp `[row, column]`, tương đương với dòng-cột (ngược lại với cú pháp thông thường trong Excel, ví dụ ô B5):
+
+```{r}
+animals[ , 'Tuoi']    # xem tất cả các dòng của cột 'Tuoi'
+animals[ 2, 'Tuoi']  # xem dòng 2 của cột 'Tuoi'
+```
+
+Tương tự, truy vấn dữ liệu bằng số thứ tự (index) cũng theo cú pháp dòng-cột:
+
+```{r}
+animals[,2]
+animals[2,2]
+```
+
+Tạo ra một cột mới:
+
+```{r}
+animals$CanNang_g <- animals$CanNang_kg * 1000 # tạo cột cân nặng theo gam
+animals                                       # truy vấn kết quả
+```
+
+Kiểm tra định dạng các biến trong data frame bằng cách dùng hàm `str()`:
+
+```{r}
+str(animals)
+```
+
+Hàm `summary()` giúp đưa ra tóm tắt về data frame, tính toán 1 số thống kê cơ bản như mean, min, max, median, etc.
+
+```{r}
+summary(animals)
+```
+
+
+## Tham khảo
+
++ [Delimiter - Wiki](https://en.wikipedia.org/wiki/Delimiter)
++ [Comma-separated values - Wiki](https://en.wikipedia.org/wiki/Comma-separated_values)
++ [String - Wiki](https://en.wikipedia.org/wiki/String_(computer_science))
++ [Data structures - Advanced R](https://adv-r.hadley.nz/vectors-chap.html)

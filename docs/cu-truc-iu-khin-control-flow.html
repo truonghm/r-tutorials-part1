@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>6 Cấu trúc điều khiển (Control flow) | Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1</title>
+  <meta name="description" content="6 Cấu trúc điều khiển (Control flow) | Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1" />
+  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="6 Cấu trúc điều khiển (Control flow) | Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  <meta name="github-repo" content="truonghm/R01" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="6 Cấu trúc điều khiển (Control flow) | Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1" />
+  
+  
+  
+
+<meta name="author" content="Truong Hoang" />
+
+
+<meta name="date" content="2019-11-10" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="bin-i-d-liu-phn-2.html"/>
+<link rel="next" href="faqs-ngn-gon-v-r.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Mở đầu</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#disclaimer"><i class="fa fa-check"></i>Disclaimer</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#outline-draft"><i class="fa fa-check"></i>Outline draft</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#to-do"><i class="fa fa-check"></i>To-do</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#general-resources"><i class="fa fa-check"></i>General resources</a></li>
+</ul></li>
+<li class="part"><span><b>Giới thiệu chung</b></span></li>
+<li class="chapter" data-level="1" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html"><i class="fa fa-check"></i><b>1</b> Làm quen với R</a><ul>
+<li class="chapter" data-level="1.1" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#tinh-toan-co-ban-trong-r"><i class="fa fa-check"></i><b>1.1</b> Tính toán cơ bản trong R</a></li>
+<li class="chapter" data-level="1.2" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#gan-bin-assignment"><i class="fa fa-check"></i><b>1.2</b> Gán biến (Assignment)</a></li>
+<li class="chapter" data-level="1.3" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#vector"><i class="fa fa-check"></i><b>1.3</b> Vector</a></li>
+<li class="chapter" data-level="1.4" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#cac-goi-thu-vin-packages"><i class="fa fa-check"></i><b>1.4</b> Các gói thư viện (packages)</a></li>
+<li class="chapter" data-level="1.5" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#tim-kim-cau-tra-li"><i class="fa fa-check"></i><b>1.5</b> Tìm kiếm câu trả lời</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#documentation-cua-r"><i class="fa fa-check"></i><b>1.5.1</b> Documentation của R</a></li>
+<li class="chapter" data-level="1.5.2" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#stackoverflow"><i class="fa fa-check"></i><b>1.5.2</b> Stackoverflow</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#workflow-co-ban-trong-r"><i class="fa fa-check"></i><b>1.6</b> Workflow cơ bản trong R</a><ul>
+<li class="chapter" data-level="1.6.1" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#r-script-file-uoi-.r"><i class="fa fa-check"></i><b>1.6.1</b> R Script (file đuôi *.R)</a></li>
+<li class="chapter" data-level="1.6.2" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#r-markdown-file-uoi-.rmd"><i class="fa fa-check"></i><b>1.6.2</b> R Markdown (file đuôi *.Rmd)</a></li>
+<li class="chapter" data-level="1.6.3" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#r-project-file-uoi-.rproj"><i class="fa fa-check"></i><b>1.6.3</b> R Project (file đuôi *.Rproj)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#tham-khao"><i class="fa fa-check"></i><b>1.7</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="data-frame.html"><a href="data-frame.html"><i class="fa fa-check"></i><b>2</b> Data frame</a><ul>
+<li class="chapter" data-level="2.1" data-path="data-frame.html"><a href="data-frame.html#import-d-liu-co-ban"><i class="fa fa-check"></i><b>2.1</b> Import dữ liệu cơ bản</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="data-frame.html"><a href="data-frame.html#t-package"><i class="fa fa-check"></i><b>2.1.1</b> Từ package</a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-frame.html"><a href="data-frame.html#import-t-excel-file-csv-hoc-file-txt"><i class="fa fa-check"></i><b>2.1.2</b> Import từ Excel, file csv hoặc file txt</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-frame.html"><a href="data-frame.html#cac-loai-d-liu-value-type"><i class="fa fa-check"></i><b>2.2</b> Các loại dữ liệu (Value type)</a></li>
+<li class="chapter" data-level="2.3" data-path="data-frame.html"><a href="data-frame.html#truy-vn-d-liu-co-ban"><i class="fa fa-check"></i><b>2.3</b> Truy vấn dữ liệu cơ bản</a></li>
+<li class="chapter" data-level="2.4" data-path="data-frame.html"><a href="data-frame.html#tham-khao-1"><i class="fa fa-check"></i><b>2.4</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ve-biu-.html"><a href="ve-biu-.html"><i class="fa fa-check"></i><b>3</b> Vẽ biểu đồ</a><ul>
+<li class="chapter" data-level="3.1" data-path="ve-biu-.html"><a href="ve-biu-.html#cac-biu--co-ban"><i class="fa fa-check"></i><b>3.1</b> Các biểu đồ cơ bản</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="ve-biu-.html"><a href="ve-biu-.html#scatterplot"><i class="fa fa-check"></i><b>3.1.1</b> Scatterplot</a></li>
+<li class="chapter" data-level="3.1.2" data-path="ve-biu-.html"><a href="ve-biu-.html#boxplot"><i class="fa fa-check"></i><b>3.1.2</b> Boxplot</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="ve-biu-.html"><a href="ve-biu-.html#tieu--va-t-ten-truc"><i class="fa fa-check"></i><b>3.2</b> Tiêu đề và đặt tên trục</a></li>
+<li class="chapter" data-level="3.3" data-path="ve-biu-.html"><a href="ve-biu-.html#dan-nhan-d-liu-annotation"><i class="fa fa-check"></i><b>3.3</b> Dán nhãn dữ liệu (annotation)</a></li>
+<li class="chapter" data-level="3.4" data-path="ve-biu-.html"><a href="ve-biu-.html#facet"><i class="fa fa-check"></i><b>3.4</b> Facet</a></li>
+<li class="chapter" data-level="3.5" data-path="ve-biu-.html"><a href="ve-biu-.html#cac-thut-ng"><i class="fa fa-check"></i><b>3.5</b> Các thuật ngữ</a></li>
+<li class="chapter" data-level="3.6" data-path="ve-biu-.html"><a href="ve-biu-.html#tham-khao-2"><i class="fa fa-check"></i><b>3.6</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html"><i class="fa fa-check"></i><b>4</b> Biến đổi dữ liệu</a><ul>
+<li class="chapter" data-level="4.1" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#gii-thiu-chung-v-dplyr-va-tibble"><i class="fa fa-check"></i><b>4.1</b> Giới thiệu chung về <strong>dplyr</strong> và <code>tibble</code></a><ul>
+<li class="chapter" data-level="4.1.1" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#tibble"><i class="fa fa-check"></i><b>4.1.1</b> Tibble</a></li>
+<li class="chapter" data-level="4.1.2" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#package-dplyr"><i class="fa fa-check"></i><b>4.1.2</b> Package <strong>dplyr</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#cac-verb-trong-dplyr"><i class="fa fa-check"></i><b>4.2</b> Các “verb” trong <strong>dplyr</strong></a><ul>
+<li class="chapter" data-level="4.2.1" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#add_row"><i class="fa fa-check"></i><b>4.2.1</b> <code>add_row()</code></a></li>
+<li class="chapter" data-level="4.2.2" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#select-filter-va-slice"><i class="fa fa-check"></i><b>4.2.2</b> <code>select()</code>, <code>filter()</code> và <code>slice()</code></a></li>
+<li class="chapter" data-level="4.2.3" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#arrange"><i class="fa fa-check"></i><b>4.2.3</b> <code>arrange()</code></a></li>
+<li class="chapter" data-level="4.2.4" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#mutate-transmute"><i class="fa fa-check"></i><b>4.2.4</b> <code>mutate()</code> &amp; <code>transmute()</code></a></li>
+<li class="chapter" data-level="4.2.5" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#summarise"><i class="fa fa-check"></i><b>4.2.5</b> <code>summarise()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#kt-hp-cac-ham-trong-dplyr"><i class="fa fa-check"></i><b>4.3</b> Kết hợp các hàm trong <strong>dplyr</strong></a><ul>
+<li class="chapter" data-level="4.3.1" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#group_by"><i class="fa fa-check"></i><b>4.3.1</b> <code>group_by()</code></a></li>
+<li class="chapter" data-level="4.3.2" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#bin-i-d-liu-co-ban"><i class="fa fa-check"></i><b>4.3.2</b> Biến đổi dữ liệu cơ bản</a></li>
+<li class="chapter" data-level="4.3.3" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#group_by-va-summarise"><i class="fa fa-check"></i><b>4.3.3</b> <code>group_by</code> và <code>summarise</code></a></li>
+<li class="chapter" data-level="4.3.4" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#kt-hp-group_by-va-mutate-filter"><i class="fa fa-check"></i><b>4.3.4</b> Kết hợp <code>group_by</code> và <code>mutate</code> / <code>filter</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#tham-khao-3"><i class="fa fa-check"></i><b>4.4</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="bin-i-d-liu-phn-2.html"><a href="bin-i-d-liu-phn-2.html"><i class="fa fa-check"></i><b>5</b> Biến đổi dữ liệu (Phần 2)</a><ul>
+<li class="chapter" data-level="5.1" data-path="bin-i-d-liu-phn-2.html"><a href="bin-i-d-liu-phn-2.html#dataset-czech-financial"><i class="fa fa-check"></i><b>5.1</b> Dataset Czech Financial</a></li>
+<li class="chapter" data-level="5.2" data-path="bin-i-d-liu-phn-2.html"><a href="bin-i-d-liu-phn-2.html#tham-khao-4"><i class="fa fa-check"></i><b>5.2</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html"><i class="fa fa-check"></i><b>6</b> Cấu trúc điều khiển (Control flow)</a><ul>
+<li class="chapter" data-level="6.1" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#biu-thc-phuong-thc-iu-kin-expressions-operators"><i class="fa fa-check"></i><b>6.1</b> Biểu thức &amp; phương thức điều kiện (expressions &amp; operators)</a></li>
+<li class="chapter" data-level="6.2" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#mnh--iu-kin"><i class="fa fa-check"></i><b>6.2</b> Mệnh đề điều kiện</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#trong-dplyr"><i class="fa fa-check"></i><b>6.2.1</b> Trong <strong>dplyr</strong></a></li>
+<li class="chapter" data-level="6.2.2" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#mnh-if"><i class="fa fa-check"></i><b>6.2.2</b> Mệnh <code>if</code></a></li>
+<li class="chapter" data-level="6.2.3" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#tng-hp-lai"><i class="fa fa-check"></i><b>6.2.3</b> Tổng hợp lại</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#vong-lp"><i class="fa fa-check"></i><b>6.3</b> Vòng lặp</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#vong-lp-while"><i class="fa fa-check"></i><b>6.3.1</b> Vòng lặp <code>while</code></a></li>
+<li class="chapter" data-level="6.3.2" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#vong-lp-for"><i class="fa fa-check"></i><b>6.3.2</b> Vòng lặp <code>for</code></a></li>
+<li class="chapter" data-level="6.3.3" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#chu-y"><i class="fa fa-check"></i><b>6.3.3</b> Chú ý</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#tham-khao-5"><i class="fa fa-check"></i><b>6.4</b> Tham khảo</a></li>
+</ul></li>
+<li class="part"><span><b>Misc</b></span></li>
+<li class="chapter" data-level="7" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html"><i class="fa fa-check"></i><b>7</b> FAQs ngắn gọn về R</a><ul>
+<li class="chapter" data-level="7.1" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#cac-ky-hiu-c-bit-trong-r"><i class="fa fa-check"></i><b>7.1</b> Các ký hiệu đặc biệt trong R</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#du--"><i class="fa fa-check"></i><b>7.1.1</b> Dấu <code>&lt;-</code></a></li>
+<li class="chapter" data-level="7.1.2" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#du-."><i class="fa fa-check"></i><b>7.1.2</b> Dấu <code>.</code></a></li>
+<li class="chapter" data-level="7.1.3" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#du"><i class="fa fa-check"></i><b>7.1.3</b> Dấu <code>%</code></a></li>
+<li class="chapter" data-level="7.1.4" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#du-va"><i class="fa fa-check"></i><b>7.1.4</b> Dấu <code>:</code> và <code>::</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#mt-s-cau-hoi-khac"><i class="fa fa-check"></i><b>7.2</b> Một số câu hỏi khác</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#r-co-th-s-dung-cho-cac-muc-ich-nao-khac-ngoai-scientific-computing-khong"><i class="fa fa-check"></i><b>7.2.1</b> R có thể sử dụng cho các mục đích nào khác ngoài scientific computing không?</a></li>
+<li class="chapter" data-level="7.2.2" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#trong-r-co-tn-tai-h-thngquy-chun-v-style-tuong-uong-pep8-trong-pythong-khong"><i class="fa fa-check"></i><b>7.2.2</b> Trong R có tồn tại hệ thống/quy chuẩn về “style” (tương đương) PEP8 trong Pythong) không?</a></li>
+<li class="chapter" data-level="7.2.3" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#co-nen-s-dung-require--tai-package-khong"><i class="fa fa-check"></i><b>7.2.3</b> Có nên sử dụng <code>require</code> để tải package không?</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#tham-khao-6"><i class="fa fa-check"></i><b>7.3</b> Tham khảo</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="cu-truc-iu-khin-control-flow" class="section level1">
+<h1><span class="header-section-number">6</span> Cấu trúc điều khiển (Control flow)</h1>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb174-1" title="1"><span class="co"># load sẵn tidyverse</span></a>
+<a class="sourceLine" id="cb174-2" title="2"><span class="kw">library</span>(tidyverse, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p>Có 2 kiểu cấu trúc điều khiển (control flow) trong R:</p>
+<ol style="list-style-type: decimal">
+<li>Sử dụng các mệnh đề điều kiện <code>if</code> và <code>switch</code>, trong đó ở phần này, chúng ta sẽ chỉ đề cập đến <code>if</code></li>
+<li>Sử dụng các mệnh đề vòng lặp <code>while</code>, <code>repeat</code> và <code>for</code></li>
+</ol>
+<div id="biu-thc-phuong-thc-iu-kin-expressions-operators" class="section level2">
+<h2><span class="header-section-number">6.1</span> Biểu thức &amp; phương thức điều kiện (expressions &amp; operators)</h2>
+<p><em>Biểu thức điều kiện</em> (logical expressions) bao gồm 1 số biểu thức cơ bản như: <code>&lt;</code>, <code>&lt;=</code>, <code>==</code>, <code>!=</code>, <code>&gt;=</code>, <code>&gt;</code>. Đây là các biểu thức so sánh thường thấy trong toán học, với <code>!=</code> tương đương với <code>&lt;&gt;</code> trong 1 số ngôn ngữ khác.</p>
+<p>Ngoài ra, như đã giới thiệu ở phần trước, R còn có các <em>toán tử điều kiện</em> (logical operators):</p>
+<table>
+<colgroup>
+<col width="28%" />
+<col width="31%" />
+<col width="40%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Kí hiệu</th>
+<th align="center">Ý nghĩa</th>
+<th align="center">Ghi chú</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><code>!x</code> (exclaimation)</td>
+<td align="center">not x (logical negation)</td>
+<td align="center">Chỉ nên dùng với dữ liệu dạng Logical/boolean</td>
+</tr>
+<tr class="even">
+<td align="center"><code>x &amp; y</code> (ampersand)</td>
+<td align="center">x và y (logical AND)</td>
+<td align="center">Trả kết quả là vector</td>
+</tr>
+<tr class="odd">
+<td align="center"><code>x &amp;&amp; y</code> (double ampersands)</td>
+<td align="center">x và y (logical AND)</td>
+<td align="center">Trả kết quả không vectorized</td>
+</tr>
+<tr class="even">
+<td align="center"><code>x | y</code> (vertical bar)</td>
+<td align="center">x hoặc y (logical OR, inclusive)</td>
+<td align="center">Trả kết quả là vector</td>
+</tr>
+<tr class="odd">
+<td align="center"><code>x || y</code> (double vertical bars)</td>
+<td align="center">x hoặc y (logical OR, inclusive)</td>
+<td align="center">Trả kết quả không vectorized</td>
+</tr>
+<tr class="even">
+<td align="center"><code>xor(x, y)</code></td>
+<td align="center">exclusive OR</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" title="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">A=</span><span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">B=</span><span class="dv">5</span><span class="op">:</span><span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb175-2" title="2">df</a></code></pre></div>
+<pre><code>##   A  B
+## 1 1  5
+## 2 2  6
+## 3 3  7
+## 4 4  8
+## 5 5  9
+## 6 6 10</code></pre>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb177-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="st">`</span><span class="dt">A==3?</span><span class="st">`</span>         =<span class="st">  </span>A <span class="op">==</span><span class="st"> </span><span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb177-2" title="2">              <span class="st">`</span><span class="dt">A&lt;=3?</span><span class="st">`</span>         =<span class="st">  </span>A <span class="op">&lt;=</span><span class="st"> </span><span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb177-3" title="3">              <span class="st">`</span><span class="dt">A!=3?</span><span class="st">`</span>         =<span class="st">  </span>A <span class="op">!=</span><span class="st"> </span><span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb177-4" title="4">              <span class="st">`</span><span class="dt">Not</span><span class="st">`</span> =<span class="st"> </span><span class="op">!</span><span class="st"> `</span><span class="dt">A!=3?</span><span class="st">`</span>)</a></code></pre></div>
+<pre><code>##   A  B A==3? A&lt;=3? A!=3?   Not
+## 1 1  5 FALSE  TRUE  TRUE FALSE
+## 2 2  6 FALSE  TRUE  TRUE FALSE
+## 3 3  7  TRUE  TRUE FALSE  TRUE
+## 4 4  8 FALSE FALSE  TRUE FALSE
+## 5 5  9 FALSE FALSE  TRUE FALSE
+## 6 6 10 FALSE FALSE  TRUE FALSE</code></pre>
+<p>Ngoài các toán tử trên, R còn có các hàm <code>any()</code>, <code>all()</code> và <code>which()</code>. Các hàm này có ý nghĩa đúng như tên gọi:</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" title="1"><span class="kw">any</span>(<span class="dv">6</span><span class="op">:</span><span class="dv">10</span> <span class="op">&lt;=</span><span class="st"> </span><span class="dv">7</span>)   <span class="co"># Trả về TRUE nếu có bất kì giá trị nào &lt;= 7 (TRUE)</span></a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb181-1" title="1"><span class="kw">all</span>(<span class="dv">6</span><span class="op">:</span><span class="dv">10</span> <span class="op">&lt;=</span><span class="st"> </span><span class="dv">7</span>)   <span class="co"># Trả về TRUE nếu tất cả mọi giá trị đều &lt;= 7 (FALSE)</span></a></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb183-1" title="1"><span class="kw">which</span>(<span class="dv">6</span><span class="op">:</span><span class="dv">10</span> <span class="op">&lt;=</span><span class="st"> </span><span class="dv">7</span>) <span class="co"># Trả về vị trí (index) của những giá trị đáp ứng điều kiện</span></a></code></pre></div>
+<pre><code>## [1] 1 2</code></pre>
+<p>Lưu ý: R đếm (index) bắt đầu từ 1, thể hiện qua kết quả của hàm <code>which()</code> ở trên. Trong một số ngôn ngữ khác như Python, index bắt đầu từ 0 (VBA cũng có 1 số chỗ index từ 0).</p>
+<p>Ở phần 1.4 trước đó, chúng ta đã làm quen với <code>%in%</code>, tương tự như hàm <code>IN</code> trong SQL.</p>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb185-1" title="1"><span class="co"># dùng hàm rep() để repeat các kí tự A B C D</span></a>
+<a class="sourceLine" id="cb185-2" title="2">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Letter =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&#39;A&#39;</span>,<span class="st">&#39;B&#39;</span>,<span class="st">&#39;C&#39;</span>,<span class="st">&#39;D&#39;</span>), <span class="dt">each=</span><span class="dv">2</span>), <span class="dt">Value=</span><span class="dv">1</span><span class="op">:</span><span class="dv">8</span>)</a>
+<a class="sourceLine" id="cb185-3" title="3">df</a></code></pre></div>
+<pre><code>##   Letter Value
+## 1      A     1
+## 2      A     2
+## 3      B     3
+## 4      B     4
+## 5      C     5
+## 6      C     6
+## 7      D     7
+## 8      D     8</code></pre>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb187-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Letter <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;A&#39;</span>, <span class="st">&#39;B&#39;</span>))</a></code></pre></div>
+<pre><code>##   Letter Value
+## 1      A     1
+## 2      A     2
+## 3      B     3
+## 4      B     4</code></pre>
+</div>
+<div id="mnh--iu-kin" class="section level2">
+<h2><span class="header-section-number">6.2</span> Mệnh đề điều kiện</h2>
+<div id="trong-dplyr" class="section level3">
+<h3><span class="header-section-number">6.2.1</span> Trong <strong>dplyr</strong></h3>
+<p>Ở phần 1.4 - Biến đổi dữ liệu, chúng ta đã lấy khá nhiều ví dụ về mệnh đề điều kiện <code>if_else()</code> và <code>case_when</code>, vì vậy phần này sẽ không nói quá nhiều nữa. Tuy nhiên, vẫn cần có 1 số lưu ý như sau:</p>
+<div id="if_else-va-case_when" class="section level4">
+<h4><span class="header-section-number">6.2.1.1</span> <code>if_else()</code> và <code>case_when()</code></h4>
+<p>Điểm chung của 2 hàm này là cùng thuộc package <strong>dplyr</strong>, và được tạo ra để làm việc với kiểu dữ liệu vector. Nói chung, 2 hàm này khác nhau không quá nhiều về công dụng (functionality), tuy nhiên qua nhiều thử nghiệm, có thể thấy <code>if_else()</code> nhanh hơn <code>case_when()</code>:</p>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb189-1" title="1"><span class="co"># Đoạn code này có tham khảo ở rstudio forum, link ở phần tham khảo</span></a>
+<a class="sourceLine" id="cb189-2" title="2">microbenchmark<span class="op">::</span><span class="kw">microbenchmark</span>(</a>
+<a class="sourceLine" id="cb189-3" title="3">  <span class="kw">case_when</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span> <span class="op">&lt;</span><span class="st"> </span><span class="dv">100</span> <span class="op">~</span><span class="st"> &quot;low&quot;</span>, <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &quot;high&quot;</span>),</a>
+<a class="sourceLine" id="cb189-4" title="4">  <span class="kw">if_else</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span> <span class="op">&lt;</span><span class="st"> </span><span class="dv">3</span>, <span class="st">&quot;low&quot;</span>, <span class="st">&quot;high&quot;</span>),</a>
+<a class="sourceLine" id="cb189-5" title="5">  <span class="kw">ifelse</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span> <span class="op">&lt;</span><span class="st"> </span><span class="dv">3</span>, <span class="st">&quot;low&quot;</span>, <span class="st">&quot;high&quot;</span>)</a>
+<a class="sourceLine" id="cb189-6" title="6">)</a></code></pre></div>
+<pre><code>## Unit: microseconds
+##                                            expr   min    lq    mean median
+##  case_when(1:1000 &lt; 100 ~ &quot;low&quot;, TRUE ~ &quot;high&quot;) 123.9 128.4 140.117 131.20
+##              if_else(1:1000 &lt; 3, &quot;low&quot;, &quot;high&quot;)  39.1  40.3  43.725  41.35
+##               ifelse(1:1000 &lt; 3, &quot;low&quot;, &quot;high&quot;) 197.4 200.0 210.983 201.05
+##     uq   max neval
+##  136.0 278.3   100
+##   42.6  83.0   100
+##  203.6 320.4   100</code></pre>
+<p>Như vậy, có thể kết luận là nếu chúng ta chỉ có ý định viết mệnh đề quan hệ với 2 điều kiện <code>TRUE</code> hoặc <code>FALSE</code>, hãy dùng <code>if_else()</code>. Nếu cần dùng nhiều điều kiện, hãy dùng <code>case_when()</code> để code dễ đọc hơn (more readability).</p>
+</div>
+<div id="if_else-va-ifelse" class="section level4">
+<h4><span class="header-section-number">6.2.1.2</span> <code>if_else()</code> và <code>ifelse()</code></h4>
+<p>Trong ví dụ dùng <code>microbenchmark</code> ở trên, có thêm 1 hàm là <code>ifelse()</code>. Cần phân biệt hàm này với <code>if_else()</code>: <code>?ifelse()</code> cho ta thấy đây là 1 hàm thuộc base R, với tốc độ chậm và gặp vấn đề trong việc giữ đúng kiểu dữ liệu. Vì vậy, tốt nhất là nên tránh xa hàm này.</p>
+</div>
+</div>
+<div id="mnh-if" class="section level3">
+<h3><span class="header-section-number">6.2.2</span> Mệnh <code>if</code></h3>
+<p>Ngoài các mệnh đề điều kiện ở trên, chúng ta còn có thể dùng hàm <code>if</code> (khác với <code>if_else()</code> hay <code>ifelse()</code>) trong các tình huống cần đánh giá điều kiện phức tạp hơn, và với kiểu dữ liệu scalar (vô hướng, tức là 1 giá trị). Cấu trúc chung của mệnh đề <code>if</code> như sau:</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb191-1" title="1"><span class="co"># Cơ bản</span></a>
+<a class="sourceLine" id="cb191-2" title="2"><span class="cf">if</span>( kiểm tra điều kiện ){</a>
+<a class="sourceLine" id="cb191-3" title="3">  các biểu thức kết quả</a>
+<a class="sourceLine" id="cb191-4" title="4">}</a>
+<a class="sourceLine" id="cb191-5" title="5"></a>
+<a class="sourceLine" id="cb191-6" title="6"><span class="co"># Bao gồm cả mệnh đề else</span></a>
+<a class="sourceLine" id="cb191-7" title="7"><span class="cf">if</span>( kiểm tra điều kiện ){</a>
+<a class="sourceLine" id="cb191-8" title="8">  các biểu thức kết quả</a>
+<a class="sourceLine" id="cb191-9" title="9">}<span class="cf">else</span>{</a>
+<a class="sourceLine" id="cb191-10" title="10">  các biểu thức kết quả</a>
+<a class="sourceLine" id="cb191-11" title="11">}</a></code></pre></div>
+</div>
+<div id="tng-hp-lai" class="section level3">
+<h3><span class="header-section-number">6.2.3</span> Tổng hợp lại</h3>
+<ol style="list-style-type: decimal">
+<li><p><code>if_else()</code> và <code>case_when()</code> áp dụng với dữ liệu kiểu vector, và thường kết hợp với các hàm trong <strong>dplyr</strong>.</p></li>
+<li><p><code>if</code> áp dụng với dữ liệu kiểu scalar (vô hướng).</p></li>
+<li><p><code>ifelse()</code> là một hàm của base R và không hiệu quả bằng <code>if_else()</code> hay <code>case_when()</code>, vì vậy có thể bỏ qua.</p></li>
+</ol>
+</div>
+</div>
+<div id="vong-lp" class="section level2">
+<h2><span class="header-section-number">6.3</span> Vòng lặp</h2>
+<p>Chúng ta thường phải viết code để thực hiện 1 công việc lặp đi lặp lại nhiều lần. Để làm được điều này, R cho chúng ta các cách để:</p>
+<ol style="list-style-type: decimal">
+<li>Cho R biết khi nào thì dừng thực hiện công việc đó (nếu đáp ứng điều kiện)<br />
+</li>
+<li>Số lần thực hiện</li>
+</ol>
+<div id="vong-lp-while" class="section level3">
+<h3><span class="header-section-number">6.3.1</span> Vòng lặp <code>while</code></h3>
+<p>Cấu trúc cơ bản của vòng lặp <code>while</code></p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb192-1" title="1"><span class="cf">while</span>( kiểm tra điều kiện ){</a>
+<a class="sourceLine" id="cb192-2" title="2">  các biểu thức cần lặp lại</a>
+<a class="sourceLine" id="cb192-3" title="3">}</a></code></pre></div>
+<p>R sẽ bắt đầu bằng việc đánh giá điều kiện: Nếu điều kiện đúng, R sẽ thi hành các biểu thức bên trong ngoặc <code>{}</code> một lần. Sau đó, R sẽ lặp lại quá trình này cho đến khi điều kiện không còn đúng nữa.</p>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb193-1" title="1">x &lt;-<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb193-2" title="2"><span class="cf">while</span>( x <span class="op">&lt;</span><span class="st"> </span><span class="dv">10</span> ){</a>
+<a class="sourceLine" id="cb193-3" title="3">  <span class="kw">print</span>( <span class="kw">paste</span>(<span class="st">&quot;Giá trị của x hiện đang là:&quot;</span>, x) )</a>
+<a class="sourceLine" id="cb193-4" title="4">  x &lt;-<span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="co"># tăng thêm 1 vào biến x ~ biểu thức cập nhật biến điều kiện</span></a>
+<a class="sourceLine" id="cb193-5" title="5">}</a></code></pre></div>
+<pre><code>## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 2&quot;
+## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 3&quot;
+## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 4&quot;
+## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 5&quot;
+## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 6&quot;
+## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 7&quot;
+## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 8&quot;
+## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 9&quot;</code></pre>
+<p><strong>Lỗi thường gặp</strong></p>
+<p>Người dùng vòng lặp <code>while</code> thường gặp 1 lỗi cơ bản là quên không cập nhật biến điều kiện, hay như trong ví dụ ở trên là quên không thêm vào <code>x &lt;- x + 1</code>. Khi dùng <code>while</code>, luôn cần đến 1 biểu thức để cập nhật biến điều kiện, khiến cho điều kiện có thể đạt kết quả <code>FALSE</code>. Nếu không, hàm <code>while</code> sẽ chạy mãi mãi (infinite loop) và có thể gây treo máy.</p>
+</div>
+<div id="vong-lp-for" class="section level3">
+<h3><span class="header-section-number">6.3.2</span> Vòng lặp <code>for</code></h3>
+<p>Vòng lặp <code>for</code> là kiểu vòng lặp phổ biến hơn. Khi dùng <code>for</code>, chúng ta cần biết chính xác số lần chạy vòng lặp. cấu trúc chung của <code>for</code> loop như sau:</p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb195-1" title="1"><span class="cf">for</span>( item <span class="cf">in</span> vector ){</a>
+<a class="sourceLine" id="cb195-2" title="2">  các biểu thức</a>
+<a class="sourceLine" id="cb195-3" title="3">}</a></code></pre></div>
+<p>Ví dụ:</p>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb196-1" title="1"><span class="cf">for</span>(x <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>){</a>
+<a class="sourceLine" id="cb196-2" title="2">  <span class="kw">print</span>( <span class="kw">paste</span>(<span class="st">&quot;Giá trị của x hiện đang là:&quot;</span>, x) )</a>
+<a class="sourceLine" id="cb196-3" title="3">}</a></code></pre></div>
+<pre><code>## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 1&quot;
+## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 2&quot;
+## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 3&quot;
+## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 4&quot;
+## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 5&quot;
+## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 6&quot;
+## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 7&quot;
+## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 8&quot;
+## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 9&quot;
+## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 10&quot;</code></pre>
+<p>Trong ví dụ này, x sẽ đi lần lượt từng giá trị trong vector <code>c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)</code>, và các biểu thức trong ngoặc <code>{}</code> được thi hành mỗi lần x nhận 1 giá trị.</p>
+<p>Chúng ta có thể dùng vòng lặp <code>for</code> để tạo ra 10 giá trị đầu tiên của dãy số Fibonacci (được định nghĩa là: <span class="math inline">\(F_{n}=F_{n-1}+F_{n-2}\)</span> với <span class="math inline">\(F_{1}=0\)</span> và <span class="math inline">\(F_{2}=1\)</span>) như sau:</p>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb198-1" title="1">F &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>, <span class="dv">10</span>)          <span class="co"># tạo ra 1 dãy 10 giá trị NA</span></a>
+<a class="sourceLine" id="cb198-2" title="2">F[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">0</span>                 <span class="co"># Đặt giá trị cho F1 và F2</span></a>
+<a class="sourceLine" id="cb198-3" title="3">F[<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="dv">1</span>   </a>
+<a class="sourceLine" id="cb198-4" title="4"></a>
+<a class="sourceLine" id="cb198-5" title="5"><span class="cf">for</span>( n <span class="cf">in</span> <span class="dv">3</span><span class="op">:</span><span class="dv">10</span> ){         <span class="co"># Vòng lặp đi từ F3</span></a>
+<a class="sourceLine" id="cb198-6" title="6">  F[n] &lt;-<span class="st"> </span>F[n<span class="dv">-1</span>] <span class="op">+</span><span class="st"> </span>F[n<span class="dv">-2</span>] </a>
+<a class="sourceLine" id="cb198-7" title="7">  <span class="kw">print</span>(F)                <span class="co"># in ra quá trình sau mỗi lần tính</span></a>
+<a class="sourceLine" id="cb198-8" title="8">}</a></code></pre></div>
+<pre><code>##  [1]  0  1  1 NA NA NA NA NA NA NA
+##  [1]  0  1  1  2 NA NA NA NA NA NA
+##  [1]  0  1  1  2  3 NA NA NA NA NA
+##  [1]  0  1  1  2  3  5 NA NA NA NA
+##  [1]  0  1  1  2  3  5  8 NA NA NA
+##  [1]  0  1  1  2  3  5  8 13 NA NA
+##  [1]  0  1  1  2  3  5  8 13 21 NA
+##  [1]  0  1  1  2  3  5  8 13 21 34</code></pre>
+</div>
+<div id="chu-y" class="section level3">
+<h3><span class="header-section-number">6.3.3</span> Chú ý</h3>
+<ol style="list-style-type: decimal">
+<li><p>Ngoài <code>for</code> và <code>while</code>, chúng ta còn có thể dùng <code>repeat</code> để lặp lại 1 hành động mãi mãi (chúng ta cần cung cấp thêm 1 mệnh đề điều kiện kèm <code>break</code> để dừng vòng lặp)</p></li>
+<li><p>Chúng ta có thể viết lại vòng lặp <code>for</code> sử dụng <code>while</code>, và viết lại <code>while</code> sử dụng <code>repeat</code>, nhưng không thể làm ngược lại. Điều này là vì <code>repeat</code> linh động hơn <code>while</code>, và <code>while</code> linh động hơn <code>for</code>, nhưng linh động cũng đồng nghĩa với việc dễ có lỗ hổng trong điều kiện dẫn đến lỗi hơn. Tốt nhất là chúng ta nên luôn sử dụng những phương pháp chặt chẽ nhất (strict &amp; least flexible) để giải quyết cùng 1 bài toán.</p></li>
+<li><p>Trong các bài toán về data analysis, chúng ta thường sẽ không cần dùng <code>for</code> nhiều vì đã có các hàm <code>map()</code> và <code>apply()</code> cung cấp giải pháp còn chặt chẽ và hiệu quả hơn. Một lý do chủ yếu là do dữ liệu thường luôn ở dạng vector nên về mặt lý thuyết, ta có thể thực hiện 1 lệnh với <em>toàn bộ</em> các phần tử của vector đó thay vì dùng vòng lặp để đi qua từng phần tử một.</p></li>
+<li><p>Tham khảo thêm về control flow tại <a href="https://adv-r.hadley.nz/control-flow.html">https://adv-r.hadley.nz/control-flow.html</a></p></li>
+</ol>
+</div>
+</div>
+<div id="tham-khao-5" class="section level2">
+<h2><span class="header-section-number">6.4</span> Tham khảo</h2>
+<ul>
+<li><a href="https://community.rstudio.com/t/case-when-why-not/2685/2"><code>if_else</code> vs. <code>ifelse</code> vs. <code>case_when</code></a></li>
+<li><a href="https://en.wikipedia.org/wiki/Scalar_%28mathematics%29">Scalar in mathematics</a></li>
+<li><a href="https://adv-r.hadley.nz/control-flow.html">Control flow - Advanced R</a></li>
+</ul>
+
+</div>
+</div>
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="bin-i-d-liu-phn-2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="faqs-ngn-gon-v-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+},
+"search": true
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

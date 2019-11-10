@@ -1,0 +1,214 @@
+# Vẽ biểu đồ
+
+
+```{r, echo=FALSE}
+# Reset môi trường
+rm(list = ls())
+pkgs = names(sessionInfo()$otherPkgs)
+if( length(pkgs > 0)){
+  pkgs = paste('package:', pkgs, sep = "")
+  for( i in 1:length(pkgs)){
+    detach(pkgs[i], character.only = TRUE, force=TRUE)
+  }
+}
+```
+
+
+
+
+
+
+```{r, message=FALSE, warning=FALSE, results='hide'}
+# load sẵn ggplot2 (đã bao gồm trong tidyverse)
+library(tidyverse, quietly = TRUE)
+```
+
+Do vẽ biểu đồ (graphing) là một mảng phức tạp trong R nói riêng và data analysis/statistics nói chung nên phần này sẽ chỉ dừng ở mức cơ  bản.
+
+Có một số loại biểu đồ quan trọng nhất như sau:
+
+1. Nhóm Line (`geom_path`, `geom_line`, `geom_step`)
+
+2. Nhóm Point (`geom_point`, được sử dụng để vẽ các biểu đồ dạng scatterplot)
+
+3. Histogram (`geom_freqpoly`, `geom_histogram`, `stat_bin`)
+
+4. Density (`geom_density`, `stat_density`)
+
+5. Boxplot (`geom_boxplot`, `stat_boxplot`)
+
+6. Candle chart (không hỗ trợ trong **ggplot2**)
+
+Các biểu đồ đề cập tới trong phần 3 này là scatterplot và boxplot. Các bộ dữ liệu được sử dụng minh họa là `iris` và `mpg`.
+
+`iris` là một dataset chứa các observation của 3 loài hoa thuộc chi [iris](https://vi.wikipedia.org/wiki/Chi_Di%C3%AAn_v%C4%A9), trong đó độ dài và rộng của cách hoa (petal) và đài hoa (sepal) được đo và ghi lại.
+
+```{r}
+data(iris)
+str(iris)  # xem loại dữ liệu
+```
+
+Package được sử dụng trong phần này là **ggplot2**. **ggplot2** có rất nhiều công cụ (các hàm) để giúp người dùng vẽ được loại biểu đồ mong muốn (danh sách đầy đủ có ở [https://ggplot2.tidyverse.org/reference/](https://ggplot2.tidyverse.org/reference/)).
+
+Một biểu đồ sẽ được dựng lên theo từng layer (lớp), với lớp ban đầu là:
+
+```{r}
+ggplot(data = iris)
+ggplot(iris, aes(x = Sepal.Length,y = Sepal.Width))
+```
+
+Có thể thấy cả 2 kết quả trả về là một biểu đồ trống, với kết quả ở dưới có thêm 2 trục x (trục tung) và y (trục hoành). Để thêm một lớp, ta dùng cú pháp chung như sau:
+
+  ```
+  ggplot(data = <DATA>) + 
+    <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))
+  ```
+
+Hoặc:
+
+  ```
+  ggplot(data = <DATA>, aes(<MAPPINGS>)) + 
+    <GEOM_FUNCTION>()
+  ```
+  
+Phân biệt cụ thể giữa 2 cú pháp này sẽ giải thích kĩ hơn ở phần nâng cao.
+
+
+Ví dụ với `geom_point`:
+
+```{r, fig.height=3, warning=FALSE, message=FALSE}
+p <- ggplot(data = iris, aes(x = Sepal.Length,y = Sepal.Width))
+p + geom_point()
+
+
+p + geom_point() + geom_smooth() # Thêm 1 lớp geom_smooth()
+```
+
+Lưu ý:
+
++ Các hàm `geom_point()` và `geom_smooth()` không nhận argument nào, và R sẽ tự động thừa kế các argument của hàm `ggplot` phía trước.
++ Mỗi layer có thể nhận những dataset khác nhau.
++ Layer có thể được thêm vào  bằng dấu `+`.
++ Dataset sử dụng để visualize bắt buộc phải là dạng data frame.
+
+
+## Các biểu đồ cơ bản
+
+
+### Scatterplot
+
+Đây là biểu đồ được dùng để thể hiện mối quan hệ giữa 2 biến liên tục.
+
+**Cú pháp chung** cho biểu dồ scatterplot (`?geom_point` để đọc thêm documentation):
+
+```
+geom_point(mapping = NULL, data = NULL, stat = "identity",
+  position = "identity", ..., na.rm = FALSE, show.legend = NA,
+  inherit.aes = TRUE)
+```
+
+**Ý nghĩa của các argument**:
+
+Chú ý rằng các giá trị gán sẵn cho từng argument trong cú pháp trên là giá trị mặc định; nếu không có thiết kệ cụ thể, argument sẽ nhận giá trị mặc định.
+
++ `mapping`: Thiết lập 2 trục tung hoành (với `aes()`). Nếu `mapping = NULL` (tức là để trống), `geom_point` nhận `mapping` từ layer đầu tiên (top level) của plot, tức là từ hàm `ggplot` trước đó. Nếu không có layer đầu, `mapping` không thể để trống.
++ `data`: data frame được dùng. Nếu `data = NULL`, `geom_point` nhận `data` từ layer đầu tiên, tức là từ hàm `ggplot` trước đó.
++ `stat`: Biến đổi thống kê sử dụng trong dữ liệu để vẽ đồ thị.
++ `position`: Điều chỉnh vị trí của đồ thị.
++ `…`: Những argument khác được pass vào đồ thị. Thông thường là các giá trị qui định về color, size của đồ thị.
++ `na.rm`: bỏ giá trị NA. Nếu bằng `FALSE`, hàm sẽ bỏ NA và có cảnh báo (warning). Nếu bằng `TRUE`, hàm sẽ bỏ NA mà không cảnh báo.
++ `show.legend`: Có thể hiện layer này trong legend hay không. Mặc định `show.legend = NA`, tức là có bao gồm trong legend (Còn nhận 1 số value khác, đọc thêm ở doc).
++ `inherit.aes`: Nếu bằng `FALSE`, đè lên aestheticis mặc định, thay vì kết hợp với nhau.
+
+Trước mắt, chúng ta sẽ chỉ quan tâm đến 2 argument là `mapping` và `data`. Ngoài ra argument `stat` cũng nên được chú ý.
+
+Vẽ biểu đồ với `x=Sepal.Length` và `y=Petal.Length`:
+
+```{r, fig.height=3, warning=FALSE, message=FALSE}
+p <- ggplot(data = iris, aes(x = Sepal.Length, y = Petal.Length)) 
+p + geom_point()
+```
+
+Như đã nói ở trên, geom_point không nhận argument nào, tức là thừa kế từ ggplot (hay nói cách khác, `mapping` và `data` bằng NULL và thừa kế từ `ggplot`, còn các argument còn lại nhận giá trị mặc định).
+
+Ta có thể thêm đặc tính (attribute) về màu sắc, với màu sắc thay đổi dựa theo một trường dữ liệu thứ 3 là *Species*:
+
+```{r, fig.height=3, warning=FALSE, message=FALSE}
+p + geom_point(aes(color = Species))
+```
+
+Như vậy, không chỉ có trục tung/hoành là có thể nhận dữ liệu mà ta còn gán thêm được các trường dữ liệu khác vào trục.
+
+**Các tham số về hình dạng của biểu đồ**:
+
++ `alpha`: Độ trong suốt
+
++ `colour/color`: Màu sắc (trong bài này sẽ viết là color)
+
++ `fill`: Màu sắc bên trong trong trường hợp có viền bao ngoài
+
++ `group`: Các nhóm
+
++ `shape`: Hình dạng của point
+
++ `size`: Kích thước điểm
+
++ `stroke`: Kích thước viền
+
+Tuy nhiên, nếu muốn, chúng ta cũng hoàn toàn có thể chỉ gán một giá trị cố định vào các tham số trên, thay vì gán theo trường dữ liệu:
+
+```{r, fig.height=3, warning=FALSE, message=FALSE}
+p + geom_point( color = 'blue', size = 3)
+```
+
+Có thể thấy, nếu gán theo giá trị cố định, các tham số `color` hay `size` sẽ không nằm trong hàm `aes()`:
+
+1. Các tham số bên trong `aes()` sẽ nhận giá trị là 1 trường dữ liệu (`attribute=Column_Name`), và thay đổi theo dữ liệu.
+2. Các tham số bên ngoài `aes()` sẽ nhận giá trị cố định (`attribute=fixed_value`).
+
+
+**Một số ví dụ khác**:
+
+Thay đổi `shape` dựa theo *Species*:
+
+```{r, fig.height=3, warning=FALSE, message=FALSE}
+p + geom_point(aes(shape = Species))
+```
+
+Lồng thêm 3 layer vào nhau:
+
+```{r, fig.height=3, warning=FALSE, message=FALSE}
+p + geom_point(color = 'black', size = 4.5) +
+  geom_point(color = 'pink', size = 4) + 
+  geom_point(color = 'black', size = 1.8)
+```
+
+
+### Boxplot
+
+Biểu đồ boxplot, hay còn gọi là *box and whiskers*, thể hiện 5 thống kê quan trọng:
+
++ median: trung vị, (đường thẳng ở giữa hình hộp), là giá trị ở giữa của dataset (Q2/0th Percentile).
++ 2 điểm hinge: là 1st quartile và 3rd quartile, là khoảng phần tư thứ nhất và thứ 3 (tứ phân vị), hay nói cách khác là 2 giá trị ở giữa giá trị lớn nhất/nhỏ nhất và giá trị median. 
++ 2 điểm whisker: 
+
+
+## Tiêu đề và đặt tên trục
+
+Tiêu đề (title) và tên trục (axis labels)
+
+
+## Dán nhãn dữ liệu (annotation)
+
+
+## Facet
+
+
+## Các thuật ngữ
+
+Phần này sẽ tổng hợp lại các thuật ngữ bằng tiếng Anh và nghĩa tiếng Việt.
+
+
+## Tham khảo
+
+

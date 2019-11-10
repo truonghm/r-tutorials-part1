@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1</title>
+  <meta name="description" content="Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1" />
+  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  <meta name="github-repo" content="truonghm/R01" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1" />
+  
+  
+  
+
+<meta name="author" content="Truong Hoang" />
+
+
+<meta name="date" content="2019-11-10" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+<link rel="next" href="lam-quen-vi-r.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Mở đầu</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#disclaimer"><i class="fa fa-check"></i>Disclaimer</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#outline-draft"><i class="fa fa-check"></i>Outline draft</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#to-do"><i class="fa fa-check"></i>To-do</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#general-resources"><i class="fa fa-check"></i>General resources</a></li>
+</ul></li>
+<li class="part"><span><b>Giới thiệu chung</b></span></li>
+<li class="chapter" data-level="1" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html"><i class="fa fa-check"></i><b>1</b> Làm quen với R</a><ul>
+<li class="chapter" data-level="1.1" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#tinh-toan-co-ban-trong-r"><i class="fa fa-check"></i><b>1.1</b> Tính toán cơ bản trong R</a></li>
+<li class="chapter" data-level="1.2" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#gan-bin-assignment"><i class="fa fa-check"></i><b>1.2</b> Gán biến (Assignment)</a></li>
+<li class="chapter" data-level="1.3" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#vector"><i class="fa fa-check"></i><b>1.3</b> Vector</a></li>
+<li class="chapter" data-level="1.4" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#cac-goi-thu-vin-packages"><i class="fa fa-check"></i><b>1.4</b> Các gói thư viện (packages)</a></li>
+<li class="chapter" data-level="1.5" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#tim-kim-cau-tra-li"><i class="fa fa-check"></i><b>1.5</b> Tìm kiếm câu trả lời</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#documentation-cua-r"><i class="fa fa-check"></i><b>1.5.1</b> Documentation của R</a></li>
+<li class="chapter" data-level="1.5.2" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#stackoverflow"><i class="fa fa-check"></i><b>1.5.2</b> Stackoverflow</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#workflow-co-ban-trong-r"><i class="fa fa-check"></i><b>1.6</b> Workflow cơ bản trong R</a><ul>
+<li class="chapter" data-level="1.6.1" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#r-script-file-uoi-.r"><i class="fa fa-check"></i><b>1.6.1</b> R Script (file đuôi *.R)</a></li>
+<li class="chapter" data-level="1.6.2" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#r-markdown-file-uoi-.rmd"><i class="fa fa-check"></i><b>1.6.2</b> R Markdown (file đuôi *.Rmd)</a></li>
+<li class="chapter" data-level="1.6.3" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#r-project-file-uoi-.rproj"><i class="fa fa-check"></i><b>1.6.3</b> R Project (file đuôi *.Rproj)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#tham-khao"><i class="fa fa-check"></i><b>1.7</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="data-frame.html"><a href="data-frame.html"><i class="fa fa-check"></i><b>2</b> Data frame</a><ul>
+<li class="chapter" data-level="2.1" data-path="data-frame.html"><a href="data-frame.html#import-d-liu-co-ban"><i class="fa fa-check"></i><b>2.1</b> Import dữ liệu cơ bản</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="data-frame.html"><a href="data-frame.html#t-package"><i class="fa fa-check"></i><b>2.1.1</b> Từ package</a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-frame.html"><a href="data-frame.html#import-t-excel-file-csv-hoc-file-txt"><i class="fa fa-check"></i><b>2.1.2</b> Import từ Excel, file csv hoặc file txt</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-frame.html"><a href="data-frame.html#cac-loai-d-liu-value-type"><i class="fa fa-check"></i><b>2.2</b> Các loại dữ liệu (Value type)</a></li>
+<li class="chapter" data-level="2.3" data-path="data-frame.html"><a href="data-frame.html#truy-vn-d-liu-co-ban"><i class="fa fa-check"></i><b>2.3</b> Truy vấn dữ liệu cơ bản</a></li>
+<li class="chapter" data-level="2.4" data-path="data-frame.html"><a href="data-frame.html#tham-khao-1"><i class="fa fa-check"></i><b>2.4</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ve-biu-.html"><a href="ve-biu-.html"><i class="fa fa-check"></i><b>3</b> Vẽ biểu đồ</a><ul>
+<li class="chapter" data-level="3.1" data-path="ve-biu-.html"><a href="ve-biu-.html#cac-biu--co-ban"><i class="fa fa-check"></i><b>3.1</b> Các biểu đồ cơ bản</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="ve-biu-.html"><a href="ve-biu-.html#scatterplot"><i class="fa fa-check"></i><b>3.1.1</b> Scatterplot</a></li>
+<li class="chapter" data-level="3.1.2" data-path="ve-biu-.html"><a href="ve-biu-.html#boxplot"><i class="fa fa-check"></i><b>3.1.2</b> Boxplot</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="ve-biu-.html"><a href="ve-biu-.html#tieu--va-t-ten-truc"><i class="fa fa-check"></i><b>3.2</b> Tiêu đề và đặt tên trục</a></li>
+<li class="chapter" data-level="3.3" data-path="ve-biu-.html"><a href="ve-biu-.html#dan-nhan-d-liu-annotation"><i class="fa fa-check"></i><b>3.3</b> Dán nhãn dữ liệu (annotation)</a></li>
+<li class="chapter" data-level="3.4" data-path="ve-biu-.html"><a href="ve-biu-.html#facet"><i class="fa fa-check"></i><b>3.4</b> Facet</a></li>
+<li class="chapter" data-level="3.5" data-path="ve-biu-.html"><a href="ve-biu-.html#cac-thut-ng"><i class="fa fa-check"></i><b>3.5</b> Các thuật ngữ</a></li>
+<li class="chapter" data-level="3.6" data-path="ve-biu-.html"><a href="ve-biu-.html#tham-khao-2"><i class="fa fa-check"></i><b>3.6</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html"><i class="fa fa-check"></i><b>4</b> Biến đổi dữ liệu</a><ul>
+<li class="chapter" data-level="4.1" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#gii-thiu-chung-v-dplyr-va-tibble"><i class="fa fa-check"></i><b>4.1</b> Giới thiệu chung về <strong>dplyr</strong> và <code>tibble</code></a><ul>
+<li class="chapter" data-level="4.1.1" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#tibble"><i class="fa fa-check"></i><b>4.1.1</b> Tibble</a></li>
+<li class="chapter" data-level="4.1.2" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#package-dplyr"><i class="fa fa-check"></i><b>4.1.2</b> Package <strong>dplyr</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#cac-verb-trong-dplyr"><i class="fa fa-check"></i><b>4.2</b> Các “verb” trong <strong>dplyr</strong></a><ul>
+<li class="chapter" data-level="4.2.1" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#add_row"><i class="fa fa-check"></i><b>4.2.1</b> <code>add_row()</code></a></li>
+<li class="chapter" data-level="4.2.2" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#select-filter-va-slice"><i class="fa fa-check"></i><b>4.2.2</b> <code>select()</code>, <code>filter()</code> và <code>slice()</code></a></li>
+<li class="chapter" data-level="4.2.3" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#arrange"><i class="fa fa-check"></i><b>4.2.3</b> <code>arrange()</code></a></li>
+<li class="chapter" data-level="4.2.4" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#mutate-transmute"><i class="fa fa-check"></i><b>4.2.4</b> <code>mutate()</code> &amp; <code>transmute()</code></a></li>
+<li class="chapter" data-level="4.2.5" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#summarise"><i class="fa fa-check"></i><b>4.2.5</b> <code>summarise()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#kt-hp-cac-ham-trong-dplyr"><i class="fa fa-check"></i><b>4.3</b> Kết hợp các hàm trong <strong>dplyr</strong></a><ul>
+<li class="chapter" data-level="4.3.1" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#group_by"><i class="fa fa-check"></i><b>4.3.1</b> <code>group_by()</code></a></li>
+<li class="chapter" data-level="4.3.2" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#bin-i-d-liu-co-ban"><i class="fa fa-check"></i><b>4.3.2</b> Biến đổi dữ liệu cơ bản</a></li>
+<li class="chapter" data-level="4.3.3" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#group_by-va-summarise"><i class="fa fa-check"></i><b>4.3.3</b> <code>group_by</code> và <code>summarise</code></a></li>
+<li class="chapter" data-level="4.3.4" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#kt-hp-group_by-va-mutate-filter"><i class="fa fa-check"></i><b>4.3.4</b> Kết hợp <code>group_by</code> và <code>mutate</code> / <code>filter</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#tham-khao-3"><i class="fa fa-check"></i><b>4.4</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="bin-i-d-liu-phn-2.html"><a href="bin-i-d-liu-phn-2.html"><i class="fa fa-check"></i><b>5</b> Biến đổi dữ liệu (Phần 2)</a><ul>
+<li class="chapter" data-level="5.1" data-path="bin-i-d-liu-phn-2.html"><a href="bin-i-d-liu-phn-2.html#dataset-czech-financial"><i class="fa fa-check"></i><b>5.1</b> Dataset Czech Financial</a></li>
+<li class="chapter" data-level="5.2" data-path="bin-i-d-liu-phn-2.html"><a href="bin-i-d-liu-phn-2.html#tham-khao-4"><i class="fa fa-check"></i><b>5.2</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html"><i class="fa fa-check"></i><b>6</b> Cấu trúc điều khiển (Control flow)</a><ul>
+<li class="chapter" data-level="6.1" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#biu-thc-phuong-thc-iu-kin-expressions-operators"><i class="fa fa-check"></i><b>6.1</b> Biểu thức &amp; phương thức điều kiện (expressions &amp; operators)</a></li>
+<li class="chapter" data-level="6.2" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#mnh--iu-kin"><i class="fa fa-check"></i><b>6.2</b> Mệnh đề điều kiện</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#trong-dplyr"><i class="fa fa-check"></i><b>6.2.1</b> Trong <strong>dplyr</strong></a></li>
+<li class="chapter" data-level="6.2.2" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#mnh-if"><i class="fa fa-check"></i><b>6.2.2</b> Mệnh <code>if</code></a></li>
+<li class="chapter" data-level="6.2.3" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#tng-hp-lai"><i class="fa fa-check"></i><b>6.2.3</b> Tổng hợp lại</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#vong-lp"><i class="fa fa-check"></i><b>6.3</b> Vòng lặp</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#vong-lp-while"><i class="fa fa-check"></i><b>6.3.1</b> Vòng lặp <code>while</code></a></li>
+<li class="chapter" data-level="6.3.2" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#vong-lp-for"><i class="fa fa-check"></i><b>6.3.2</b> Vòng lặp <code>for</code></a></li>
+<li class="chapter" data-level="6.3.3" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#chu-y"><i class="fa fa-check"></i><b>6.3.3</b> Chú ý</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#tham-khao-5"><i class="fa fa-check"></i><b>6.4</b> Tham khảo</a></li>
+</ul></li>
+<li class="part"><span><b>Misc</b></span></li>
+<li class="chapter" data-level="7" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html"><i class="fa fa-check"></i><b>7</b> FAQs ngắn gọn về R</a><ul>
+<li class="chapter" data-level="7.1" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#cac-ky-hiu-c-bit-trong-r"><i class="fa fa-check"></i><b>7.1</b> Các ký hiệu đặc biệt trong R</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#du--"><i class="fa fa-check"></i><b>7.1.1</b> Dấu <code>&lt;-</code></a></li>
+<li class="chapter" data-level="7.1.2" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#du-."><i class="fa fa-check"></i><b>7.1.2</b> Dấu <code>.</code></a></li>
+<li class="chapter" data-level="7.1.3" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#du"><i class="fa fa-check"></i><b>7.1.3</b> Dấu <code>%</code></a></li>
+<li class="chapter" data-level="7.1.4" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#du-va"><i class="fa fa-check"></i><b>7.1.4</b> Dấu <code>:</code> và <code>::</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#mt-s-cau-hoi-khac"><i class="fa fa-check"></i><b>7.2</b> Một số câu hỏi khác</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#r-co-th-s-dung-cho-cac-muc-ich-nao-khac-ngoai-scientific-computing-khong"><i class="fa fa-check"></i><b>7.2.1</b> R có thể sử dụng cho các mục đích nào khác ngoài scientific computing không?</a></li>
+<li class="chapter" data-level="7.2.2" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#trong-r-co-tn-tai-h-thngquy-chun-v-style-tuong-uong-pep8-trong-pythong-khong"><i class="fa fa-check"></i><b>7.2.2</b> Trong R có tồn tại hệ thống/quy chuẩn về “style” (tương đương) PEP8 trong Pythong) không?</a></li>
+<li class="chapter" data-level="7.2.3" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#co-nen-s-dung-require--tai-package-khong"><i class="fa fa-check"></i><b>7.2.3</b> Có nên sử dụng <code>require</code> để tải package không?</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#tham-khao-6"><i class="fa fa-check"></i><b>7.3</b> Tham khảo</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1</h1>
+<p class="author"><em>Truong Hoang</em></p>
+<p class="date"><em>November 10, 2019</em></p>
+</div>
+<div id="m-u" class="section level1 unnumbered">
+<h1>Mở đầu</h1>
+<p>These documents are my personal notes for the R language. They will be brief, enough to get going with data analysis and statistics. These notes will be in both English and Vietnamese (and obviously predominantly Vietnamese), because of multiple reasons that I’m still too lazy to list here (but I will come back later). The language also tends to be casual and colloquial, not formal, because this is not a textbook.</p>
+<p>Tài liệu chia ra làm 2 phần (đây sẽ là phần 1): phần 1 giới thiệu R ở mức độ cơ bản và bỏ qua 1 số chi tiết phức tạp hơn, nhưng vẫn cố gắng giải thích đi sâu nhất có thể (ví dụ như logic phía sau của 1 function); phần 2 sẽ đi sâu hơn về R nhưng vẫn dừng ở mức ngắn gọn và đầy đủ nhất có thể (data structures, user-defined functions, string manipulation, date &amp; time, more advanced <code>dplyr</code>, automation, <code>apply</code>, functional programming with <code>purrr</code>, etc).</p>
+<div id="disclaimer" class="section level2 unnumbered">
+<h2>Disclaimer</h2>
+<ol style="list-style-type: decimal">
+<li><p>I have no formal education in programming or mathematics.</p></li>
+<li><p>Mình không phải chuyên gia về R; thực tế là trong quá trình viết tài liệu, mình cũng phải tự đọc và nghiên cứu thêm rất nhiều. Vì vậy mới nói đây sẽ là personal notes nhằm phục vụ cho việc học của chính mình là trên hết. Hiện tại mình chưa biết cách dùng citation trong R Markdown/bookdown, tuy nhiên mình sẽ luôn bao gồm thêm 1 mục tham khảo ở cuối mỗi chương để trích dẫn các nguồn mà mình sử dụng trong bài và cung cấp tài liệu đọc thêm.</p></li>
+</ol>
+</div>
+<div id="outline-draft" class="section level2 unnumbered">
+<h2>Outline draft</h2>
+<ol style="list-style-type: decimal">
+<li><p><strong>Các mảng kiến thức chính</strong></p>
+<p>1.1. <em>Làm quen với R</em> - 100%<br />
+1.1.1. Sử dụng R để tính toán cơ bản (và giới thiệu về function)<br />
+1.1.2. Gán biến (assignment)<br />
+1.1.3. Vectors<br />
+1.1.4. Các gói thư viện (packages)<br />
+1.1.5. Tìm kiếm câu trả lời<br />
+1.1.6. Workflow trong R<br />
+1.1.7. Tham khảo
+1.2. <em>Data frame</em> - 95%<br />
+1.2.1. Nhập dữ liệu (import data)<br />
+1.2.2. Các loại dữ liệu (value type)<br />
+1.2.3. Truy vấn dữ liệu cơ bản<br />
+1.2.4. Tham khảo<br />
+1.3. <em>Vẽ biểu đồ</em> - 60%<br />
+1.3.1. Các loại biểu đồ cơ bản<br />
+1.3.2. Tiêu đề và đặt tên trục<br />
+1.3.3. Dán nhãn dữ liệu (annotation)<br />
+1.3.4. Facet
+1.3.5. Tổng hợp thuật ngữ<br />
+1.3.6. Tham khảo<br />
+1.4. <em>Biến đổi dữ liệu (wrangling)</em> - 100%<br />
+1.4.1. Giới thiệu chung<br />
+1.4.2. Các verb trong dplyr<br />
+1.4.3. Basic transformation<br />
+1.4.4. Ví dụ thêm<br />
+1.4.5. Tham khảo<br />
+1.5. <em>Biến đổi dữ liệu phần 2</em> - 0%<br />
+1.6. <em>Control flow (giới thiệu về if-else, for-loop, etc.)</em> - 90%</p></li>
+<li><p><strong>Misc</strong></p>
+<p>2.1. <em>FAQs</em><br />
+2.2. Tricks<br />
+2.2.1. Kết nối với SQL server<br />
+2.2.2. Liệt kê các file trong thư mục<br />
+2.2.3. apply/lappy/sapply/tapply<br />
+2.2.4. Tương tác với Excel<br />
+2.2.5. Làm presentation<br />
+2.2.6. Some basic string manipulation functions
+2.2.7. Some basic stats functions</p></li>
+</ol>
+</div>
+<div id="to-do" class="section level2 unnumbered">
+<h2>To-do</h2>
+<ol style="list-style-type: decimal">
+<li>Hoàn thành tất cả trước 20191031</li>
+<li>Bổ sung về projects trong phần Workflow 1.1.6</li>
+<li>Hoàn thành phần 1.3</li>
+<li>Bổ sung ví dụ về import data mục 1.2.1</li>
+<li>Bổ sung về ví dụ <code>if</code> trong 1.5.1.3</li>
+<li>Tự tạo dummy data để làm ví dụ</li>
+<li>Bổ sung thêm chương wrangling nâng cao (giới thiệu các loại join)</li>
+</ol>
+</div>
+<div id="general-resources" class="section level2 unnumbered">
+<h2>General resources</h2>
+<ul>
+<li><a href="https://r4ds.had.co.nz">R for Data Science - Hadley Wickham</a></li>
+<li><a href="https://bookdown.org/yihui/rmarkdown/">R Markdown: Thhe Definitive Guide - Yihui Xie</a></li>
+<li><a href="https://bookdown.org/yihui/bookdown/">bookdown: Authoring Books and Technical Documents with R Markdown - Yihui Xie</a></li>
+<li><a href="https://resources.github.com/whitepapers/github-and-rstudio/">Git and RStudio</a></li>
+<li><a href="https://adv-r.hadley.nz/">Advaned R - Hadley Wickham</a></li>
+</ul>
+
+</div>
+</div>
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="lam-quen-vi-r.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+},
+"search": true
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

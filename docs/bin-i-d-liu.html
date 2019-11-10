@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 Biến đổi dữ liệu | Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1</title>
+  <meta name="description" content="4 Biến đổi dữ liệu | Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1" />
+  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 Biến đổi dữ liệu | Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  <meta name="github-repo" content="truonghm/R01" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 Biến đổi dữ liệu | Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1" />
+  
+  
+  
+
+<meta name="author" content="Truong Hoang" />
+
+
+<meta name="date" content="2019-11-10" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ve-biu-.html"/>
+<link rel="next" href="bin-i-d-liu-phn-2.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Mở đầu</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#disclaimer"><i class="fa fa-check"></i>Disclaimer</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#outline-draft"><i class="fa fa-check"></i>Outline draft</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#to-do"><i class="fa fa-check"></i>To-do</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#general-resources"><i class="fa fa-check"></i>General resources</a></li>
+</ul></li>
+<li class="part"><span><b>Giới thiệu chung</b></span></li>
+<li class="chapter" data-level="1" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html"><i class="fa fa-check"></i><b>1</b> Làm quen với R</a><ul>
+<li class="chapter" data-level="1.1" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#tinh-toan-co-ban-trong-r"><i class="fa fa-check"></i><b>1.1</b> Tính toán cơ bản trong R</a></li>
+<li class="chapter" data-level="1.2" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#gan-bin-assignment"><i class="fa fa-check"></i><b>1.2</b> Gán biến (Assignment)</a></li>
+<li class="chapter" data-level="1.3" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#vector"><i class="fa fa-check"></i><b>1.3</b> Vector</a></li>
+<li class="chapter" data-level="1.4" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#cac-goi-thu-vin-packages"><i class="fa fa-check"></i><b>1.4</b> Các gói thư viện (packages)</a></li>
+<li class="chapter" data-level="1.5" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#tim-kim-cau-tra-li"><i class="fa fa-check"></i><b>1.5</b> Tìm kiếm câu trả lời</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#documentation-cua-r"><i class="fa fa-check"></i><b>1.5.1</b> Documentation của R</a></li>
+<li class="chapter" data-level="1.5.2" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#stackoverflow"><i class="fa fa-check"></i><b>1.5.2</b> Stackoverflow</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#workflow-co-ban-trong-r"><i class="fa fa-check"></i><b>1.6</b> Workflow cơ bản trong R</a><ul>
+<li class="chapter" data-level="1.6.1" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#r-script-file-uoi-.r"><i class="fa fa-check"></i><b>1.6.1</b> R Script (file đuôi *.R)</a></li>
+<li class="chapter" data-level="1.6.2" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#r-markdown-file-uoi-.rmd"><i class="fa fa-check"></i><b>1.6.2</b> R Markdown (file đuôi *.Rmd)</a></li>
+<li class="chapter" data-level="1.6.3" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#r-project-file-uoi-.rproj"><i class="fa fa-check"></i><b>1.6.3</b> R Project (file đuôi *.Rproj)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#tham-khao"><i class="fa fa-check"></i><b>1.7</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="data-frame.html"><a href="data-frame.html"><i class="fa fa-check"></i><b>2</b> Data frame</a><ul>
+<li class="chapter" data-level="2.1" data-path="data-frame.html"><a href="data-frame.html#import-d-liu-co-ban"><i class="fa fa-check"></i><b>2.1</b> Import dữ liệu cơ bản</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="data-frame.html"><a href="data-frame.html#t-package"><i class="fa fa-check"></i><b>2.1.1</b> Từ package</a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-frame.html"><a href="data-frame.html#import-t-excel-file-csv-hoc-file-txt"><i class="fa fa-check"></i><b>2.1.2</b> Import từ Excel, file csv hoặc file txt</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-frame.html"><a href="data-frame.html#cac-loai-d-liu-value-type"><i class="fa fa-check"></i><b>2.2</b> Các loại dữ liệu (Value type)</a></li>
+<li class="chapter" data-level="2.3" data-path="data-frame.html"><a href="data-frame.html#truy-vn-d-liu-co-ban"><i class="fa fa-check"></i><b>2.3</b> Truy vấn dữ liệu cơ bản</a></li>
+<li class="chapter" data-level="2.4" data-path="data-frame.html"><a href="data-frame.html#tham-khao-1"><i class="fa fa-check"></i><b>2.4</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ve-biu-.html"><a href="ve-biu-.html"><i class="fa fa-check"></i><b>3</b> Vẽ biểu đồ</a><ul>
+<li class="chapter" data-level="3.1" data-path="ve-biu-.html"><a href="ve-biu-.html#cac-biu--co-ban"><i class="fa fa-check"></i><b>3.1</b> Các biểu đồ cơ bản</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="ve-biu-.html"><a href="ve-biu-.html#scatterplot"><i class="fa fa-check"></i><b>3.1.1</b> Scatterplot</a></li>
+<li class="chapter" data-level="3.1.2" data-path="ve-biu-.html"><a href="ve-biu-.html#boxplot"><i class="fa fa-check"></i><b>3.1.2</b> Boxplot</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="ve-biu-.html"><a href="ve-biu-.html#tieu--va-t-ten-truc"><i class="fa fa-check"></i><b>3.2</b> Tiêu đề và đặt tên trục</a></li>
+<li class="chapter" data-level="3.3" data-path="ve-biu-.html"><a href="ve-biu-.html#dan-nhan-d-liu-annotation"><i class="fa fa-check"></i><b>3.3</b> Dán nhãn dữ liệu (annotation)</a></li>
+<li class="chapter" data-level="3.4" data-path="ve-biu-.html"><a href="ve-biu-.html#facet"><i class="fa fa-check"></i><b>3.4</b> Facet</a></li>
+<li class="chapter" data-level="3.5" data-path="ve-biu-.html"><a href="ve-biu-.html#cac-thut-ng"><i class="fa fa-check"></i><b>3.5</b> Các thuật ngữ</a></li>
+<li class="chapter" data-level="3.6" data-path="ve-biu-.html"><a href="ve-biu-.html#tham-khao-2"><i class="fa fa-check"></i><b>3.6</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html"><i class="fa fa-check"></i><b>4</b> Biến đổi dữ liệu</a><ul>
+<li class="chapter" data-level="4.1" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#gii-thiu-chung-v-dplyr-va-tibble"><i class="fa fa-check"></i><b>4.1</b> Giới thiệu chung về <strong>dplyr</strong> và <code>tibble</code></a><ul>
+<li class="chapter" data-level="4.1.1" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#tibble"><i class="fa fa-check"></i><b>4.1.1</b> Tibble</a></li>
+<li class="chapter" data-level="4.1.2" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#package-dplyr"><i class="fa fa-check"></i><b>4.1.2</b> Package <strong>dplyr</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#cac-verb-trong-dplyr"><i class="fa fa-check"></i><b>4.2</b> Các “verb” trong <strong>dplyr</strong></a><ul>
+<li class="chapter" data-level="4.2.1" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#add_row"><i class="fa fa-check"></i><b>4.2.1</b> <code>add_row()</code></a></li>
+<li class="chapter" data-level="4.2.2" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#select-filter-va-slice"><i class="fa fa-check"></i><b>4.2.2</b> <code>select()</code>, <code>filter()</code> và <code>slice()</code></a></li>
+<li class="chapter" data-level="4.2.3" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#arrange"><i class="fa fa-check"></i><b>4.2.3</b> <code>arrange()</code></a></li>
+<li class="chapter" data-level="4.2.4" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#mutate-transmute"><i class="fa fa-check"></i><b>4.2.4</b> <code>mutate()</code> &amp; <code>transmute()</code></a></li>
+<li class="chapter" data-level="4.2.5" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#summarise"><i class="fa fa-check"></i><b>4.2.5</b> <code>summarise()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#kt-hp-cac-ham-trong-dplyr"><i class="fa fa-check"></i><b>4.3</b> Kết hợp các hàm trong <strong>dplyr</strong></a><ul>
+<li class="chapter" data-level="4.3.1" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#group_by"><i class="fa fa-check"></i><b>4.3.1</b> <code>group_by()</code></a></li>
+<li class="chapter" data-level="4.3.2" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#bin-i-d-liu-co-ban"><i class="fa fa-check"></i><b>4.3.2</b> Biến đổi dữ liệu cơ bản</a></li>
+<li class="chapter" data-level="4.3.3" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#group_by-va-summarise"><i class="fa fa-check"></i><b>4.3.3</b> <code>group_by</code> và <code>summarise</code></a></li>
+<li class="chapter" data-level="4.3.4" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#kt-hp-group_by-va-mutate-filter"><i class="fa fa-check"></i><b>4.3.4</b> Kết hợp <code>group_by</code> và <code>mutate</code> / <code>filter</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#tham-khao-3"><i class="fa fa-check"></i><b>4.4</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="bin-i-d-liu-phn-2.html"><a href="bin-i-d-liu-phn-2.html"><i class="fa fa-check"></i><b>5</b> Biến đổi dữ liệu (Phần 2)</a><ul>
+<li class="chapter" data-level="5.1" data-path="bin-i-d-liu-phn-2.html"><a href="bin-i-d-liu-phn-2.html#dataset-czech-financial"><i class="fa fa-check"></i><b>5.1</b> Dataset Czech Financial</a></li>
+<li class="chapter" data-level="5.2" data-path="bin-i-d-liu-phn-2.html"><a href="bin-i-d-liu-phn-2.html#tham-khao-4"><i class="fa fa-check"></i><b>5.2</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html"><i class="fa fa-check"></i><b>6</b> Cấu trúc điều khiển (Control flow)</a><ul>
+<li class="chapter" data-level="6.1" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#biu-thc-phuong-thc-iu-kin-expressions-operators"><i class="fa fa-check"></i><b>6.1</b> Biểu thức &amp; phương thức điều kiện (expressions &amp; operators)</a></li>
+<li class="chapter" data-level="6.2" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#mnh--iu-kin"><i class="fa fa-check"></i><b>6.2</b> Mệnh đề điều kiện</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#trong-dplyr"><i class="fa fa-check"></i><b>6.2.1</b> Trong <strong>dplyr</strong></a></li>
+<li class="chapter" data-level="6.2.2" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#mnh-if"><i class="fa fa-check"></i><b>6.2.2</b> Mệnh <code>if</code></a></li>
+<li class="chapter" data-level="6.2.3" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#tng-hp-lai"><i class="fa fa-check"></i><b>6.2.3</b> Tổng hợp lại</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#vong-lp"><i class="fa fa-check"></i><b>6.3</b> Vòng lặp</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#vong-lp-while"><i class="fa fa-check"></i><b>6.3.1</b> Vòng lặp <code>while</code></a></li>
+<li class="chapter" data-level="6.3.2" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#vong-lp-for"><i class="fa fa-check"></i><b>6.3.2</b> Vòng lặp <code>for</code></a></li>
+<li class="chapter" data-level="6.3.3" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#chu-y"><i class="fa fa-check"></i><b>6.3.3</b> Chú ý</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#tham-khao-5"><i class="fa fa-check"></i><b>6.4</b> Tham khảo</a></li>
+</ul></li>
+<li class="part"><span><b>Misc</b></span></li>
+<li class="chapter" data-level="7" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html"><i class="fa fa-check"></i><b>7</b> FAQs ngắn gọn về R</a><ul>
+<li class="chapter" data-level="7.1" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#cac-ky-hiu-c-bit-trong-r"><i class="fa fa-check"></i><b>7.1</b> Các ký hiệu đặc biệt trong R</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#du--"><i class="fa fa-check"></i><b>7.1.1</b> Dấu <code>&lt;-</code></a></li>
+<li class="chapter" data-level="7.1.2" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#du-."><i class="fa fa-check"></i><b>7.1.2</b> Dấu <code>.</code></a></li>
+<li class="chapter" data-level="7.1.3" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#du"><i class="fa fa-check"></i><b>7.1.3</b> Dấu <code>%</code></a></li>
+<li class="chapter" data-level="7.1.4" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#du-va"><i class="fa fa-check"></i><b>7.1.4</b> Dấu <code>:</code> và <code>::</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#mt-s-cau-hoi-khac"><i class="fa fa-check"></i><b>7.2</b> Một số câu hỏi khác</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#r-co-th-s-dung-cho-cac-muc-ich-nao-khac-ngoai-scientific-computing-khong"><i class="fa fa-check"></i><b>7.2.1</b> R có thể sử dụng cho các mục đích nào khác ngoài scientific computing không?</a></li>
+<li class="chapter" data-level="7.2.2" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#trong-r-co-tn-tai-h-thngquy-chun-v-style-tuong-uong-pep8-trong-pythong-khong"><i class="fa fa-check"></i><b>7.2.2</b> Trong R có tồn tại hệ thống/quy chuẩn về “style” (tương đương) PEP8 trong Pythong) không?</a></li>
+<li class="chapter" data-level="7.2.3" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#co-nen-s-dung-require--tai-package-khong"><i class="fa fa-check"></i><b>7.2.3</b> Có nên sử dụng <code>require</code> để tải package không?</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#tham-khao-6"><i class="fa fa-check"></i><b>7.3</b> Tham khảo</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="bin-i-d-liu" class="section level1">
+<h1><span class="header-section-number">4</span> Biến đổi dữ liệu</h1>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" title="1"><span class="co"># load sẵn tidyverse</span></a>
+<a class="sourceLine" id="cb85-2" title="2"><span class="kw">library</span>(tidyverse, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p>Các tool có sẵn trong <strong>base R</strong> thường không thống nhất và khó sử dụng, nhất là cho người mới học. Vì vậy, chúng ta sẽ sử dụng package<strong>dplyr</strong> (Đọc mô tả package tại <a href="http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html">[http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html]</a>).</p>
+<div id="gii-thiu-chung-v-dplyr-va-tibble" class="section level2">
+<h2><span class="header-section-number">4.1</span> Giới thiệu chung về <strong>dplyr</strong> và <code>tibble</code></h2>
+<div id="tibble" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> Tibble</h3>
+<p>Từ đầu đến giờ, chúng ta đã sử dụng <code>data.frame</code>, tuy nhiên có 1 số điểm mà loại dữ liệu bảng này làm chưa tốt như:</p>
+<ul>
+<li>Một số chuỗi kỹ tự đặc biệt dạng <code>string</code> bị đổi thành <code>factor</code> khi import.</li>
+<li>Subset (Lấy các tập hợp con) từ data dạng <code>data.frame</code> có thể bị đổi thành dạng <code>vector</code> hoặc <code>scalar</code>.</li>
+<li>Tốc độ còn chậm.</li>
+</ul>
+<p>Vì vậy, <strong>dplyr</strong> giới thiệu 1 loại dữ liệu bảng mới là <code>tibble</code>. Về cơ bản, <code>tibble</code> giống <code>data.frame</code> nhưng cải thiện ở nhiều điểm. Hiện tại chúng ta có thể tạm bỏ qua những điểm này.</p>
+</div>
+<div id="package-dplyr" class="section level3">
+<h3><span class="header-section-number">4.1.2</span> Package <strong>dplyr</strong></h3>
+<p>Một điểm đặc biệt của <strong>dplyr</strong> là hàm pipe <code>%&gt;%</code>, giúp việc viết và đọc code dễ dàng hơn rất nhiều. Ý tưởng của hàm pipe là lấy kết quả của 1 hàm trước đó luôn cho hàm phía sau, tức là thay vì viết <code>f(a,b)</code>, ta có thể viết <code>a %&gt;% f(b)</code>, dẫn đến 2 lợi ích:</p>
+<ul>
+<li><strong>Tránh lồng các hàm vào với nhau</strong>, ví dụ: nếu bắt đầu bằng <code>x</code>, sau đó dùng hàm <code>f()</code>, tiếp đến hàm <code>g()</code>, rồi đến hàm <code>h()</code>, ta sẽ phải viết <code>h(g(f(x)))</code>. Khi đọc đoạn code này, ta sẽ phải đọc từ <em>trong ra ngoài</em>. Khi sử dụng pipe, ta sẽ đọc từ trái sang phải như sau: <code>x %&gt;% f() %&gt;% g() %&gt;% h()</code></li>
+<li><strong>Đặt nhiều variable mới</strong>: Nếu không lồng các hàm vào với nhau, ta sẽ phải đặt variable mới cho từng hàm.</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Code</th>
+<th align="center">Ý nghĩa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><code>a %&gt;% f(b)</code></td>
+<td align="center"><code>f(a,b)</code></td>
+</tr>
+<tr class="even">
+<td align="center"><code>b %&gt;% f(a, .)</code></td>
+<td align="center"><code>f(a, b)</code></td>
+</tr>
+<tr class="odd">
+<td align="center"><code>x %&gt;% f() %&gt;% g()</code></td>
+<td align="center"><code>g( f(x) )</code></td>
+</tr>
+</tbody>
+</table>
+<p>Sau mỗi lần nối các hàm với pipe, kết quả luôn là 1 dataset.</p>
+</div>
+</div>
+<div id="cac-verb-trong-dplyr" class="section level2">
+<h2><span class="header-section-number">4.2</span> Các “verb” trong <strong>dplyr</strong></h2>
+<p><strong>dplyr</strong> có 1 hệ thống các hàm, hay còn gọi là các “verb” (động từ) rất thống nhất và khoa học, giúp người mới có thể đọc hiểu và viết code dễ dàng:</p>
+<ul>
+<li><p><code>add_row</code> - Thêm dòng mới.</p></li>
+<li><p><code>select</code> - Chọn ra các cột theo tên hoặc STT.</p></li>
+<li><p><code>filter</code> - Chọn ra các dòng theo điều kiện.</p></li>
+<li><p><code>slice</code> - Chọn ra các dòng theo số dòng.</p></li>
+<li><p><code>arrange</code> - Sắp xếp lại dòng.</p></li>
+<li><p><code>mutate</code>&amp; <code>transmute</code> - Thêm cột mới.</p></li>
+<li><p><code>summarise</code> &amp; <code>group_by</code> - Dùng để pivot dữ liệu.</p></li>
+</ul>
+<p>Các hàm trên có cú pháp giống nhau, đều bắt đầu bằng 1 argument dataset đầu vào.</p>
+<p>Để lấy ví dụ, chúng ta sẽ tạo ra 1 data frame đơn giản làm mẫu, sử dụng hàm <code>tribble()</code> để tạo ra 1 <code>tibble</code>:</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" title="1">grades &lt;-<span class="st"> </span><span class="kw">tribble</span>(</a>
+<a class="sourceLine" id="cb86-2" title="2">  <span class="op">~</span>Ten,     <span class="op">~</span>GioiTinh, <span class="op">~</span>HS1, <span class="op">~</span>HS2, <span class="op">~</span>CuoiKi,</a>
+<a class="sourceLine" id="cb86-3" title="3">  <span class="st">&#39;Nguyet&#39;</span>    , <span class="st">&#39;F&#39;</span>,     <span class="dv">93</span>,  <span class="dv">98</span>,     <span class="dv">96</span>,</a>
+<a class="sourceLine" id="cb86-4" title="4">  <span class="st">&#39;Truong&#39;</span>    , <span class="st">&#39;M&#39;</span>,     <span class="dv">99</span>,  <span class="dv">90</span>,     <span class="dv">80</span>,</a>
+<a class="sourceLine" id="cb86-5" title="5">  <span class="st">&#39;Mat&#39;</span>       , <span class="st">&#39;M&#39;</span>,     <span class="dv">89</span>,  <span class="dv">70</span>,     <span class="dv">85</span>,</a>
+<a class="sourceLine" id="cb86-6" title="6">  <span class="st">&#39;Chuoi&#39;</span>     , <span class="st">&#39;M&#39;</span>,     <span class="dv">80</span>,  <span class="dv">82</span>,     <span class="dv">81</span>,</a>
+<a class="sourceLine" id="cb86-7" title="7">  <span class="st">&#39;SoyaBean&#39;</span>  , <span class="st">&#39;F&#39;</span>,     <span class="dv">70</span>,  <span class="dv">85</span>,     <span class="dv">92</span>,</a>
+<a class="sourceLine" id="cb86-8" title="8">  <span class="st">&#39;KhungLong&#39;</span> , <span class="st">&#39;F&#39;</span>,     <span class="dv">77</span>,  <span class="dv">86</span>,     <span class="dv">72</span>)</a>
+<a class="sourceLine" id="cb86-9" title="9">grades</a></code></pre></div>
+<pre><code>## # A tibble: 6 x 5
+##   Ten       GioiTinh   HS1   HS2 CuoiKi
+##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Nguyet    F           93    98     96
+## 2 Truong    M           99    90     80
+## 3 Mat       M           89    70     85
+## 4 Chuoi     M           80    82     81
+## 5 SoyaBean  F           70    85     92
+## 6 KhungLong F           77    86     72</code></pre>
+<div id="add_row" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> <code>add_row()</code></h3>
+<p>Thêm dòng vào dữ liệu <code>grades</code> ở trên như sau:</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" title="1">grades <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_row</span>(<span class="dt">Ten=</span><span class="st">&#39;Cuu&#39;</span>, <span class="dt">HS1=</span><span class="dv">96</span>, <span class="dt">HS2=</span><span class="dv">90</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 7 x 5
+##   Ten       GioiTinh   HS1   HS2 CuoiKi
+##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Nguyet    F           93    98     96
+## 2 Truong    M           99    90     80
+## 3 Mat       M           89    70     85
+## 4 Chuoi     M           80    82     81
+## 5 SoyaBean  F           70    85     92
+## 6 KhungLong F           77    86     72
+## 7 Cuu       &lt;NA&gt;        96    90     NA</code></pre>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" title="1">grades</a></code></pre></div>
+<pre><code>## # A tibble: 6 x 5
+##   Ten       GioiTinh   HS1   HS2 CuoiKi
+##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Nguyet    F           93    98     96
+## 2 Truong    M           99    90     80
+## 3 Mat       M           89    70     85
+## 4 Chuoi     M           80    82     81
+## 5 SoyaBean  F           70    85     92
+## 6 KhungLong F           77    86     72</code></pre>
+<p>Các trường thông tin không được thiết lập (như giới tính và điểm cuối kì) sẽ nhận giá trị <code>NA</code>. Vì chúng ta không assign kết quả của câu lệnh trên vào object nào cả, R sẽ in ra luôn kết quả. Dataset <code>grades</code> gốc vẫn không có gì thay đổi.</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" title="1">grades &lt;-<span class="st"> </span>grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb92-2" title="2"><span class="st">  </span><span class="kw">add_row</span>(<span class="dt">Ten=</span><span class="st">&#39;Cuu&#39;</span>, <span class="dt">GioiTinh =</span> <span class="st">&#39;F&#39;</span>, <span class="dt">HS1=</span><span class="dv">96</span>, <span class="dt">HS2=</span><span class="dv">90</span>, <span class="dt">CuoiKi =</span> <span class="dv">69</span>)</a>
+<a class="sourceLine" id="cb92-3" title="3">grades</a></code></pre></div>
+<pre><code>## # A tibble: 7 x 5
+##   Ten       GioiTinh   HS1   HS2 CuoiKi
+##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Nguyet    F           93    98     96
+## 2 Truong    M           99    90     80
+## 3 Mat       M           89    70     85
+## 4 Chuoi     M           80    82     81
+## 5 SoyaBean  F           70    85     92
+## 6 KhungLong F           77    86     72
+## 7 Cuu       F           96    90     69</code></pre>
+<p>Câu lệnh trên gán kết quả sau khi thêm dòng vào chính dataset <code>grades</code>, khiến R ghi đè dataset mới lên dataset gốc.</p>
+</div>
+<div id="select-filter-va-slice" class="section level3">
+<h3><span class="header-section-number">4.2.2</span> <code>select()</code>, <code>filter()</code> và <code>slice()</code></h3>
+<p>Các nhóm hàm này cho phép chúng ta chọn ra nhóm những dòng/cột theo điều kiện.</p>
+<div id="select" class="section level4">
+<h4><span class="header-section-number">4.2.2.1</span> <code>select()</code></h4>
+<p>Hàm <code>select()</code> cho phép chọn ra các cột (hoặc bỏ đi), tương đương với <code>SELECT</code> trong SQL.</p>
+<p><strong>Chọn cột theo tên</strong>:</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" title="1">grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb94-2" title="2"><span class="st">  </span><span class="kw">select</span>(HS1, HS2)      <span class="co"># select by name</span></a></code></pre></div>
+<pre><code>## # A tibble: 7 x 2
+##     HS1   HS2
+##   &lt;dbl&gt; &lt;dbl&gt;
+## 1    93    98
+## 2    99    90
+## 3    89    70
+## 4    80    82
+## 5    70    85
+## 6    77    86
+## 7    96    90</code></pre>
+<p><strong>Chọn các cột liên tiếp</strong>:</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" title="1">grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb96-2" title="2"><span class="st">  </span><span class="kw">select</span>(HS1<span class="op">:</span>CuoiKi)    <span class="co"># select consecutively</span></a></code></pre></div>
+<pre><code>## # A tibble: 7 x 3
+##     HS1   HS2 CuoiKi
+##   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1    93    98     96
+## 2    99    90     80
+## 3    89    70     85
+## 4    80    82     81
+## 5    70    85     92
+## 6    77    86     72
+## 7    96    90     69</code></pre>
+<p><strong>Loại ra một hoặc nhiều cột</strong> khỏi dataset ban đầu (negative indexing):</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" title="1">grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb98-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>HS2)         <span class="co"># negative indexing</span></a></code></pre></div>
+<pre><code>## # A tibble: 7 x 4
+##   Ten       GioiTinh   HS1 CuoiKi
+##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Nguyet    F           93     96
+## 2 Truong    M           99     80
+## 3 Mat       M           89     85
+## 4 Chuoi     M           80     81
+## 5 SoyaBean  F           70     92
+## 6 KhungLong F           77     72
+## 7 Cuu       F           96     69</code></pre>
+<p><strong>Chọn cột theo thứ tự/vị trí</strong>:</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" title="1">grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb100-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)          <span class="co"># select by index/position</span></a></code></pre></div>
+<pre><code>## # A tibble: 7 x 2
+##   Ten       GioiTinh
+##   &lt;chr&gt;     &lt;chr&gt;   
+## 1 Nguyet    F       
+## 2 Truong    M       
+## 3 Mat       M       
+## 4 Chuoi     M       
+## 5 SoyaBean  F       
+## 6 KhungLong F       
+## 7 Cuu       F</code></pre>
+<p><strong>Dùng hàm <code>starts_with()</code></strong> để chọn cột theo điều kiện tên cột:</p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" title="1">grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb102-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&#39;HS&#39;</span>)) <span class="co"># select by patterns of col name</span></a></code></pre></div>
+<pre><code>## # A tibble: 7 x 2
+##     HS1   HS2
+##   &lt;dbl&gt; &lt;dbl&gt;
+## 1    93    98
+## 2    99    90
+## 3    89    70
+## 4    80    82
+## 5    70    85
+## 6    77    86
+## 7    96    90</code></pre>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" title="1">grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb104-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&#39;HS&#39;</span>), <span class="kw">starts_with</span>(<span class="st">&#39;C&#39;</span>))</a></code></pre></div>
+<pre><code>## # A tibble: 7 x 3
+##     HS1   HS2 CuoiKi
+##   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1    93    98     96
+## 2    99    90     80
+## 3    89    70     85
+## 4    80    82     81
+## 5    70    85     92
+## 6    77    86     72
+## 7    96    90     69</code></pre>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" title="1">grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb106-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="kw">ends_with</span>(<span class="st">&#39;1&#39;</span>))   <span class="co"># áp dụng tương tự với ends_with</span></a></code></pre></div>
+<pre><code>## # A tibble: 7 x 1
+##     HS1
+##   &lt;dbl&gt;
+## 1    93
+## 2    99
+## 3    89
+## 4    80
+## 5    70
+## 6    77
+## 7    96</code></pre>
+</div>
+<div id="filter" class="section level4">
+<h4><span class="header-section-number">4.2.2.2</span> <code>filter()</code></h4>
+<p>Hàm <code>filter()</code> giúp lọc ra các dòng theo điều kiện, giống chức năng filter trong Excel và <code>WHERE</code> trong SQL:</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" title="1">grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb108-2" title="2"><span class="st">  </span><span class="kw">filter</span>(CuoiKi <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 2 x 5
+##   Ten      GioiTinh   HS1   HS2 CuoiKi
+##   &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Nguyet   F           93    98     96
+## 2 SoyaBean F           70    85     92</code></pre>
+<p><strong>Kết hợp nhiều điều kiện</strong> với nhau dùng dấu phẩy <code>,</code> hoặc dùng dấu <code>&amp;</code>:</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" title="1">grades <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb110-2" title="2"><span class="st">  </span><span class="kw">filter</span>(HS2 <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>, CuoiKi <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 1 x 5
+##   Ten    GioiTinh   HS1   HS2 CuoiKi
+##   &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Nguyet F           93    98     96</code></pre>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" title="1">grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb112-2" title="2"><span class="st">  </span><span class="kw">filter</span>(HS2 <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span> <span class="op">&amp;</span><span class="st"> </span>CuoiKi <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 1 x 5
+##   Ten    GioiTinh   HS1   HS2 CuoiKi
+##   &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Nguyet F           93    98     96</code></pre>
+<p>Các logical operators trong R:</p>
+<table>
+<colgroup>
+<col width="28%" />
+<col width="31%" />
+<col width="40%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Kí hiệu</th>
+<th align="center">Ý nghĩa</th>
+<th align="center">Ghi chú</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><code>!x</code> (exclaimation)</td>
+<td align="center">not x (logical negation)</td>
+<td align="center">Chỉ nên dùng với dữ liệu dạng Logical/boolean</td>
+</tr>
+<tr class="even">
+<td align="center"><code>x &amp; y</code> (ampersand)</td>
+<td align="center">x và y (logical AND)</td>
+<td align="center">Trả kết quả là vector</td>
+</tr>
+<tr class="odd">
+<td align="center"><code>x &amp;&amp; y</code> (double ampersands)</td>
+<td align="center">x và y (logical AND)</td>
+<td align="center">Trả kết quả không vectorized</td>
+</tr>
+<tr class="even">
+<td align="center"><code>x | y</code> (vertical bar)</td>
+<td align="center">x hoặc y (logical OR, inclusive)</td>
+<td align="center">Trả kết quả là vector</td>
+</tr>
+<tr class="odd">
+<td align="center"><code>x || y</code> (double vertical bars)</td>
+<td align="center">x hoặc y (logical OR, inclusive)</td>
+<td align="center">Trả kết quả không vectorized</td>
+</tr>
+<tr class="even">
+<td align="center"><code>xor(x, y)</code></td>
+<td align="center">exclusive OR</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<p>Lưu ý về <strong>inclusive OR</strong> và <strong>exclusive OR</strong>:</p>
+<ul>
+<li><em>inclusive OR</em>: hoặc cái này hoặc cái kia, hoặc cả hai. Ví dụ: Mỗi người có thể sở hữu xe máy hoặc xe hơi, hoặc cả hai.</li>
+<li><em>exclusive OR</em>: hoặc cái này hoặc cái kia, nhưng không thể là cả hai. Ví dụ: Mọi số tự nhiên là số chẵn hoặc số lẻ, nhưng không thể là cả hai.</li>
+</ul>
+<p>Ví dụ:</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" title="1">grades <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb114-2" title="2"><span class="st">  </span><span class="kw">filter</span>(HS2 <span class="op">&lt;</span><span class="st"> </span><span class="dv">90</span> <span class="op">|</span><span class="st"> </span>CuoiKi <span class="op">&lt;</span><span class="st"> </span><span class="dv">90</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 6 x 5
+##   Ten       GioiTinh   HS1   HS2 CuoiKi
+##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Truong    M           99    90     80
+## 2 Mat       M           89    70     85
+## 3 Chuoi     M           80    82     81
+## 4 SoyaBean  F           70    85     92
+## 5 KhungLong F           77    86     72
+## 6 Cuu       F           96    90     69</code></pre>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" title="1">grades <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb116-2" title="2"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">xor</span>(HS2 <span class="op">&lt;</span><span class="st"> </span><span class="dv">90</span>, CuoiKi <span class="op">&lt;</span><span class="st"> </span><span class="dv">90</span>))</a></code></pre></div>
+<pre><code>## # A tibble: 3 x 5
+##   Ten      GioiTinh   HS1   HS2 CuoiKi
+##   &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Truong   M           99    90     80
+## 2 SoyaBean F           70    85     92
+## 3 Cuu      F           96    90     69</code></pre>
+</div>
+<div id="slice" class="section level4">
+<h4><span class="header-section-number">4.2.2.3</span> <code>slice()</code></h4>
+<p>Hàm <code>slice()</code> cũng lọc ra dòng giống <code>filter()</code>, nhưng dựa vào số thứ tự của dòng (row number):</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" title="1"><span class="co"># Lấy dòng đầu tiên</span></a>
+<a class="sourceLine" id="cb118-2" title="2">grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb118-3" title="3"><span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 1 x 5
+##   Ten    GioiTinh   HS1   HS2 CuoiKi
+##   &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Nguyet F           93    98     96</code></pre>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" title="1"><span class="co"># Lấy 2 dòng đầu tiên</span></a>
+<a class="sourceLine" id="cb120-2" title="2">grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb120-3" title="3"><span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 2 x 5
+##   Ten    GioiTinh   HS1   HS2 CuoiKi
+##   &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Nguyet F           93    98     96
+## 2 Truong M           99    90     80</code></pre>
+<p><strong>Kết hợp với hàm <code>n()</code></strong>; hàm <code>n()</code> dùng để đếm số lượng quan sát:</p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" title="1">grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb122-2" title="2"><span class="st">  </span><span class="kw">slice</span>(<span class="dv">2</span><span class="op">:</span><span class="kw">n</span>())</a></code></pre></div>
+<pre><code>## # A tibble: 6 x 5
+##   Ten       GioiTinh   HS1   HS2 CuoiKi
+##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Truong    M           99    90     80
+## 2 Mat       M           89    70     85
+## 3 Chuoi     M           80    82     81
+## 4 SoyaBean  F           70    85     92
+## 5 KhungLong F           77    86     72
+## 6 Cuu       F           96    90     69</code></pre>
+<p><strong>Loại bỏ dòng</strong> với index âm:</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" title="1">grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb124-2" title="2"><span class="st">  </span><span class="kw">slice</span>(<span class="op">-</span><span class="dv">3</span><span class="op">:-</span><span class="kw">n</span>())</a></code></pre></div>
+<pre><code>## # A tibble: 2 x 5
+##   Ten    GioiTinh   HS1   HS2 CuoiKi
+##   &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Nguyet F           93    98     96
+## 2 Truong M           99    90     80</code></pre>
+<p>Lưu ý: Hàm <code>n()</code> chỉ sử dụng được khi lồng trong các hàm <code>summarise()</code>, <code>mutate()</code> và <code>filter()</code>. Hàm này không nhận argument nào.</p>
+</div>
+</div>
+<div id="arrange" class="section level3">
+<h3><span class="header-section-number">4.2.3</span> <code>arrange()</code></h3>
+<p>Cú pháp của hàm: <code>arrange(data, ...)</code>. Hàm <code>arrange()</code> mặc định sắp xếp theo thứ tự tăng dần (ascending). Hàm này tương đương với <code>ORDER BY</code> trong SQL.</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" title="1">grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb126-2" title="2"><span class="st">  </span><span class="kw">arrange</span>(Ten)</a></code></pre></div>
+<pre><code>## # A tibble: 7 x 5
+##   Ten       GioiTinh   HS1   HS2 CuoiKi
+##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Chuoi     M           80    82     81
+## 2 Cuu       F           96    90     69
+## 3 KhungLong F           77    86     72
+## 4 Mat       M           89    70     85
+## 5 Nguyet    F           93    98     96
+## 6 SoyaBean  F           70    85     92
+## 7 Truong    M           99    90     80</code></pre>
+<p><strong>Sắp xếp giảm dần với <code>desc()</code></strong>:</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" title="1">grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb128-2" title="2"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(CuoiKi))</a></code></pre></div>
+<pre><code>## # A tibble: 7 x 5
+##   Ten       GioiTinh   HS1   HS2 CuoiKi
+##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Nguyet    F           93    98     96
+## 2 SoyaBean  F           70    85     92
+## 3 Mat       M           89    70     85
+## 4 Chuoi     M           80    82     81
+## 5 Truong    M           99    90     80
+## 6 KhungLong F           77    86     72
+## 7 Cuu       F           96    90     69</code></pre>
+<p><strong>Kết hợp nhiều điều kiện xếp</strong>:</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" title="1">grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb130-2" title="2"><span class="st">  </span><span class="kw">arrange</span>(HS2, <span class="kw">desc</span>(CuoiKi))</a></code></pre></div>
+<pre><code>## # A tibble: 7 x 5
+##   Ten       GioiTinh   HS1   HS2 CuoiKi
+##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Mat       M           89    70     85
+## 2 Chuoi     M           80    82     81
+## 3 SoyaBean  F           70    85     92
+## 4 KhungLong F           77    86     72
+## 5 Truong    M           99    90     80
+## 6 Cuu       F           96    90     69
+## 7 Nguyet    F           93    98     96</code></pre>
+</div>
+<div id="mutate-transmute" class="section level3">
+<h3><span class="header-section-number">4.2.4</span> <code>mutate()</code> &amp; <code>transmute()</code></h3>
+<div id="mutate" class="section level4">
+<h4><span class="header-section-number">4.2.4.1</span> <code>mutate()</code></h4>
+<p>Hàm <code>mutate()</code> tạo ra cột mới hoặc update cột có sẵn trong dataset. Ta có thể tạo ra nhiều cột trong cùng 1 hàm <code>mutate()</code>, và thậm chí có thể dùng cột vừa tạo ở trước đó để làm cơ sở tính cho cột tiếp theo. Ta có thể thêm những cột đơn giản như <code>mutate(random_col = 1)</code> để thêm cột chỉ có giá trị 1, hoặc kết hợp với các hàm <code>if_else</code> và <code>case_when</code> để đưa vào các điều kiện phức tạp hơn.</p>
+<p>Tạo thêm cột điểm tổng kết và xếp hạng, sau đó gán lại vào dataset cũ:</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" title="1">grades &lt;-<span class="st"> </span>grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb132-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(</a>
+<a class="sourceLine" id="cb132-3" title="3">    <span class="dt">TongKet =</span> (HS1 <span class="op">+</span><span class="st"> </span>HS2<span class="op">*</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>CuoiKi<span class="op">*</span><span class="dv">3</span>)<span class="op">/</span><span class="dv">6</span>,</a>
+<a class="sourceLine" id="cb132-4" title="4">    <span class="dt">XepHang =</span> <span class="kw">cut</span>(TongKet, <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>, <span class="dv">90</span>, <span class="dv">100</span>),</a>
+<a class="sourceLine" id="cb132-5" title="5">                           <span class="kw">c</span>(<span class="st">&#39;Yeu&#39;</span>, <span class="st">&#39;TB&#39;</span>, <span class="st">&#39;TB Kha&#39;</span>, <span class="st">&#39;Kha&#39;</span>, <span class="st">&#39;Gioi&#39;</span>, <span class="st">&#39;XS&#39;</span>))) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb132-6" title="6"><span class="st">  </span><span class="kw">arrange</span>(TongKet)</a>
+<a class="sourceLine" id="cb132-7" title="7">grades</a></code></pre></div>
+<pre><code>## # A tibble: 7 x 7
+##   Ten       GioiTinh   HS1   HS2 CuoiKi TongKet XepHang
+##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;  
+## 1 KhungLong F           77    86     72    77.5 Kha    
+## 2 Cuu       F           96    90     69    80.5 Gioi   
+## 3 Mat       M           89    70     85    80.7 Gioi   
+## 4 Chuoi     M           80    82     81    81.2 Gioi   
+## 5 SoyaBean  F           70    85     92    86   Gioi   
+## 6 Truong    M           99    90     80    86.5 Gioi   
+## 7 Nguyet    F           93    98     96    96.2 XS</code></pre>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" title="1"><span class="kw">str</span>(grades)</a></code></pre></div>
+<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    7 obs. of  7 variables:
+##  $ Ten     : chr  &quot;KhungLong&quot; &quot;Cuu&quot; &quot;Mat&quot; &quot;Chuoi&quot; ...
+##  $ GioiTinh: chr  &quot;F&quot; &quot;F&quot; &quot;M&quot; &quot;M&quot; ...
+##  $ HS1     : num  77 96 89 80 70 99 93
+##  $ HS2     : num  86 90 70 82 85 90 98
+##  $ CuoiKi  : num  72 69 85 81 92 80 96
+##  $ TongKet : num  77.5 80.5 80.7 81.2 86 ...
+##  $ XepHang : Factor w/ 6 levels &quot;Yeu&quot;,&quot;TB&quot;,&quot;TB Kha&quot;,..: 4 5 5 5 5 5 6</code></pre>
+<p><strong>Kết hợp với <code>if_else</code></strong>:</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb136-1" title="1"><span class="co"># Thay đổi giá trị của 1 observation nhất định - đổi điểm HS1 của Chuối thành 75</span></a>
+<a class="sourceLine" id="cb136-2" title="2"><span class="co"># Lưu ý, cột TongKet đã tạo ra trước đó sẽ không tự đổng thay đổi them giá trị HS1 mới</span></a>
+<a class="sourceLine" id="cb136-3" title="3">grades &lt;-<span class="st"> </span>grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb136-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">HS1 =</span> <span class="kw">if_else</span>(Ten <span class="op">==</span><span class="st"> &#39;Chuoi&#39;</span>, <span class="dv">75</span>, HS1))  <span class="co"># Nếu Ten không phải là Chuoi, giữ nguyên giá trị của HS1</span></a>
+<a class="sourceLine" id="cb136-5" title="5">grades</a></code></pre></div>
+<pre><code>## # A tibble: 7 x 7
+##   Ten       GioiTinh   HS1   HS2 CuoiKi TongKet XepHang
+##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;  
+## 1 KhungLong F           77    86     72    77.5 Kha    
+## 2 Cuu       F           96    90     69    80.5 Gioi   
+## 3 Mat       M           89    70     85    80.7 Gioi   
+## 4 Chuoi     M           75    82     81    81.2 Gioi   
+## 5 SoyaBean  F           70    85     92    86   Gioi   
+## 6 Truong    M           99    90     80    86.5 Gioi   
+## 7 Nguyet    F           93    98     96    96.2 XS</code></pre>
+<p>Thay đổi toàn cột giới tính:</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb138-1" title="1">grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb138-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">GioiTinh =</span> <span class="kw">if_else</span>(GioiTinh <span class="op">==</span><span class="st"> &#39;M&#39;</span>, <span class="st">&#39;Male&#39;</span>,<span class="st">&#39;Female&#39;</span>))</a></code></pre></div>
+<pre><code>## # A tibble: 7 x 7
+##   Ten       GioiTinh   HS1   HS2 CuoiKi TongKet XepHang
+##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;  
+## 1 KhungLong Female      77    86     72    77.5 Kha    
+## 2 Cuu       Female      96    90     69    80.5 Gioi   
+## 3 Mat       Male        89    70     85    80.7 Gioi   
+## 4 Chuoi     Male        75    82     81    81.2 Gioi   
+## 5 SoyaBean  Female      70    85     92    86   Gioi   
+## 6 Truong    Male        99    90     80    86.5 Gioi   
+## 7 Nguyet    Female      93    98     96    96.2 XS</code></pre>
+<p>Kết hợp nhiều điều kiện:</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb140-1" title="1"><span class="co"># Lồng (nest) các hàm if_else lại với nhau:</span></a>
+<a class="sourceLine" id="cb140-2" title="2">grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb140-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Grade =</span> <span class="kw">if_else</span>(XepHang <span class="op">==</span><span class="st"> &#39;Yeu&#39;</span>, <span class="st">&#39;F&#39;</span>,</a>
+<a class="sourceLine" id="cb140-4" title="4">                         <span class="kw">if_else</span>(XepHang <span class="op">==</span><span class="st"> &#39;TB&#39;</span>, <span class="st">&#39;D&#39;</span>,</a>
+<a class="sourceLine" id="cb140-5" title="5">                                 <span class="kw">if_else</span>(XepHang <span class="op">==</span><span class="st"> &#39;TB Kha&#39;</span>, <span class="st">&#39;C&#39;</span>,</a>
+<a class="sourceLine" id="cb140-6" title="6">                                         <span class="kw">if_else</span>(XepHang <span class="op">==</span><span class="st"> &#39;Kha&#39;</span>, <span class="st">&#39;B&#39;</span>,</a>
+<a class="sourceLine" id="cb140-7" title="7">                                                 <span class="kw">if_else</span>(XepHang <span class="op">==</span><span class="st"> &#39;Gioi&#39;</span>, <span class="st">&#39;A&#39;</span>, <span class="st">&#39;A+&#39;</span>))))))</a></code></pre></div>
+<pre><code>## # A tibble: 7 x 8
+##   Ten       GioiTinh   HS1   HS2 CuoiKi TongKet XepHang Grade
+##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;   &lt;chr&gt;
+## 1 KhungLong F           77    86     72    77.5 Kha     B    
+## 2 Cuu       F           96    90     69    80.5 Gioi    A    
+## 3 Mat       M           89    70     85    80.7 Gioi    A    
+## 4 Chuoi     M           75    82     81    81.2 Gioi    A    
+## 5 SoyaBean  F           70    85     92    86   Gioi    A    
+## 6 Truong    M           99    90     80    86.5 Gioi    A    
+## 7 Nguyet    F           93    98     96    96.2 XS      A+</code></pre>
+<p>Lưu ý, hàm <code>dplyr::if_else()</code> khác với hàm <code>base::ifelse()</code>. Hàm thứ 2 của base 2 có rất nhiều giới hạn so với hàm cải tiến của <strong>dplyr</strong>.</p>
+<p><strong>Kết hợp với <code>case_when</code></strong> - Về cơ bản, <code>if_else</code> và <code>case_when</code> giống nhau. Điểm khác biệt lớn nhất nằm ở mặt trình bày: Có thể thấy ở ví dụ trên, cách viết nested <code>if_else</code> đọc khá rối mắt. Áp dụng lại với <code>case_when</code>:</p>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb142-1" title="1">grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb142-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Grade =</span> <span class="kw">case_when</span>(XepHang <span class="op">==</span><span class="st"> &#39;Yeu&#39;</span> <span class="op">~</span><span class="st"> &#39;F&#39;</span>,</a>
+<a class="sourceLine" id="cb142-3" title="3">                           XepHang <span class="op">==</span><span class="st"> &#39;TB&#39;</span> <span class="op">~</span><span class="st"> &#39;D&#39;</span>,</a>
+<a class="sourceLine" id="cb142-4" title="4">                           XepHang <span class="op">==</span><span class="st"> &#39;TB Kha&#39;</span> <span class="op">~</span><span class="st"> &#39;C&#39;</span>,</a>
+<a class="sourceLine" id="cb142-5" title="5">                           XepHang <span class="op">==</span><span class="st"> &#39;Kha&#39;</span> <span class="op">~</span><span class="st"> &#39;B&#39;</span>,</a>
+<a class="sourceLine" id="cb142-6" title="6">                           XepHang <span class="op">==</span><span class="st"> &#39;Gioi&#39;</span> <span class="op">~</span><span class="st"> &#39;A&#39;</span>,</a>
+<a class="sourceLine" id="cb142-7" title="7">                           <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &#39;A+&#39;</span>))  <span class="co"># case cuối cùng tương đương với tất cả các trường hợp còn lại</span></a></code></pre></div>
+<pre><code>## # A tibble: 7 x 8
+##   Ten       GioiTinh   HS1   HS2 CuoiKi TongKet XepHang Grade
+##   &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;   &lt;chr&gt;
+## 1 KhungLong F           77    86     72    77.5 Kha     B    
+## 2 Cuu       F           96    90     69    80.5 Gioi    A    
+## 3 Mat       M           89    70     85    80.7 Gioi    A    
+## 4 Chuoi     M           75    82     81    81.2 Gioi    A    
+## 5 SoyaBean  F           70    85     92    86   Gioi    A    
+## 6 Truong    M           99    90     80    86.5 Gioi    A    
+## 7 Nguyet    F           93    98     96    96.2 XS      A+</code></pre>
+</div>
+<div id="transmute" class="section level4">
+<h4><span class="header-section-number">4.2.4.2</span> <code>transmute()</code></h4>
+<p>Hàm <code>transmute()</code> cũng tạo ra cột mới, tuy nhiên kết quả đầu ra sẽ chỉ bao gồm những cột vừa được tạo:</p>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" title="1">grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb144-2" title="2"><span class="st">  </span><span class="kw">transmute</span>(<span class="dt">GioiTinh.VN =</span> <span class="kw">if_else</span>(GioiTinh <span class="op">==</span><span class="st"> &#39;M&#39;</span>, <span class="st">&#39;Nam&#39;</span>,<span class="st">&#39;Nu&#39;</span>))</a></code></pre></div>
+<pre><code>## # A tibble: 7 x 1
+##   GioiTinh.VN
+##   &lt;chr&gt;      
+## 1 Nu         
+## 2 Nu         
+## 3 Nam        
+## 4 Nam        
+## 5 Nu         
+## 6 Nam        
+## 7 Nu</code></pre>
+</div>
+</div>
+<div id="summarise" class="section level3">
+<h3><span class="header-section-number">4.2.5</span> <code>summarise()</code></h3>
+<p>Hàm <code>summarise()</code> nếu dùng riêng lẻ sẽ không thật sự hữu ích. Hàm này tính toán và tóm tắt dataset dựa vào một hoặc nhiều trường dữ liệu, sau đó trả ra kết quả là trường dữ liệu mới với 1 dòng kết quả tóm tắt tương ứng.</p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb146-1" title="1">grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb146-2" title="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">TB.HS1 =</span> <span class="kw">mean</span>(HS1), <span class="dt">STD.HS1 =</span> <span class="kw">sd</span>(HS1))</a></code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##   TB.HS1 STD.HS1
+##    &lt;dbl&gt;   &lt;dbl&gt;
+## 1   85.6    11.4</code></pre>
+</div>
+</div>
+<div id="kt-hp-cac-ham-trong-dplyr" class="section level2">
+<h2><span class="header-section-number">4.3</span> Kết hợp các hàm trong <strong>dplyr</strong></h2>
+<div id="group_by" class="section level3">
+<h3><span class="header-section-number">4.3.1</span> <code>group_by()</code></h3>
+<p>Do dataset đang sử dụng chỉ có 7 observation nên việc group thành các nhóm không có ý nghĩa cho lắm. Hàm <code>group_by</code> luôn kết hợp với các hàm khác như <code>mutate()</code>, <code>filter()</code> và <code>summarise()</code>, cho phép nhóm (aggregate) dữ liệu thành các nhóm khác nhau.</p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb148-1" title="1"><span class="co"># Group theo giới tính</span></a>
+<a class="sourceLine" id="cb148-2" title="2">grades <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb148-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(GioiTinh) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb148-4" title="4"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">SL =</span> <span class="kw">n</span>())</a></code></pre></div>
+<pre><code>## # A tibble: 2 x 2
+##   GioiTinh    SL
+##   &lt;chr&gt;    &lt;int&gt;
+## 1 F            4
+## 2 M            3</code></pre>
+<p>Chúng ta sẽ sử dụng dataset của OpenIntro về số lượt ném của Kobe Bryant trong series chung kết NBA 2009 (LAL - Lakers vs. ORL - Magic), kéo dài 5 games:</p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" title="1">kobe &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&#39;https://www.openintro.org/stat/data/kobe.csv&#39;</span>,</a>
+<a class="sourceLine" id="cb150-2" title="2">                 <span class="dt">col_types =</span> <span class="kw">cols</span>(<span class="dt">game =</span> <span class="kw">col_integer</span>(),</a>
+<a class="sourceLine" id="cb150-3" title="3">                                  <span class="dt">quarter =</span> <span class="kw">col_character</span>()))</a>
+<a class="sourceLine" id="cb150-4" title="4"><span class="kw">head</span>(kobe,<span class="dv">10</span>)</a></code></pre></div>
+<p>Dataset trên có các trường dữ liệu sau:</p>
+<ul>
+<li><strong>vs</strong>: thuộc kiểu <code>string</code>, gồm team mà LAL đối đầu. Dataset này chỉ có ORL.</li>
+<li><strong>game</strong>: thuộc kiểu <code>integer</code>, từ 1 đến 5.</li>
+<li><strong>quarter</strong>: thuộc kiểu <code>character</code>, 1 game bóng rổ có 4 hiệp nhưng có thể có overtime (OT)</li>
+<li><strong>time</strong>: thuộc kiểu <code>character</code>, tuy nhiên vì thời gian trong 1 game bóng rổ đo theo kiểu minute:second:millisecond khiến R hiểu thành hh:mm:ss nên cột này sẽ cần sửa sau (dùng <code>col_character()</code> khiến dữ liệu bị thay đổi).</li>
+<li><strong>description</strong>: thuộc kiểu <code>string</code>, Mô tả từng shot</li>
+<li><strong>basket</strong>: thuộc kiểu <code>string</code>: H tương đương với ném vào - made shot (hit), M tương đương với ném trượt - missed shot (miss).</li>
+</ul>
+<p>Trong phần dưới, do dataset có 133 observation nên chúng ta sẽ không in thẳng kết quả ra console mà dùng hàm <code>head()</code> để kiểm tra 10 observation đầu tiên. Để kiểm tra toàn bộ dataset, ta dùng hàm <code>View(kobe)</code> hoặc click vào dataset ở cửa sổ Envirronment góc trên bên phải.</p>
+</div>
+<div id="bin-i-d-liu-co-ban" class="section level3">
+<h3><span class="header-section-number">4.3.2</span> Biến đổi dữ liệu cơ bản</h3>
+<div id="cac-vi-du-cu-th" class="section level4">
+<h4><span class="header-section-number">4.3.2.1</span> Các ví dụ cụ thể</h4>
+<p>Có thể thấy trong dataset <code>kobe</code> ở trên:</p>
+<ul>
+<li>Không có trường dữ liệu ghi lại xem mỗi cú ném tương đương bao nhiêu điểm, chỉ có trường <strong>description</strong>.</li>
+<li>Cột <strong>quarter</strong> vừa có dữ liệu kiểu số (1 đến 4) vừa có kiểu string (1OT, 2OT, etc).</li>
+<li>Cột <strong>time</strong> đang hơi rắc rối cho việc xử lý và tính toán sau này.</li>
+</ul>
+<p>Chúng ta sẽ làm 1 số bước biến đổi dữ liệu như sau.</p>
+<ol style="list-style-type: decimal">
+<li>Đổi cột <strong>time</strong> thành số giây còn lại trong hiệp, kết hợp với hàm <code>paste0()</code> để nối các string lại:</li>
+</ol>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" title="1"><span class="co"># split cột time ra làm 3 cột minute/second/millisecond</span></a>
+<a class="sourceLine" id="cb151-2" title="2">kobe &lt;-<span class="st"> </span><span class="kw">cbind</span>(kobe, kobe <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb151-3" title="3"><span class="st">                </span><span class="kw">transmute</span>(<span class="dt">time.s =</span> <span class="kw">as.character</span>(time)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb151-4" title="4"><span class="st">                </span><span class="kw">separate</span>(time.s, <span class="dt">into =</span> <span class="kw">paste0</span>(<span class="st">&quot;T&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">sep =</span> <span class="st">&#39;:&#39;</span>, <span class="dt">remove =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb151-5" title="5"></a>
+<a class="sourceLine" id="cb151-6" title="6"><span class="co"># có thể thấy cột T3 - millisecond chỉ có giá trị 00, vì vậy ta sẽ loại cột này đi</span></a>
+<a class="sourceLine" id="cb151-7" title="7">kobe <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb151-8" title="8"><span class="st">  </span><span class="kw">group_by</span>(T3) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># kết hợp group_by và summarise, sẽ nói kĩ hơn ở phần sau</span></a>
+<a class="sourceLine" id="cb151-9" title="9"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n=</span><span class="kw">n</span>())</a></code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##   T3        n
+##   &lt;chr&gt; &lt;int&gt;
+## 1 00      133</code></pre>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" title="1">kobe &lt;-<span class="st"> </span>kobe <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb153-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>T3) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># bỏ T3</span></a>
+<a class="sourceLine" id="cb153-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">time.s =</span> <span class="kw">as.integer</span>(T1) <span class="op">*</span><span class="st"> </span><span class="dv">60</span> <span class="op">+</span><span class="st"> </span><span class="kw">as.integer</span>(T2)) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># Tạo lại cột time.s ~ số giây còn lại</span></a>
+<a class="sourceLine" id="cb153-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">time =</span> <span class="kw">as.character</span>(time)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># đổi định dạng cột time thành string</span></a>
+<a class="sourceLine" id="cb153-5" title="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">T1 =</span> <span class="kw">as.integer</span>(T1)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb153-6" title="6"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">time.m =</span> T1) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># đổi tên T1 thành time.m ~ số phút còn lại</span></a>
+<a class="sourceLine" id="cb153-7" title="7"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>T2) <span class="co"># bỏ T2</span></a>
+<a class="sourceLine" id="cb153-8" title="8"></a>
+<a class="sourceLine" id="cb153-9" title="9"><span class="kw">head</span>(kobe, <span class="dv">10</span>)</a></code></pre></div>
+<pre><code>##     vs game quarter     time
+## 1  ORL    1       1 09:47:00
+## 2  ORL    1       1 09:07:00
+## 3  ORL    1       1 08:11:00
+## 4  ORL    1       1 07:41:00
+## 5  ORL    1       1 07:03:00
+## 6  ORL    1       1 06:01:00
+## 7  ORL    1       1 04:07:00
+## 8  ORL    1       1 00:52:00
+## 9  ORL    1       1 00:00:00
+## 10 ORL    1       2 06:35:00
+##                                                description basket time.m
+## 1                  Kobe Bryant makes 4-foot two point shot      H      9
+## 2                                Kobe Bryant misses jumper      M      9
+## 3                         Kobe Bryant misses 7-foot jumper      M      8
+## 4  Kobe Bryant makes 16-foot jumper (Derek Fisher assists)      H      7
+## 5                          Kobe Bryant makes driving layup      H      7
+## 6                                Kobe Bryant misses jumper      M      6
+## 7                        Kobe Bryant misses 12-foot jumper      M      4
+## 8                        Kobe Bryant misses 19-foot jumper      M      0
+## 9                                 Kobe Bryant misses layup      M      0
+## 10                                Kobe Bryant makes jumper      H      6
+##    time.s
+## 1     587
+## 2     547
+## 3     491
+## 4     461
+## 5     423
+## 6     361
+## 7     247
+## 8      52
+## 9       0
+## 10    395</code></pre>
+<p>Ngược lại, ta cũng có thể dùng hàm <code>%/%</code> (là hàm để lấy phần nguyên của phép chia) và <code>%%</code> (lấy phần dư) để tính ngược lại từ trường <strong>time.s</strong> về dạng second:millisecond:</p>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb155-1" title="1"><span class="kw">transmute</span>(kobe, <span class="dt">time.x =</span> time.s <span class="op">%/%</span><span class="st"> </span><span class="dv">60</span> <span class="op">+</span><span class="st"> </span>(time.s <span class="op">%%</span><span class="st"> </span><span class="dv">60</span>)<span class="op">/</span><span class="dv">100</span>)</a></code></pre></div>
+<pre><code>##     time.x
+## 1     9.47
+## 2     9.07
+## 3     8.11
+## 4     7.41
+## 5     7.03
+## 6     6.01
+## 7     4.07
+## 8     0.52
+## 9     0.00
+## 10    6.35
+## 11    5.58
+## 12    5.22
+## 13    4.37
+## 14    3.30
+## 15    2.55
+## 16    1.55
+## 17    0.38
+## 18    0.04
+## 19   11.44
+## 20   11.15
+## 21   10.14
+## 22    9.15
+## 23    6.43
+## 24    4.58
+## 25    4.24
+## 26    3.55
+## 27    3.16
+## 28    1.15
+## 29    0.00
+## 30    6.48
+## 31    6.16
+## 32    5.48
+## 33    2.54
+## 34    1.59
+## 35   11.32
+## 36    5.09
+## 37    4.35
+## 38    0.01
+## 39    1.52
+## 40   11.18
+## 41    9.52
+## 42    9.23
+## 43    8.48
+## 44    4.37
+## 45    4.07
+## 46    3.29
+## 47    1.20
+## 48    0.45
+## 49    0.00
+## 50    7.09
+## 51    5.37
+## 52    1.54
+## 53    1.10
+## 54    4.13
+## 55    2.17
+## 56   11.19
+## 57    8.29
+## 58    7.01
+## 59    6.03
+## 60    5.16
+## 61    3.02
+## 62    0.19
+## 63    5.37
+## 64    4.01
+## 65    3.15
+## 66    2.08
+## 67    0.39
+## 68    9.17
+## 69    7.24
+## 70    7.13
+## 71    5.30
+## 72    0.51
+## 73    0.04
+## 74    8.52
+## 75    7.24
+## 76    6.26
+## 77    5.20
+## 78    4.48
+## 79    3.33
+## 80    1.02
+## 81    4.13
+## 82    3.32
+## 83    2.49
+## 84    1.58
+## 85    0.47
+## 86   11.00
+## 87    9.56
+## 88    5.20
+## 89    4.48
+## 90    3.48
+## 91    1.13
+## 92    7.54
+## 93    6.48
+## 94    6.28
+## 95    4.43
+## 96    0.25
+## 97    9.00
+## 98    5.52
+## 99    2.17
+## 100  11.00
+## 101   9.56
+## 102   9.06
+## 103   8.18
+## 104   6.22
+## 105   4.26
+## 106   3.12
+## 107   2.38
+## 108   2.06
+## 109   5.41
+## 110   5.09
+## 111   4.42
+## 112   3.37
+## 113   3.07
+## 114   2.00
+## 115   1.18
+## 116   0.34
+## 117   0.30
+## 118   0.00
+## 119   6.55
+## 120   3.13
+## 121   0.53
+## 122   0.41
+## 123   0.02
+## 124   9.29
+## 125   5.55
+## 126   1.20
+## 127   0.01
+## 128   3.57
+## 129   3.33
+## 130   2.02
+## 131   0.23
+## 132   0.06
+## 133   0.00</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Sửa cột <strong>quarter</strong>, sử dụng hàm <code>nchar()</code> để đếm số ký tự trong string và hàm <code>substr()</code> để cắt string từ bên trái:</li>
+</ol>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb157-1" title="1"><span class="co"># Chuyển 1OT thành 5, 2OT thành 6 , etc.</span></a>
+<a class="sourceLine" id="cb157-2" title="2">kobe &lt;-<span class="st"> </span>kobe <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb157-3" title="3"><span class="st">  </span><span class="co"># nếu độ dài string = 1 -&gt; đổi thành dạng numeric</span></a>
+<a class="sourceLine" id="cb157-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">quarter.n =</span> <span class="kw">case_when</span>(<span class="kw">nchar</span>(quarter) <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(quarter),  </a>
+<a class="sourceLine" id="cb157-5" title="5">                               <span class="co"># nếu độ dài string = 3 -&gt; cột thêm 4</span></a>
+<a class="sourceLine" id="cb157-6" title="6">                             <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">substr</span>(quarter, <span class="dv">1</span>, <span class="dv">1</span>)) <span class="op">+</span><span class="st"> </span><span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb157-7" title="7"><span class="kw">head</span>(kobe, <span class="dv">10</span>)</a></code></pre></div>
+<pre><code>##     vs game quarter     time
+## 1  ORL    1       1 09:47:00
+## 2  ORL    1       1 09:07:00
+## 3  ORL    1       1 08:11:00
+## 4  ORL    1       1 07:41:00
+## 5  ORL    1       1 07:03:00
+## 6  ORL    1       1 06:01:00
+## 7  ORL    1       1 04:07:00
+## 8  ORL    1       1 00:52:00
+## 9  ORL    1       1 00:00:00
+## 10 ORL    1       2 06:35:00
+##                                                description basket time.m
+## 1                  Kobe Bryant makes 4-foot two point shot      H      9
+## 2                                Kobe Bryant misses jumper      M      9
+## 3                         Kobe Bryant misses 7-foot jumper      M      8
+## 4  Kobe Bryant makes 16-foot jumper (Derek Fisher assists)      H      7
+## 5                          Kobe Bryant makes driving layup      H      7
+## 6                                Kobe Bryant misses jumper      M      6
+## 7                        Kobe Bryant misses 12-foot jumper      M      4
+## 8                        Kobe Bryant misses 19-foot jumper      M      0
+## 9                                 Kobe Bryant misses layup      M      0
+## 10                                Kobe Bryant makes jumper      H      6
+##    time.s quarter.n
+## 1     587         1
+## 2     547         1
+## 3     491         1
+## 4     461         1
+## 5     423         1
+## 6     361         1
+## 7     247         1
+## 8      52         1
+## 9       0         1
+## 10    395         2</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Thêm cột điểm <strong>point</strong></li>
+</ol>
+<p>Vì dataset khá nhỏ và việc manipulate string cũng khá phức tạp nên chúng ta sẽ bắt đầu thủ công bằng cách scan dataset sẽ đưa ra được 1 số kết luận như sau:</p>
+<ul>
+<li>Dataset này không bao gồm ném phạt (free throws), và chỉ bao gồm field goal attempts, tương đương với 2 hoặc 3 điểm</li>
+<li>Các cú ném 3 điểm sẽ bao gồm đoạn string “3pt” hoặc “three point”, và ta chắc chắn được ra 2 đoạn string này đủ unique để indentify từng shot attempt là 2 hay 3 điểm. Đồng thời, khoảng cách từ vạch 3 điểm đến rổ là 23.75ft (22ft từ góc sân), vì vậy ở dữ liệu cho game 1-2-4-5, phần description đã bao gồm đầy đủ thông tin phân loại 3 điểm (dựa vào thông tin khoảng cách của shot).</li>
+</ul>
+<p>Từ 2 kết luận trên, ta có thể tạo thêm cột <strong>point.attempt</strong>, sử dụng hàm <code>grepl(string_to_find, value, ...)</code> trả về giá trị TRUE/FALSE để tìm kiếm các quan sát tương đương với 3 điểm:</p>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb159-1" title="1">kobe &lt;-<span class="st"> </span>kobe <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb159-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">point.attempt =</span> <span class="kw">case_when</span>(<span class="kw">grepl</span>(<span class="st">&#39;3pt&#39;</span>, description, <span class="dt">fixed =</span> <span class="ot">TRUE</span>) <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb159-3" title="3">                           <span class="kw">grepl</span>(<span class="st">&#39;three point&#39;</span>, description, <span class="dt">fixed =</span> <span class="ot">TRUE</span>) <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb159-4" title="4">                           <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb159-5" title="5"><span class="kw">head</span>(kobe, <span class="dv">10</span>)</a></code></pre></div>
+<pre><code>##     vs game quarter     time
+## 1  ORL    1       1 09:47:00
+## 2  ORL    1       1 09:07:00
+## 3  ORL    1       1 08:11:00
+## 4  ORL    1       1 07:41:00
+## 5  ORL    1       1 07:03:00
+## 6  ORL    1       1 06:01:00
+## 7  ORL    1       1 04:07:00
+## 8  ORL    1       1 00:52:00
+## 9  ORL    1       1 00:00:00
+## 10 ORL    1       2 06:35:00
+##                                                description basket time.m
+## 1                  Kobe Bryant makes 4-foot two point shot      H      9
+## 2                                Kobe Bryant misses jumper      M      9
+## 3                         Kobe Bryant misses 7-foot jumper      M      8
+## 4  Kobe Bryant makes 16-foot jumper (Derek Fisher assists)      H      7
+## 5                          Kobe Bryant makes driving layup      H      7
+## 6                                Kobe Bryant misses jumper      M      6
+## 7                        Kobe Bryant misses 12-foot jumper      M      4
+## 8                        Kobe Bryant misses 19-foot jumper      M      0
+## 9                                 Kobe Bryant misses layup      M      0
+## 10                                Kobe Bryant makes jumper      H      6
+##    time.s quarter.n point.attempt
+## 1     587         1             2
+## 2     547         1             2
+## 3     491         1             2
+## 4     461         1             2
+## 5     423         1             2
+## 6     361         1             2
+## 7     247         1             2
+## 8      52         1             2
+## 9       0         1             2
+## 10    395         2             2</code></pre>
+<p>Đồng thời, để tính toán dễ dàng hơn, ta đổi cột <strong>basket</strong> sang 1 và 0 để tính dễ hơn, sau đó tạo thêm cột <span class="math inline">\(point.made = point.attempt * basket.n\)</span></p>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" title="1">kobe &lt;-<span class="st"> </span>kobe <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb161-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">basket.n =</span> <span class="kw">case_when</span>(basket <span class="op">==</span><span class="st"> &#39;H&#39;</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb161-3" title="3">                              <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb161-4" title="4">         <span class="dt">point.made =</span> point.attempt <span class="op">*</span><span class="st"> </span>basket.n)</a>
+<a class="sourceLine" id="cb161-5" title="5"><span class="kw">head</span>(kobe, <span class="dv">10</span>)</a></code></pre></div>
+<pre><code>##     vs game quarter     time
+## 1  ORL    1       1 09:47:00
+## 2  ORL    1       1 09:07:00
+## 3  ORL    1       1 08:11:00
+## 4  ORL    1       1 07:41:00
+## 5  ORL    1       1 07:03:00
+## 6  ORL    1       1 06:01:00
+## 7  ORL    1       1 04:07:00
+## 8  ORL    1       1 00:52:00
+## 9  ORL    1       1 00:00:00
+## 10 ORL    1       2 06:35:00
+##                                                description basket time.m
+## 1                  Kobe Bryant makes 4-foot two point shot      H      9
+## 2                                Kobe Bryant misses jumper      M      9
+## 3                         Kobe Bryant misses 7-foot jumper      M      8
+## 4  Kobe Bryant makes 16-foot jumper (Derek Fisher assists)      H      7
+## 5                          Kobe Bryant makes driving layup      H      7
+## 6                                Kobe Bryant misses jumper      M      6
+## 7                        Kobe Bryant misses 12-foot jumper      M      4
+## 8                        Kobe Bryant misses 19-foot jumper      M      0
+## 9                                 Kobe Bryant misses layup      M      0
+## 10                                Kobe Bryant makes jumper      H      6
+##    time.s quarter.n point.attempt basket.n point.made
+## 1     587         1             2        1          2
+## 2     547         1             2        0          0
+## 3     491         1             2        0          0
+## 4     461         1             2        1          2
+## 5     423         1             2        1          2
+## 6     361         1             2        0          0
+## 7     247         1             2        0          0
+## 8      52         1             2        0          0
+## 9       0         1             2        0          0
+## 10    395         2             2        1          2</code></pre>
+</div>
+<div id="kt-hp-toan-b-vi-pipe" class="section level4">
+<h4><span class="header-section-number">4.3.2.2</span> Kết hợp toàn bộ với pipe</h4>
+<p>Ta có thể kết hợp tất cả các ví dụ trên thành 1 đoạn script với pipe <code>%&gt;%</code> để ra kết quả cuối như sau:</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" title="1">kobe &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&#39;https://www.openintro.org/stat/data/kobe.csv&#39;</span>,</a>
+<a class="sourceLine" id="cb163-2" title="2">                 <span class="dt">col_types =</span> <span class="kw">cols</span>(<span class="dt">game =</span> <span class="kw">col_integer</span>(),</a>
+<a class="sourceLine" id="cb163-3" title="3">                                  <span class="dt">quarter =</span> <span class="kw">col_character</span>())) </a>
+<a class="sourceLine" id="cb163-4" title="4"></a>
+<a class="sourceLine" id="cb163-5" title="5">kobe &lt;-<span class="st"> </span><span class="kw">cbind</span>(kobe, kobe <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb163-6" title="6"><span class="st">                </span><span class="kw">transmute</span>(<span class="dt">time.s =</span> <span class="kw">as.character</span>(time)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb163-7" title="7"><span class="st">                </span><span class="kw">separate</span>(time.s, <span class="dt">into =</span> <span class="kw">paste0</span>(<span class="st">&quot;T&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">sep =</span> <span class="st">&#39;:&#39;</span>, <span class="dt">remove =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb163-8" title="8"><span class="st">        </span><span class="kw">select</span>(<span class="op">-</span>T3) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb163-9" title="9"><span class="st">        </span><span class="kw">mutate</span>(<span class="dt">time.s =</span> <span class="kw">as.integer</span>(T1) <span class="op">*</span><span class="st"> </span><span class="dv">60</span> <span class="op">+</span><span class="st"> </span><span class="kw">as.integer</span>(T2)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb163-10" title="10"><span class="st">        </span><span class="kw">mutate</span>(<span class="dt">time =</span> <span class="kw">as.character</span>(time)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb163-11" title="11"><span class="st">        </span><span class="kw">mutate</span>(<span class="dt">T1 =</span> <span class="kw">as.integer</span>(T1)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb163-12" title="12"><span class="st">        </span><span class="kw">rename</span>(<span class="dt">time.m =</span> T1) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb163-13" title="13"><span class="st">        </span><span class="kw">select</span>(<span class="op">-</span>T2) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb163-14" title="14"><span class="st">        </span><span class="kw">mutate</span>(<span class="dt">quarter.n =</span> <span class="kw">case_when</span>(<span class="kw">nchar</span>(quarter) <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(quarter),</a>
+<a class="sourceLine" id="cb163-15" title="15">                                     <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">substr</span>(quarter, <span class="dv">1</span>, <span class="dv">1</span>)) <span class="op">+</span><span class="st"> </span><span class="dv">4</span>),</a>
+<a class="sourceLine" id="cb163-16" title="16">               <span class="dt">point.attempt =</span> <span class="kw">case_when</span>(<span class="kw">grepl</span>(<span class="st">&#39;3pt&#39;</span>, description, <span class="dt">fixed =</span> <span class="ot">TRUE</span>) <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb163-17" title="17">                                         <span class="kw">grepl</span>(<span class="st">&#39;three point&#39;</span>, description, <span class="dt">fixed =</span> <span class="ot">TRUE</span>) <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb163-18" title="18">                                         <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb163-19" title="19">               <span class="dt">basket.n =</span> <span class="kw">case_when</span>(basket <span class="op">==</span><span class="st"> &#39;H&#39;</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb163-20" title="20">                                    <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb163-21" title="21">               <span class="dt">point.made =</span> point.attempt <span class="op">*</span><span class="st"> </span>basket.n)</a></code></pre></div>
+</div>
+</div>
+<div id="group_by-va-summarise" class="section level3">
+<h3><span class="header-section-number">4.3.3</span> <code>group_by</code> và <code>summarise</code></h3>
+<p>Với dataset <code>kobe</code> đã biến đổi cơ bản xong, ta có thể kết hợp <code>group_by</code> và <code>summarise</code> để trả lời 1 số câu hỏi đơn giản:</p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" title="1">kobe &lt;-<span class="st"> </span><span class="kw">arrange</span>(kobe, game)</a>
+<a class="sourceLine" id="cb164-2" title="2"></a>
+<a class="sourceLine" id="cb164-3" title="3"><span class="co"># group theo game</span></a>
+<a class="sourceLine" id="cb164-4" title="4">kobe <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb164-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(game) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb164-6" title="6"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">total.fg =</span> <span class="kw">sum</span>(basket.n), <span class="co"># tổng số lượt ném thành công</span></a>
+<a class="sourceLine" id="cb164-7" title="7">            <span class="dt">total.fga =</span> <span class="kw">n</span>(), <span class="co"># tổng số lượt ném</span></a>
+<a class="sourceLine" id="cb164-8" title="8">            <span class="dt">total.point =</span> <span class="kw">sum</span>(point.made), <span class="co"># tổng số điểm</span></a>
+<a class="sourceLine" id="cb164-9" title="9">            <span class="dt">point.per.fga =</span> total.point<span class="op">/</span>total.fga, <span class="co"># điểm trung bình trên mỗi lượt ném</span></a>
+<a class="sourceLine" id="cb164-10" title="10">            <span class="dt">avg.fg =</span> <span class="kw">mean</span>(basket.n)) <span class="co"># tỷ lệ ném thành công</span></a></code></pre></div>
+<pre><code>## # A tibble: 5 x 6
+##    game total.fg total.fga total.point point.per.fga avg.fg
+##   &lt;int&gt;    &lt;dbl&gt;     &lt;int&gt;       &lt;dbl&gt;         &lt;dbl&gt;  &lt;dbl&gt;
+## 1     1       16        34          32         0.941  0.471
+## 2     2       10        21          21         1      0.476
+## 3     3       11        25          26         1.04   0.44 
+## 4     4       11        30          24         0.8    0.367
+## 5     5       10        23          22         0.957  0.435</code></pre>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" title="1"><span class="co"># group theo game và quarter</span></a>
+<a class="sourceLine" id="cb166-2" title="2">kobe <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb166-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(game, quarter.n) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb166-4" title="4"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">total.fg =</span> <span class="kw">sum</span>(basket.n),</a>
+<a class="sourceLine" id="cb166-5" title="5">            <span class="dt">total.fga =</span> <span class="kw">n</span>(),</a>
+<a class="sourceLine" id="cb166-6" title="6">            <span class="dt">total.point =</span> <span class="kw">sum</span>(point.made),</a>
+<a class="sourceLine" id="cb166-7" title="7">            <span class="dt">point.per.fga =</span> total.point<span class="op">/</span>total.fga,</a>
+<a class="sourceLine" id="cb166-8" title="8">            <span class="dt">avg.fg =</span> <span class="kw">mean</span>(basket.n))</a></code></pre></div>
+<pre><code>## # A tibble: 22 x 7
+## # Groups:   game [5]
+##     game quarter.n total.fg total.fga total.point point.per.fga avg.fg
+##    &lt;int&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;int&gt;       &lt;dbl&gt;         &lt;dbl&gt;  &lt;dbl&gt;
+##  1     1         1        3         9           6         0.667  0.333
+##  2     1         2        6         9          12         1.33   0.667
+##  3     1         3        6        11          12         1.09   0.545
+##  4     1         4        1         5           2         0.4    0.2  
+##  5     2         1        1         4           2         0.5    0.25 
+##  6     2         2        1         1           3         3      1    
+##  7     2         3        5        10          10         1      0.5  
+##  8     2         4        2         4           4         1      0.5  
+##  9     2         5        1         2           2         1      0.5  
+## 10     3         1        7        10          16         1.6    0.7  
+## # ... with 12 more rows</code></pre>
+</div>
+<div id="kt-hp-group_by-va-mutate-filter" class="section level3">
+<h3><span class="header-section-number">4.3.4</span> Kết hợp <code>group_by</code> và <code>mutate</code> / <code>filter</code></h3>
+<p>Thêm 1 số cột accumuated points, accumulated fga, accumulated fg, fg%, point/fga:</p>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb168-1" title="1">kobe &lt;-<span class="st"> </span>kobe <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb168-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(game) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb168-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">acc.pts =</span> <span class="kw">cumsum</span>(point.made),</a>
+<a class="sourceLine" id="cb168-4" title="4">         <span class="dt">fga =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb168-5" title="5">         <span class="dt">acc.fga =</span> <span class="kw">cumsum</span>(fga),</a>
+<a class="sourceLine" id="cb168-6" title="6">         <span class="dt">acc.fg =</span> <span class="kw">cumsum</span>(basket.n),</a>
+<a class="sourceLine" id="cb168-7" title="7">         <span class="dt">pct.fg =</span> <span class="kw">cummean</span>(basket.n),</a>
+<a class="sourceLine" id="cb168-8" title="8">         <span class="dt">pts.per.fga =</span> acc.pts<span class="op">/</span>acc.fga)</a>
+<a class="sourceLine" id="cb168-9" title="9"><span class="kw">head</span>(kobe, <span class="dv">10</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 10 x 18
+## # Groups:   game [1]
+##    vs     game quarter time  description basket time.m time.s quarter.n
+##    &lt;chr&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;   &lt;int&gt;  &lt;dbl&gt;     &lt;dbl&gt;
+##  1 ORL       1 1       09:4~ Kobe Bryan~ H           9    587         1
+##  2 ORL       1 1       09:0~ Kobe Bryan~ M           9    547         1
+##  3 ORL       1 1       08:1~ Kobe Bryan~ M           8    491         1
+##  4 ORL       1 1       07:4~ Kobe Bryan~ H           7    461         1
+##  5 ORL       1 1       07:0~ Kobe Bryan~ H           7    423         1
+##  6 ORL       1 1       06:0~ Kobe Bryan~ M           6    361         1
+##  7 ORL       1 1       04:0~ Kobe Bryan~ M           4    247         1
+##  8 ORL       1 1       00:5~ Kobe Bryan~ M           0     52         1
+##  9 ORL       1 1       00:0~ Kobe Bryan~ M           0      0         1
+## 10 ORL       1 2       06:3~ Kobe Bryan~ H           6    395         2
+## # ... with 9 more variables: point.attempt &lt;dbl&gt;, basket.n &lt;dbl&gt;,
+## #   point.made &lt;dbl&gt;, acc.pts &lt;dbl&gt;, fga &lt;dbl&gt;, acc.fga &lt;dbl&gt;,
+## #   acc.fg &lt;dbl&gt;, pct.fg &lt;dbl&gt;, pts.per.fga &lt;dbl&gt;</code></pre>
+<p>Ta cũng có thể kết hợp với <code>filter</code> để xem performance trong crunch time (tức là 3 phút cuối của những game sát nhau, trong trường hợp này là game 2/3/4):</p>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb170-1" title="1">kobe <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb170-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(game) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb170-3" title="3"><span class="st">  </span><span class="kw">filter</span>(game <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>),</a>
+<a class="sourceLine" id="cb170-4" title="4">         quarter <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(quarter),</a>
+<a class="sourceLine" id="cb170-5" title="5">         time.m <span class="op">&lt;</span><span class="dv">3</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb170-6" title="6"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>description, <span class="op">-</span>vs, <span class="op">-</span>time, <span class="op">-</span>basket) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb170-7" title="7"><span class="st">  </span><span class="kw">head</span>()</a></code></pre></div>
+<pre><code>## # A tibble: 6 x 14
+## # Groups:   game [2]
+##    game quarter time.m time.s quarter.n point.attempt basket.n point.made
+##   &lt;int&gt; &lt;chr&gt;    &lt;int&gt;  &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
+## 1     2 4            1    114         4             2        0          0
+## 2     2 4            1     70         4             2        1          2
+## 3     3 4            2    122         4             3        0          0
+## 4     3 4            0     23         4             3        0          0
+## 5     3 4            0      6         4             3        0          0
+## 6     3 4            0      0         4             2        1          2
+## # ... with 6 more variables: acc.pts &lt;dbl&gt;, fga &lt;dbl&gt;, acc.fga &lt;dbl&gt;,
+## #   acc.fg &lt;dbl&gt;, pct.fg &lt;dbl&gt;, pts.per.fga &lt;dbl&gt;</code></pre>
+<p>Trong các ví dụ trên, có 2 điểm mới:</p>
+<ol style="list-style-type: decimal">
+<li><p>các hàm <code>cumsum()</code>, <code>cummean()</code> được gọi là window functions (tham khảo ở mục dưới), thường được dùng để tính lũy kế và các ứng dụng tương tự. Một số window function hữu ích khác bao gồm:</p>
+<ul>
+<li><code>cumprod()</code>, <code>cummin()</code>, <code>cummax()</code>, <code>cumsum()</code>, <code>cummean()</code>: Các hàm tính lũy kế<br />
+</li>
+<li><code>row_number()</code>, <code>min_rank()</code>, <code>percent_rank()</code>, <code>dense_rank()</code>, <code>cume_dist()</code>: Các hàm xếp hạng (rank)<br />
+</li>
+<li><code>lead()</code> và <code>lag()</code>: Các hàm offset</li>
+</ul></li>
+<li><p>Ký hiệu <code>%in%</code>: Có thể thấy trong ví dụ, hàm này hoạt động giống <code>IN</code> trong SQL, dịch là: nếu các observation trong trường <strong>game</strong> nằm trong nhóm các giá trị (2, 3, 4).</p></li>
+</ol>
+</div>
+</div>
+<div id="tham-khao-3" class="section level2">
+<h2><span class="header-section-number">4.4</span> Tham khảo</h2>
+<ul>
+<li><a href="https://r4ds.had.co.nz/transform.html#grouped-summaries-with-summarise">Data transformation - R for DS</a></li>
+<li><a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Logic.html">Logical Operators in R</a></li>
+<li><a href="https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html"><code>dplyr</code> vignettes</a></li>
+<li><a href="https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html">Window functions</a></li>
+<li><a href="https://www.openintro.org/stat/data/?data=kobe">Kobe hot hand data - OpenIntro</a></li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ve-biu-.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="bin-i-d-liu-phn-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+},
+"search": true
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

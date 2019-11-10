@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1 Làm quen với R | Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1</title>
+  <meta name="description" content="1 Làm quen với R | Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1" />
+  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1 Làm quen với R | Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  <meta name="github-repo" content="truonghm/R01" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1 Làm quen với R | Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1" />
+  
+  
+  
+
+<meta name="author" content="Truong Hoang" />
+
+
+<meta name="date" content="2019-11-10" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="data-frame.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Mở đầu</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#disclaimer"><i class="fa fa-check"></i>Disclaimer</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#outline-draft"><i class="fa fa-check"></i>Outline draft</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#to-do"><i class="fa fa-check"></i>To-do</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#general-resources"><i class="fa fa-check"></i>General resources</a></li>
+</ul></li>
+<li class="part"><span><b>Giới thiệu chung</b></span></li>
+<li class="chapter" data-level="1" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html"><i class="fa fa-check"></i><b>1</b> Làm quen với R</a><ul>
+<li class="chapter" data-level="1.1" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#tinh-toan-co-ban-trong-r"><i class="fa fa-check"></i><b>1.1</b> Tính toán cơ bản trong R</a></li>
+<li class="chapter" data-level="1.2" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#gan-bin-assignment"><i class="fa fa-check"></i><b>1.2</b> Gán biến (Assignment)</a></li>
+<li class="chapter" data-level="1.3" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#vector"><i class="fa fa-check"></i><b>1.3</b> Vector</a></li>
+<li class="chapter" data-level="1.4" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#cac-goi-thu-vin-packages"><i class="fa fa-check"></i><b>1.4</b> Các gói thư viện (packages)</a></li>
+<li class="chapter" data-level="1.5" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#tim-kim-cau-tra-li"><i class="fa fa-check"></i><b>1.5</b> Tìm kiếm câu trả lời</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#documentation-cua-r"><i class="fa fa-check"></i><b>1.5.1</b> Documentation của R</a></li>
+<li class="chapter" data-level="1.5.2" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#stackoverflow"><i class="fa fa-check"></i><b>1.5.2</b> Stackoverflow</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#workflow-co-ban-trong-r"><i class="fa fa-check"></i><b>1.6</b> Workflow cơ bản trong R</a><ul>
+<li class="chapter" data-level="1.6.1" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#r-script-file-uoi-.r"><i class="fa fa-check"></i><b>1.6.1</b> R Script (file đuôi *.R)</a></li>
+<li class="chapter" data-level="1.6.2" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#r-markdown-file-uoi-.rmd"><i class="fa fa-check"></i><b>1.6.2</b> R Markdown (file đuôi *.Rmd)</a></li>
+<li class="chapter" data-level="1.6.3" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#r-project-file-uoi-.rproj"><i class="fa fa-check"></i><b>1.6.3</b> R Project (file đuôi *.Rproj)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#tham-khao"><i class="fa fa-check"></i><b>1.7</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="data-frame.html"><a href="data-frame.html"><i class="fa fa-check"></i><b>2</b> Data frame</a><ul>
+<li class="chapter" data-level="2.1" data-path="data-frame.html"><a href="data-frame.html#import-d-liu-co-ban"><i class="fa fa-check"></i><b>2.1</b> Import dữ liệu cơ bản</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="data-frame.html"><a href="data-frame.html#t-package"><i class="fa fa-check"></i><b>2.1.1</b> Từ package</a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-frame.html"><a href="data-frame.html#import-t-excel-file-csv-hoc-file-txt"><i class="fa fa-check"></i><b>2.1.2</b> Import từ Excel, file csv hoặc file txt</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-frame.html"><a href="data-frame.html#cac-loai-d-liu-value-type"><i class="fa fa-check"></i><b>2.2</b> Các loại dữ liệu (Value type)</a></li>
+<li class="chapter" data-level="2.3" data-path="data-frame.html"><a href="data-frame.html#truy-vn-d-liu-co-ban"><i class="fa fa-check"></i><b>2.3</b> Truy vấn dữ liệu cơ bản</a></li>
+<li class="chapter" data-level="2.4" data-path="data-frame.html"><a href="data-frame.html#tham-khao-1"><i class="fa fa-check"></i><b>2.4</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ve-biu-.html"><a href="ve-biu-.html"><i class="fa fa-check"></i><b>3</b> Vẽ biểu đồ</a><ul>
+<li class="chapter" data-level="3.1" data-path="ve-biu-.html"><a href="ve-biu-.html#cac-biu--co-ban"><i class="fa fa-check"></i><b>3.1</b> Các biểu đồ cơ bản</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="ve-biu-.html"><a href="ve-biu-.html#scatterplot"><i class="fa fa-check"></i><b>3.1.1</b> Scatterplot</a></li>
+<li class="chapter" data-level="3.1.2" data-path="ve-biu-.html"><a href="ve-biu-.html#boxplot"><i class="fa fa-check"></i><b>3.1.2</b> Boxplot</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="ve-biu-.html"><a href="ve-biu-.html#tieu--va-t-ten-truc"><i class="fa fa-check"></i><b>3.2</b> Tiêu đề và đặt tên trục</a></li>
+<li class="chapter" data-level="3.3" data-path="ve-biu-.html"><a href="ve-biu-.html#dan-nhan-d-liu-annotation"><i class="fa fa-check"></i><b>3.3</b> Dán nhãn dữ liệu (annotation)</a></li>
+<li class="chapter" data-level="3.4" data-path="ve-biu-.html"><a href="ve-biu-.html#facet"><i class="fa fa-check"></i><b>3.4</b> Facet</a></li>
+<li class="chapter" data-level="3.5" data-path="ve-biu-.html"><a href="ve-biu-.html#cac-thut-ng"><i class="fa fa-check"></i><b>3.5</b> Các thuật ngữ</a></li>
+<li class="chapter" data-level="3.6" data-path="ve-biu-.html"><a href="ve-biu-.html#tham-khao-2"><i class="fa fa-check"></i><b>3.6</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html"><i class="fa fa-check"></i><b>4</b> Biến đổi dữ liệu</a><ul>
+<li class="chapter" data-level="4.1" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#gii-thiu-chung-v-dplyr-va-tibble"><i class="fa fa-check"></i><b>4.1</b> Giới thiệu chung về <strong>dplyr</strong> và <code>tibble</code></a><ul>
+<li class="chapter" data-level="4.1.1" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#tibble"><i class="fa fa-check"></i><b>4.1.1</b> Tibble</a></li>
+<li class="chapter" data-level="4.1.2" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#package-dplyr"><i class="fa fa-check"></i><b>4.1.2</b> Package <strong>dplyr</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#cac-verb-trong-dplyr"><i class="fa fa-check"></i><b>4.2</b> Các “verb” trong <strong>dplyr</strong></a><ul>
+<li class="chapter" data-level="4.2.1" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#add_row"><i class="fa fa-check"></i><b>4.2.1</b> <code>add_row()</code></a></li>
+<li class="chapter" data-level="4.2.2" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#select-filter-va-slice"><i class="fa fa-check"></i><b>4.2.2</b> <code>select()</code>, <code>filter()</code> và <code>slice()</code></a></li>
+<li class="chapter" data-level="4.2.3" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#arrange"><i class="fa fa-check"></i><b>4.2.3</b> <code>arrange()</code></a></li>
+<li class="chapter" data-level="4.2.4" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#mutate-transmute"><i class="fa fa-check"></i><b>4.2.4</b> <code>mutate()</code> &amp; <code>transmute()</code></a></li>
+<li class="chapter" data-level="4.2.5" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#summarise"><i class="fa fa-check"></i><b>4.2.5</b> <code>summarise()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#kt-hp-cac-ham-trong-dplyr"><i class="fa fa-check"></i><b>4.3</b> Kết hợp các hàm trong <strong>dplyr</strong></a><ul>
+<li class="chapter" data-level="4.3.1" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#group_by"><i class="fa fa-check"></i><b>4.3.1</b> <code>group_by()</code></a></li>
+<li class="chapter" data-level="4.3.2" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#bin-i-d-liu-co-ban"><i class="fa fa-check"></i><b>4.3.2</b> Biến đổi dữ liệu cơ bản</a></li>
+<li class="chapter" data-level="4.3.3" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#group_by-va-summarise"><i class="fa fa-check"></i><b>4.3.3</b> <code>group_by</code> và <code>summarise</code></a></li>
+<li class="chapter" data-level="4.3.4" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#kt-hp-group_by-va-mutate-filter"><i class="fa fa-check"></i><b>4.3.4</b> Kết hợp <code>group_by</code> và <code>mutate</code> / <code>filter</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#tham-khao-3"><i class="fa fa-check"></i><b>4.4</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="bin-i-d-liu-phn-2.html"><a href="bin-i-d-liu-phn-2.html"><i class="fa fa-check"></i><b>5</b> Biến đổi dữ liệu (Phần 2)</a><ul>
+<li class="chapter" data-level="5.1" data-path="bin-i-d-liu-phn-2.html"><a href="bin-i-d-liu-phn-2.html#dataset-czech-financial"><i class="fa fa-check"></i><b>5.1</b> Dataset Czech Financial</a></li>
+<li class="chapter" data-level="5.2" data-path="bin-i-d-liu-phn-2.html"><a href="bin-i-d-liu-phn-2.html#tham-khao-4"><i class="fa fa-check"></i><b>5.2</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html"><i class="fa fa-check"></i><b>6</b> Cấu trúc điều khiển (Control flow)</a><ul>
+<li class="chapter" data-level="6.1" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#biu-thc-phuong-thc-iu-kin-expressions-operators"><i class="fa fa-check"></i><b>6.1</b> Biểu thức &amp; phương thức điều kiện (expressions &amp; operators)</a></li>
+<li class="chapter" data-level="6.2" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#mnh--iu-kin"><i class="fa fa-check"></i><b>6.2</b> Mệnh đề điều kiện</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#trong-dplyr"><i class="fa fa-check"></i><b>6.2.1</b> Trong <strong>dplyr</strong></a></li>
+<li class="chapter" data-level="6.2.2" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#mnh-if"><i class="fa fa-check"></i><b>6.2.2</b> Mệnh <code>if</code></a></li>
+<li class="chapter" data-level="6.2.3" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#tng-hp-lai"><i class="fa fa-check"></i><b>6.2.3</b> Tổng hợp lại</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#vong-lp"><i class="fa fa-check"></i><b>6.3</b> Vòng lặp</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#vong-lp-while"><i class="fa fa-check"></i><b>6.3.1</b> Vòng lặp <code>while</code></a></li>
+<li class="chapter" data-level="6.3.2" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#vong-lp-for"><i class="fa fa-check"></i><b>6.3.2</b> Vòng lặp <code>for</code></a></li>
+<li class="chapter" data-level="6.3.3" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#chu-y"><i class="fa fa-check"></i><b>6.3.3</b> Chú ý</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#tham-khao-5"><i class="fa fa-check"></i><b>6.4</b> Tham khảo</a></li>
+</ul></li>
+<li class="part"><span><b>Misc</b></span></li>
+<li class="chapter" data-level="7" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html"><i class="fa fa-check"></i><b>7</b> FAQs ngắn gọn về R</a><ul>
+<li class="chapter" data-level="7.1" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#cac-ky-hiu-c-bit-trong-r"><i class="fa fa-check"></i><b>7.1</b> Các ký hiệu đặc biệt trong R</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#du--"><i class="fa fa-check"></i><b>7.1.1</b> Dấu <code>&lt;-</code></a></li>
+<li class="chapter" data-level="7.1.2" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#du-."><i class="fa fa-check"></i><b>7.1.2</b> Dấu <code>.</code></a></li>
+<li class="chapter" data-level="7.1.3" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#du"><i class="fa fa-check"></i><b>7.1.3</b> Dấu <code>%</code></a></li>
+<li class="chapter" data-level="7.1.4" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#du-va"><i class="fa fa-check"></i><b>7.1.4</b> Dấu <code>:</code> và <code>::</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#mt-s-cau-hoi-khac"><i class="fa fa-check"></i><b>7.2</b> Một số câu hỏi khác</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#r-co-th-s-dung-cho-cac-muc-ich-nao-khac-ngoai-scientific-computing-khong"><i class="fa fa-check"></i><b>7.2.1</b> R có thể sử dụng cho các mục đích nào khác ngoài scientific computing không?</a></li>
+<li class="chapter" data-level="7.2.2" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#trong-r-co-tn-tai-h-thngquy-chun-v-style-tuong-uong-pep8-trong-pythong-khong"><i class="fa fa-check"></i><b>7.2.2</b> Trong R có tồn tại hệ thống/quy chuẩn về “style” (tương đương) PEP8 trong Pythong) không?</a></li>
+<li class="chapter" data-level="7.2.3" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#co-nen-s-dung-require--tai-package-khong"><i class="fa fa-check"></i><b>7.2.3</b> Có nên sử dụng <code>require</code> để tải package không?</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#tham-khao-6"><i class="fa fa-check"></i><b>7.3</b> Tham khảo</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="lam-quen-vi-r" class="section level1">
+<h1><span class="header-section-number">1</span> Làm quen với R</h1>
+<p>R là một ngôn ngữ lập trình open-source (mã nguồn mở) thường được sử dụng trong xác suất thống kê và phân tích dữ liệu. Ngôn ngữ R hoàn toàn miễn phí, có thể cài đặt và sử dụng trên hầu hết mọi hệ điều hành, và có thể tải xuống từ <a href="www.r-project.org">www.r-project.org</a>. R được tạo ra bởi những người học và làm về thống kê, và được tập trung rất kĩ vào mục đích này.</p>
+<p>Sau khi cài đặt R từ đường link trên, người dùng có thể sử dụng ngôn ngữ này ngay lập tức từ R-GUI (giao diện GUI của R), tuy nhiên giao diện này khá thô sơ. Tốt nhất, người dùng nên cài thêm RSudio (tải xuống từ <a href="http://www.rstudio.org">rstudio.com</a>). RStudio là 1 <strong>IDE</strong> (Integrated Development Environment) có thể cài trên Windows và Mac, và là IDE phổ biến nhất để lập trình R.</p>
+<p>R chạy được dựa trên các script (tập lệnh), và không có giao diện dùng trỏ chuột như SAS/Stata/SPSS, vì vậy việc học R ban đầu sẽ khó hơn. Tuy nhiên, nhờ workflow dựa vào các script và project, người dùng sẽ dễ dàng chia sẻ code R cho người khác hơn, vì người đó có thể dựng lại hoàn toàn quy trình nghiên cứu/phân tích trong R bằng các script/project này.</p>
+<p>RStudio có 4 cửa sổ chính như sau:</p>
+<ul>
+<li>Góc trên bên trái: Script</li>
+<li>Góc dưới bên trái: console</li>
+<li>Góc trên bên phải: Environment/History/Connections</li>
+<li>Góc dưới bên phải: Files/Plots/Help (3 cái này quan trọng nhất)</li>
+</ul>
+<div id="tinh-toan-co-ban-trong-r" class="section level2">
+<h2><span class="header-section-number">1.1</span> Tính toán cơ bản trong R</h2>
+<p>R có thể sử dụng để tính toán cơ bản bằng cách chạy code từ console (cửa sổ mặc định bên dưới, tay trái trong RStudio, gõ code từ dấu <code>&gt;</code>) như sau:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># phép cộng</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="dv">173</span><span class="op">+</span><span class="dv">179</span></a></code></pre></div>
+<pre><code>## [1] 352</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># phép trừ</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="dv">173-179</span></a></code></pre></div>
+<pre><code>## [1] -6</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># phép nhân</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="dv">179</span><span class="op">*</span><span class="dv">173</span></a></code></pre></div>
+<pre><code>## [1] 30967</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co">#phép chia</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="dv">179</span><span class="op">/</span><span class="dv">173</span></a></code></pre></div>
+<pre><code>## [1] 1.034682</code></pre>
+<p>Tương tự với các phép tính phức tạp hơn:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="dv">17</span><span class="op">^</span><span class="dv">9</span></a></code></pre></div>
+<pre><code>## [1] 118587876497</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">exp</span>(<span class="dv">1</span>)  <span class="co"># exponetial function - hàm mũ</span></a></code></pre></div>
+<pre><code>## [1] 2.718282</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">pi   <span class="co"># 3.14159265...</span></a></code></pre></div>
+<pre><code>## [1] 3.141593</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">sin</span>(<span class="dv">0</span>) </a></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">log</span>(<span class="dv">5</span>) <span class="co"># nếu không chỉ định rõ cơ số, R sẽ lấy cơ số là e</span></a></code></pre></div>
+<pre><code>## [1] 1.609438</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">log</span>(<span class="dv">5</span>, <span class="dt">base=</span><span class="dv">10</span>)  <span class="co"># base 10</span></a></code></pre></div>
+<pre><code>## [1] 0.69897</code></pre>
+<p>Các function trong R khi được gọi ra luôn có các argument (tham số, viết tắt là arg), trong số một số arg là bắt buộc, một số không, và các arg được tách biệt bằng dấu phẩy. Trong ví dụ trên, hàm log yêu cầu tối thiểu 1 arg là giá trị để lấy giá trị nghịch đảo lũy thừa. Arg <code>base</code> là tham số không bắt buộc, và nếu không chỉ rõ, R sẽ dùng giá trị mặc định (default value) được định nghĩa sẵn trong hàm, ở trường hợp này là <span class="math inline">\(e\)</span>. Người dùng có thể đọc thêm về hàm <code>log</code> bằng cách gõ <code>help(log)</code> hoặc <code>?log</code> ở console. Phần giải thích (documentation) sẽ hiện ra ở cửa sổ góc dưới bên phải.</p>
+<p>Trong trường hợp của hàm log, 2 arg đầu tiên (và duy nhất) là:</p>
+<ul>
+<li><p>x: a numeric or complex vector -&gt; giá trị lấy logarit</p></li>
+<li><p>base: a positive or complex number: the base with respect to which logarithms are computed. Defaults to e=exp(1) -&gt; cơ số</p></li>
+</ul>
+<p>Các arg có thứ tự được định nghĩa sẵn theo hàm. Nếu người dùng không chỉ rõ tên của arg, ví dụ: <code>base=10</code>, R sẽ tự hiểu giá trị đưa vào hàm đầu tiên là cho <code>x</code>, giá trị thứ 2 là cho <code>base</code>.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="kw">log</span>(<span class="dv">3</span>, <span class="dv">10</span>)</a></code></pre></div>
+<pre><code>## [1] 0.4771213</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="kw">log</span>(<span class="dv">10</span>, <span class="dv">3</span>)</a></code></pre></div>
+<pre><code>## [1] 2.095903</code></pre>
+<p>Nếu có chỉ rõ tên của arg, thứ tự đưa vào hàm không còn quan trọng nữa:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="kw">log</span>(<span class="dt">x=</span><span class="dv">3</span>, <span class="dt">base=</span><span class="dv">10</span>)</a></code></pre></div>
+<pre><code>## [1] 0.4771213</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw">log</span>(<span class="dt">base=</span><span class="dv">10</span>, <span class="dt">x=</span><span class="dv">3</span>)</a></code></pre></div>
+<pre><code>## [1] 0.4771213</code></pre>
+<p>Chú ý: khi đặt giá trị cho tham số, phải sử dụng cú pháp <code>arg_name=value</code>, không phải ngược lại. Đồng thời, dấu <code>=</code> trong trường hợp này được sử dụng để gán giá trị tạm thời, vì vậy không sử dụng dấu <code>&lt;-</code> (sẽ nói ở phần sau).</p>
+</div>
+<div id="gan-bin-assignment" class="section level2">
+<h2><span class="header-section-number">1.2</span> Gán biến (Assignment)</h2>
+<p>R sử dụng <code>&lt;-</code> và <code>=</code> để gán biến (assign value to a variable). Hai cách gán biến này khác nhau như sau (trích từ <a href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/assignOps.html">nguồn</a>):</p>
+<pre><code>The operators &lt;- and = assign into the environment in which they are evaluated. The operator &lt;- can be used anywhere, whereas the operator = is only allowed at the top level (e.g., in the complete expression typed at the command prompt) or as one of the subexpressions in a braced list of expressions.</code></pre>
+<p>Bạn đọc vui lòng google để hiểu rõ hơn = )). Tuy nhiên, bài học rút ra là: chỉ sử dụng dấu bằng <code>=</code> để khai báo tham số trong hàm, còn các trường hợp gán biến khác thì luôn dùng <code>&lt;-</code>.</p>
+<p>Tên hàm không thể bắt đầu bằng số, không được bao gồm khoảng trống, và có phân biệt giữa viết hoa và viết thường (case-sensitive).</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1">test_var &lt;-<span class="st"> </span><span class="dv">100</span></a></code></pre></div>
+<p>Biến đã được khai báo sẽ hiện ra ở phần Environment (góc trên bên phải).</p>
+</div>
+<div id="vector" class="section level2">
+<h2><span class="header-section-number">1.3</span> Vector</h2>
+<p>Vector là một phần tất yếu trong R, và cũng là một trong những thứ khiến R có khả năng khai phá dữ liệu cực kì mạnh mẽ. Trong R, mọi thứ đều là một vector. Ví dụ, khi chúng ta khai báo <code>x &lt;- 7</code> hoặc <code>x = 7</code>, R sẽ hiểu rằng x đã nhận một vector có độ dài bằng 1. Tuy nhiên, các ngôn ngữ khác sẽ chỉ hiểu biến <code>x</code> đã nhận giá trị 7 mà thôi.</p>
+<p>Để tạo 1 vector, ta sử dụng hàm <code>c()</code>:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">7</span>,<span class="dv">9</span>)</a>
+<a class="sourceLine" id="cb31-2" title="2">y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">7</span>,<span class="dv">3</span>)</a></code></pre></div>
+<p>Ở phần 1.1, khi chúng ta dùng R để tính toán phép cộng của 2 giá trị, thực chất R đã làm phép cộng giữa 2 vector có độ dài = 1. Như vậy, hoàn toàn có thể lấy 2 biến <code>x</code> và <code>y</code> vừa gán ở trên để làm phép cộng.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">7</span>,<span class="dv">9</span>)</a>
+<a class="sourceLine" id="cb32-2" title="2">y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">7</span>,<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb32-3" title="3">x<span class="op">+</span>y</a></code></pre></div>
+<pre><code>## [1]  2 14 12</code></pre>
+<p>Tương tự, có thể áp dụng với hàm <code>log</code>:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="kw">log</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dt">base=</span><span class="dv">10</span>)</a></code></pre></div>
+<pre><code>## [1] 0.0000000 0.3010300 0.4771213</code></pre>
+<p>R còn có thể tạo ra vector là dãy số nguyên liên tục bằng cách viết <code>A:B</code> để tạo vector bắt đầu từ A, tăng 1 dần đều và kết thúc ở B:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1"><span class="dv">1</span><span class="op">:</span><span class="dv">7</span></a></code></pre></div>
+<pre><code>## [1] 1 2 3 4 5 6 7</code></pre>
+<p>Vì tính chất “vectorized” này của R, việc sử dụng vòng lặp (như <code>for loop</code>) giống trong 1 số ngôn ngữ khác (như VBA) là gần như không cần thiết, có thể khiến code chậm đi, trừ trong những trường hợp đặc biệt (sẽ lấy ví dụ sau).</p>
+</div>
+<div id="cac-goi-thu-vin-packages" class="section level2">
+<h2><span class="header-section-number">1.4</span> Các gói thư viện (packages)</h2>
+<p>Giống 1 số ngôn ngữ khác như Python, người dùng R có thể cài đặt thêm các thư viện bổ sung (gọi là package hoặc library) để thực hiện các công việc phức tạp hơn. Một trong số những package phổ biến nhất là <code>dplyr</code>, nằm trong nhóm các thư viện <code>tidyverse</code>. <code>tidyverse</code> cho phép người dùng khai phá dữ liệu mạnh mẽ và tiện dụng hơn, cũng như rất dễ học. Người ta thường gọi R cơ bản là <strong>base R</strong>, để phân biệt với <strong>tidyverse R</strong>. Tác giả của <code>tidyverse</code> là <a href="http://hadley.nz/">Hadley Wickham</a>, và người dùng R có thể tham khảo thêm cuốn <a href="https://r4ds.had.co.nz/data-visualisation.html">R for Data Science</a> cũng có tác giả là Hadkey để hiểu hơn về <code>tidyverse</code>.</p>
+<p>Các package được cài đặt bằng cách vào menu <code>Tools -&gt; Install Packages...</code>, hoặc gõ hàm <code>install.packages()</code> vào console. Nếu muốn cài đặt nhiều package cùng 1 lúc, ta có thể dùng thêm hàm <code>c()</code>:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&#39;dplyr&#39;</span>, <span class="st">&#39;ggplot2&#39;</span>))</a></code></pre></div>
+<p>Ngoài các thư viện để bổ sung hàm mới, một số package còn cung cấp cho người dùng các bộ dữ liệu mẫu để phục vụ việc học và thí nghiệm, ví dụ như package <code>nycflights13</code></p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1"><span class="kw">library</span>(nycflights13)</a>
+<a class="sourceLine" id="cb39-2" title="2"><span class="kw">head</span>(flights,<span class="dv">10</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 10 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     1      517            515         2      830
+##  2  2013     1     1      533            529         4      850
+##  3  2013     1     1      542            540         2      923
+##  4  2013     1     1      544            545        -1     1004
+##  5  2013     1     1      554            600        -6      812
+##  6  2013     1     1      554            558        -4      740
+##  7  2013     1     1      555            600        -5      913
+##  8  2013     1     1      557            600        -3      709
+##  9  2013     1     1      557            600        -3      838
+## 10  2013     1     1      558            600        -2      753
+## # ... with 12 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;,
+## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,
+## #   time_hour &lt;dttm&gt;</code></pre>
+</div>
+<div id="tim-kim-cau-tra-li" class="section level2">
+<h2><span class="header-section-number">1.5</span> Tìm kiếm câu trả lời</h2>
+<p>Khi lập trình, chúng ta có thể gặp phải những từng huống mà chưa ai gặp bao giờ, hoặc không có trong sách vở. Vì vậy, đặc biệt là khi tự học, việc tự tìm tòi từ nhiều nguồn là rất cần thiết.</p>
+<div id="documentation-cua-r" class="section level3">
+<h3><span class="header-section-number">1.5.1</span> Documentation của R</h3>
+<p>Mọi ngôn ngữ lập trình đều có một <strong>documentation</strong>, ghi chép lại đầy đủ ý nghĩa của từng hàm, cách sử dụng và cả ví dụ. Vì vậy, khi không hiểu một hàm nên dùng như thế nào, việc đầu tiên là tra cứu documentation có sẵn bằng cách gõ <code>help(tên_hàm)</code> hoặc <code>?tên_hàm</code> vào console. Phần giải thích sẽ hiện ra ở cửa sổ góc dưới bên phải, mục <strong>Help</strong>, trong đó thường có các phần:</p>
+<ul>
+<li>Description: Miêu tả hàm</li>
+<li>Usage: Ví dụ</li>
+<li>Arguments: Các tham số và giải thích</li>
+<li>Details: giải thích cụ thể các tham số</li>
+</ul>
+<p>Và 1 số mục khác.</p>
+<p>Ngoài ra, bạn hoàn toàn có thể sử dụng Google để tra cứu chính bản documentation này ở trên mạng.</p>
+<p>Ngoài các hàm, documentation cũng có cả giải thích cho các package. Tuy nhiên, phần giải thích này có thể không đầy đủ, và lúc đấy, bạn nên chuyển sang dùng Google, với từ khóa như “R package ABCD”.</p>
+<p>Chú ý, documentation đã được cài sẵn (built-in) theo R, vì vậy không cần kết nối với internet để sử dụng.</p>
+</div>
+<div id="stackoverflow" class="section level3">
+<h3><span class="header-section-number">1.5.2</span> Stackoverflow</h3>
+<p>Đối với các vấn đề cụ thể khác, bạn có thể sử dụng Google để tìm kiếm, và thường các kết quả đầu tiên trả về sẽ đến từ trang <strong>Stackoverflow</strong>. Khi đọc câu trả lời ở đây, tốt nhất bạn nên dành thời gian và hiểu rõ đoạn code có sẵn, thay vì copy về để sử dụng luôn. Ngoài ra, khi copy code về, hãy comment lại phía trên (sử dụng dấu thăng <code>#</code> ở đầu) nguồn gốc của code để sau này khi kiểm tra/debug, có thể dễ dàng tra cứu nguồn gốc.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="co"># ví dụ về comment</span></a></code></pre></div>
+</div>
+</div>
+<div id="workflow-co-ban-trong-r" class="section level2">
+<h2><span class="header-section-number">1.6</span> Workflow cơ bản trong R</h2>
+<p>Trong các phần trên, chúng ta chủ yếu lấy ví dụ bằng cách nhập code trực tiếp vào console và đưa ra kết quả ngay sau mỗi dòng lệnh. Việc này cũng không khác sử dụng máy tính bỏ túi, vốn không tiện lợi cho lắm.</p>
+<p>Để khiến việc sử dụng R dễ dàng và hiệu quả hơn, chúng ta có thể sử dụng R script, R Markdown hoặc R Notebook, trong đó hai định dạng phổ biến nhất là Script và Markdown (Tài liệu này cũng được soạn thảo bằng R Markdown).</p>
+<p>R Script là một dạng “văn bản” để lưu lại các câu lệnh đã soạn thảo, sau đó chúng ta có thể chạy (run) toàn bộ script này để đưa ra kết quả cuối cùng, thay vì chạy từng dòng lệnh từ console, hoặc thậm chí chạy từng phần một của script. Tuy nhiên, R Script chỉ có thể lưu chữ được code và các comment đi kèm, và không có khả năng trình bày, phân tách để tạo ra báo cáo/nghiên cứu hoàn chỉnh. Vì vậy R Script phù hợp với các quy trình làm việc/nghiên cứu nội bộ, không cần trình bày/xuất bản ra ngoài.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1"><span class="co"># ví dụ về comment: có thể dùng để giải thích ý nghĩa đoạn code ở dưới</span></a>
+<a class="sourceLine" id="cb42-2" title="2"><span class="co"># nguồn tham khảo của code</span></a>
+<a class="sourceLine" id="cb42-3" title="3"><span class="co"># ghi chú khác</span></a>
+<a class="sourceLine" id="cb42-4" title="4">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">+</span><span class="dv">1</span><span class="op">*</span><span class="dv">2-3</span><span class="op">/</span><span class="dv">4</span></a></code></pre></div>
+<p>R Markdown là một dạng của ngôn ngữ Markdown (Đọc thêm về Markdown ở <a href="https://en.wikipedia.org/wiki/Markdown">wiki</a>). Ở đây mình sẽ không giải thích cụ thể về R Markdown (tham khảo tại <a href="https://rmarkdown.rstudio.com/lesson-1.html">website của RStudio</a>), chỉ nêu ra 1 số điểm lợi như sau:</p>
+<ul>
+<li>Biến code và phân tích thành một văn bản/báo cáo/thuyết trình có trình bày sạch đẹp, bao gồm cả bảng biểu/dashboard.</li>
+<li>Có thể xuất ra nhiều định dạng (PDF, HTML, Word, website như tài liệu này, etc.)</li>
+<li>Có thể tích hợp nhiều ngôn ngữ như R, Python, SQL.</li>
+<li>Kết hợp cả code, comment, phân tích, biểu đồ trong cùng 1 văn bản.</li>
+</ul>
+<p>Điểm bất cập duy nhất của R Mả là khó sử dụng hơn script, vì vậy chúng ta sẽ không đề cập đến R Mả quá nhiều. Tuy nhiên, học cách sử dụng R Mả là rất quan trọng để đi lên một tầm cao mới trong nghiên cứu và làm việc.</p>
+<div id="r-script-file-uoi-.r" class="section level3">
+<h3><span class="header-section-number">1.6.1</span> R Script (file đuôi *.R)</h3>
+<p>Định dạng script truyền thống được tạo ra bằng cách vào menu <code>File -&gt; New File -&gt; R Script</code> trong RStudio. Một cửa sổ mới được mở ra trong RStudio và bạn có thể gõ các hàm vào giống như đang sử dụng Word hoặc Notepad.</p>
+<ul>
+<li>Để chạy dòng lệnh hiện tại (có trỏ chuột/cursor ở dòng đó), ấn nút <code>Run</code> ở góc trên phải bên cửa sổ script, hoặc dùng phím tắt <code>Ctrl+Enter</code> (trên Windows). Ngoài ra, bạn có thể chọn (highlight) một đoạn code rồi ấn <code>Run</code> hoặc <code>Ctrl+Enter</code> để chạy riêng đoạn đó.</li>
+<li>Để chạy toàn bộ cả script, ấn nút <code>Source</code>, hoặc highlight (<code>Ctrl+A</code>) toàn bộ code rồi dùng <code>Ctrl+Enter</code>.</li>
+</ul>
+<p>Thông thường một R Script sẽ nhìn như thế này:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1"><span class="co"># ví dụ về comment: có thể dùng để giải thích ý nghĩa đoạn code ở dưới</span></a>
+<a class="sourceLine" id="cb43-2" title="2"><span class="co"># nguồn tham khảo của code</span></a>
+<a class="sourceLine" id="cb43-3" title="3"><span class="co"># ghi chú khác</span></a>
+<a class="sourceLine" id="cb43-4" title="4">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>)</a>
+<a class="sourceLine" id="cb43-5" title="5"></a>
+<a class="sourceLine" id="cb43-6" title="6"><span class="co"># vẽ biểu đồ</span></a>
+<a class="sourceLine" id="cb43-7" title="7"><span class="kw">plot</span>(x, <span class="kw">exp</span>(x))</a></code></pre></div>
+<p>Có thể thấy, đoạn code trên bao gồm 1 số comment giải thích và cuối cùng là một hàm để vẽ biểu đồ. Tuy nhiên, biểu đồ này không được bao gồm luôn trong script mà người dùng phải chạy lại toàn bộ script mỗi lần mở lên xem. Ngoài ra, việc trình bày và giải thích với comment khá rối mắt và luôn phải kèm theo ký tự <code>#</code>.</p>
+</div>
+<div id="r-markdown-file-uoi-.rmd" class="section level3">
+<h3><span class="header-section-number">1.6.2</span> R Markdown (file đuôi *.Rmd)</h3>
+<p>Thông thường khi làm báo cáo hoặc viết bài nghiên cứu, chúng ta phải tính toán và vẽ biểu đồ trong các phần mềm thống kê, sau đó copy kết quả sang Word hoặc Powerpoint. Việc này khá tốn thời gian và dễ gây nhầm lẫn, trong khi R Markdown có thể vừa giúp chúng ta làm các phân tích trong R, vừa xuất ra kết quả nhanh chóng bằng dạng văn bản.</p>
+<p>Để tạo văn bản R Markdown, vào menu <code>File -&gt; New File -&gt; R Markdown...</code> của RStudio. Tham khảo thêm về R Markdown ở mục <strong>Tham khảo</strong></p>
+</div>
+<div id="r-project-file-uoi-.rproj" class="section level3">
+<h3><span class="header-section-number">1.6.3</span> R Project (file đuôi *.Rproj)</h3>
+<p>Chưa nghĩ ra nên viết gì!!</p>
+</div>
+</div>
+<div id="tham-khao" class="section level2">
+<h2><span class="header-section-number">1.7</span> Tham khảo</h2>
+<ul>
+<li><a href="https://rmarkdown.rstudio.com/">Website của R Markdown</a>.</li>
+<li><a href="https://bookdown.org/yihui/rmarkdown/">R Markdown: Thhe Definitive Guide - tác giả của cuốn sách này cũng là đồng tác giả của R Markdown</a>.</li>
+<li><a href="https://github.com/rstudio/rmarkdown">Trang GitHub của R Markdown</a>.</li>
+</ul>
+<p><em>Hết chương 1!!!!!!!!!!!!!</em></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-frame.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+},
+"search": true
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

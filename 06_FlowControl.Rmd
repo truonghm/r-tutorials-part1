@@ -1,0 +1,217 @@
+# Cấu trúc điều khiển (Control flow)
+
+
+```{r, echo=FALSE}
+# Reset môi trường
+rm(list = ls())
+pkgs = names(sessionInfo()$otherPkgs)
+if( length(pkgs > 0)){
+  pkgs = paste('package:', pkgs, sep = "")
+  for( i in 1:length(pkgs)){
+    detach(pkgs[i], character.only = TRUE, force=TRUE)
+  }
+}
+```
+
+
+
+
+
+
+
+```{r, message=FALSE, warning=FALSE, results='hide'}
+# load sẵn tidyverse
+library(tidyverse, quietly = TRUE)
+```
+
+Có 2 kiểu cấu trúc điều khiển (control flow) trong R:
+
+1. Sử dụng các mệnh đề điều kiện `if` và `switch`, trong đó ở phần này, chúng ta sẽ chỉ đề cập đến `if`
+2. Sử dụng các mệnh đề vòng lặp `while`, `repeat` và `for`
+
+
+## Biểu thức & phương thức điều kiện (expressions & operators)
+
+*Biểu thức điều kiện* (logical expressions) bao gồm 1 số biểu thức cơ bản như: `<`, `<=`, `==`, `!=`, `>=`, `>`. Đây là các biểu thức so sánh thường thấy trong toán học, với `!=` tương đương với `<>` trong 1 số ngôn ngữ khác. 
+
+Ngoài ra, như đã giới thiệu ở phần trước, R còn có các *toán tử điều kiện* (logical operators):
+
+|     Kí hiệu                     |  Ý nghĩa                           |  Ghi chú                                      |
+|:-------------------------------:|:----------------------------------:|:---------------------------------------------:|
+| `!x` (exclaimation)             |   not x  (logical negation)        |Chỉ nên dùng với dữ liệu dạng Logical/boolean  |
+| `x & y` (ampersand)             |   x và y (logical AND)             |Trả kết quả là vector                          |
+| `x && y` (double ampersands)    |  x và y (logical AND)              |Trả kết quả không vectorized                   |
+| `x | y` (vertical bar)          |  x hoặc y (logical OR, inclusive)  |Trả kết quả là vector                          |
+| `x || y` (double vertical bars) |  x hoặc y (logical OR, inclusive)  |Trả kết quả không vectorized                   |
+| `xor(x, y)`                     |  exclusive OR                      |                                               |
+
+```{r}
+df <- data.frame(A=1:6, B=5:10)
+df
+
+df %>% mutate(`A==3?`         =  A == 3,
+              `A<=3?`         =  A <= 3,
+              `A!=3?`         =  A != 3,
+              `Not` = ! `A!=3?`)
+```
+
+Ngoài các toán tử trên, R còn có các hàm `any()`, `all()` và `which()`. Các hàm này có ý nghĩa đúng như tên gọi:
+
+```{r}
+any(6:10 <= 7)   # Trả về TRUE nếu có bất kì giá trị nào <= 7 (TRUE)
+all(6:10 <= 7)   # Trả về TRUE nếu tất cả mọi giá trị đều <= 7 (FALSE)
+which(6:10 <= 7) # Trả về vị trí (index) của những giá trị đáp ứng điều kiện
+```
+
+Lưu ý: R đếm (index) bắt đầu từ 1, thể hiện qua kết quả của hàm `which()` ở trên. Trong một số ngôn ngữ khác như Python, index bắt đầu từ 0 (VBA cũng có 1 số chỗ index từ 0).
+
+Ở phần 1.4 trước đó, chúng ta đã làm quen với `%in%`, tương tự như hàm `IN` trong SQL. 
+
+```{r}
+# dùng hàm rep() để repeat các kí tự A B C D
+df <- data.frame(Letter = rep(c('A','B','C','D'), each=2), Value=1:8)
+df
+
+df %>% filter(Letter %in% c('A', 'B'))
+```
+
+
+## Mệnh đề điều kiện
+
+
+### Trong **dplyr**
+
+Ở phần 1.4 - Biến đổi dữ liệu, chúng ta đã lấy khá nhiều ví dụ về mệnh đề điều kiện `if_else()` và `case_when`, vì vậy phần này sẽ không nói quá nhiều nữa. Tuy nhiên, vẫn cần có 1 số lưu ý như sau:
+
+
+#### `if_else()` và `case_when()`
+
+Điểm chung của 2 hàm này là cùng thuộc package **dplyr**, và được tạo ra để làm việc với kiểu dữ liệu vector. Nói chung, 2 hàm này khác nhau không quá nhiều về công dụng (functionality), tuy nhiên qua nhiều thử nghiệm, có thể thấy `if_else()` nhanh hơn `case_when()`:
+
+```{r}
+# Đoạn code này có tham khảo ở rstudio forum, link ở phần tham khảo
+microbenchmark::microbenchmark(
+  case_when(1:1000 < 100 ~ "low", TRUE ~ "high"),
+  if_else(1:1000 < 3, "low", "high"),
+  ifelse(1:1000 < 3, "low", "high")
+)
+```
+
+Như vậy, có thể kết luận là nếu chúng ta chỉ có ý định viết mệnh đề quan hệ với 2 điều kiện `TRUE` hoặc `FALSE`, hãy dùng `if_else()`. Nếu cần dùng nhiều điều kiện, hãy dùng `case_when()` để code dễ đọc hơn (more readability).
+
+#### `if_else()` và `ifelse()`
+
+Trong ví dụ dùng `microbenchmark` ở trên, có thêm 1 hàm là `ifelse()`. Cần phân biệt hàm này với `if_else()`: `?ifelse()` cho ta thấy đây là 1 hàm thuộc base R, với tốc độ chậm và gặp vấn đề trong việc giữ đúng kiểu dữ liệu. Vì vậy, tốt nhất là nên tránh xa hàm này.
+
+
+### Mệnh `if`
+
+Ngoài các mệnh đề điều kiện ở trên, chúng ta còn có thể dùng hàm `if` (khác với `if_else()` hay `ifelse()`) trong các tình huống cần đánh giá điều kiện phức tạp hơn, và với kiểu dữ liệu scalar (vô hướng, tức là 1 giá trị). Cấu trúc chung của mệnh đề `if` như sau:
+
+```{r, eval=FALSE}
+# Cơ bản
+if( kiểm tra điều kiện ){
+  các biểu thức kết quả
+}
+
+# Bao gồm cả mệnh đề else
+if( kiểm tra điều kiện ){
+  các biểu thức kết quả
+}else{
+  các biểu thức kết quả
+}
+```
+
+
+### Tổng hợp lại
+
+1. `if_else()` và `case_when()` áp dụng với dữ liệu kiểu vector, và thường kết hợp với các hàm trong **dplyr**.
+
+2. `if` áp dụng với dữ liệu kiểu scalar (vô hướng).
+
+3. `ifelse()` là một hàm của base R và không hiệu quả bằng `if_else()` hay `case_when()`, vì vậy có thể bỏ qua.
+
+
+
+## Vòng lặp
+
+Chúng ta thường phải viết code để thực hiện 1 công việc lặp đi lặp lại nhiều lần. Để làm được điều này, R cho chúng ta các cách để:
+
+1. Cho R biết khi nào thì dừng thực hiện công việc đó (nếu đáp ứng điều kiện)  
+2. Số lần thực hiện
+
+
+### Vòng lặp `while`
+
+Cấu trúc cơ bản của vòng lặp `while`
+
+```{r, eval=FALSE}
+while( kiểm tra điều kiện ){
+  các biểu thức cần lặp lại
+}
+```
+
+R sẽ bắt đầu bằng việc đánh giá điều kiện: Nếu điều kiện đúng, R sẽ thi hành các biểu thức bên trong ngoặc `{}` một lần. Sau đó, R sẽ lặp lại quá trình này cho đến khi điều kiện không còn đúng nữa.
+
+```{r}
+x <- 2
+while( x < 10 ){
+  print( paste("Giá trị của x hiện đang là:", x) )
+  x <- x + 1 # tăng thêm 1 vào biến x ~ biểu thức cập nhật biến điều kiện
+}
+```
+
+**Lỗi thường gặp**
+
+Người dùng vòng lặp `while` thường gặp 1 lỗi cơ bản là quên không cập nhật biến điều kiện, hay như trong ví dụ ở trên là quên không thêm vào `x <- x + 1`. Khi dùng `while`, luôn cần đến 1 biểu thức để cập nhật biến điều kiện, khiến cho điều kiện có thể đạt kết quả `FALSE`. Nếu không, hàm `while` sẽ chạy mãi mãi (infinite loop) và có thể gây treo máy.
+
+
+### Vòng lặp `for`
+
+Vòng lặp `for` là kiểu vòng lặp phổ biến hơn. Khi dùng `for`, chúng ta cần biết chính xác số lần chạy vòng lặp. cấu trúc chung của `for` loop như sau:
+
+```{r, eval=FALSE}
+for( item in vector ){
+  các biểu thức
+}
+```
+
+Ví dụ:
+
+```{r}
+for(x in 1:10){
+  print( paste("Giá trị của x hiện đang là:", x) )
+}
+```
+
+Trong ví dụ này, x sẽ đi lần lượt từng giá trị trong vector `c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)`, và các biểu thức trong ngoặc `{}` được thi hành mỗi lần x nhận 1 giá trị.
+
+Chúng ta có thể dùng vòng lặp `for` để tạo ra 10 giá trị đầu tiên của dãy số Fibonacci (được định nghĩa là: $F_{n}=F_{n-1}+F_{n-2}$ với $F_{1}=0$ và $F_{2}=1$) như sau:
+
+```{r}
+F <- rep(NA, 10)          # tạo ra 1 dãy 10 giá trị NA
+F[1] <- 0                 # Đặt giá trị cho F1 và F2
+F[2] <- 1   
+
+for( n in 3:10 ){         # Vòng lặp đi từ F3
+  F[n] <- F[n-1] + F[n-2] 
+  print(F)                # in ra quá trình sau mỗi lần tính
+}
+```
+
+### Chú ý
+
+1. Ngoài `for` và `while`, chúng ta còn có thể dùng `repeat` để lặp lại 1 hành động mãi mãi (chúng ta cần cung cấp thêm 1 mệnh đề điều kiện kèm `break` để dừng vòng lặp)
+
+2. Chúng ta có thể viết lại vòng lặp `for` sử dụng `while`, và viết lại `while` sử dụng `repeat`, nhưng không thể làm ngược lại. Điều này là vì `repeat` linh động hơn `while`, và `while` linh động hơn `for`, nhưng linh động cũng đồng nghĩa với việc dễ có lỗ hổng trong điều kiện dẫn đến lỗi hơn. Tốt nhất là chúng ta nên luôn sử dụng những phương pháp chặt chẽ nhất (strict & least flexible) để giải quyết cùng 1 bài toán.
+
+3. Trong các bài toán về data analysis, chúng ta thường sẽ không cần dùng `for` nhiều vì đã có các hàm `map()` và `apply()` cung cấp giải pháp còn chặt chẽ và hiệu quả hơn. Một lý do chủ yếu là do dữ liệu thường luôn ở dạng vector nên về mặt lý thuyết, ta có thể thực hiện 1 lệnh với *toàn bộ* các phần tử của vector đó thay vì dùng vòng lặp để đi qua từng phần tử một.
+
+4. Tham khảo thêm về control flow tại [https://adv-r.hadley.nz/control-flow.html](https://adv-r.hadley.nz/control-flow.html)
+
+
+## Tham khảo
+
++ [`if_else` vs. `ifelse` vs. `case_when`](https://community.rstudio.com/t/case-when-why-not/2685/2)
++ [Scalar in mathematics](https://en.wikipedia.org/wiki/Scalar_%28mathematics%29)
++ [Control flow - Advanced R](https://adv-r.hadley.nz/control-flow.html)

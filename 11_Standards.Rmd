@@ -1,0 +1,231 @@
+# (PART\*) Misc {-}
+
+# FAQs ngắn gọn về R
+
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(error=TRUE)
+# Reset môi trường
+rm(list = ls())
+pkgs = names(sessionInfo()$otherPkgs)
+if( length(pkgs > 0)){
+  pkgs = paste('package:', pkgs, sep = "")
+  for( i in 1:length(pkgs)){
+    detach(pkgs[i], character.only = TRUE, force=TRUE)
+  }
+}
+```
+
+
+
+
+
+
+
+
+```{r, message=FALSE, warning=FALSE, results='hide'}
+# load sẵn tidyverse
+library(tidyverse, quietly = TRUE)
+```
+
+Phần này có mục đích trả lời 1 số câu hỏi về R, chủ yếu là những quy chuẩn đặc biệt hay những điểm khác biệt của R so với các ngôn gnwx lập trình khác.
+
+
+## Các ký hiệu đặc biệt trong R
+
+
+Một số operator/ký hiệu trong R như `<-`, `.`, `%` và `::` khá đặc biệt, dễ gây ra khó hiểu đối với người lần đầu đọc và học R. Theo cảm nhận cá nhân, tôi thấy code R rất nhiều các ký tự, và khi đọc code, nhiều lúc sẽ thấy ký tự xuất hiện nhiều hơn chữ.
+
+
+### Dấu `<-`
+
+
+Câu hỏi: Tại sao R lại sử dụng dấu `<-` thay vì dấu `=` như ở nhiều ngôn ngữ lập trình khác?
+
+
+#### Nguồn gốc
+
+
+Ngôn ngữ R có nguồn gốc từ một ngôn ngữ lập trình khác là [S](https://en.wikipedia.org/wiki/S_(programming_language)). R thừa hưởng rất nhiều từ S, trong đó có ký hiệu `<-`.
+
+Trước đó, S lại thừa hưởng từ một ngôn ngữ khác là [APL](https://en.wikipedia.org/wiki/APL_(programming_language)). APL sử dụng `<-` vì ngôn ngữ này được phát triển trên một cỗ máy có [sử dụng bàn phím chứa nút `<-`](https://en.wikipedia.org/wiki/APL_syntax_and_symbols). Vì vậy, các nhà phát triển đã sử dụng luôn ký hiệu này cho mục đích gán biến ([Tham khảo thêm tại APL Reference Manual](http://www.softwarepreservation.org/projects/apl/Books/APL360ReferenceManual)).
+
+```{r, out.width='50%', fig.align='center', fig.cap="Source: Wikipedia"}
+knitr::include_graphics('images/APL2-nappaimisto.png')
+```
+
+
+#### Cách sử dụng
+
+
+`<-` vốn được sử dụng rộng rãi hơn trong R, và `=` không được sử dụng với mục đích gán biến cho tới 2001. Trước đó, `=` chỉ được dùng để đặt tham số trong function:
+
+```{r, eval=FALSE}
+function(arg = 'value')
+```
+
+Vào [năm 2001](https://developer.r-project.org/equalAssign.html), dấu `=` bắt đầu được đưa vào sử dụng để gán biến, nhằm giúp việc học và dùng R dễ dàng hơn, do rất nhiều các ngôn ngữ lập trình khác cũng dùng dấu `=` với mục đích tương tự.
+
+Ban đầu, dấu `<-` vẫn có ích hơn dấu `=` vì một số chức năng chỉ có thể thực hiện với dấu `<-`, do dấu `=` còn được sử dụng để gán tham số trong function.
+
+Hiện nay, hầu hết các điểm khác biệt giữa 2 dấu `<-` và `=` đã không còn tồn tại, và ta  có thể sử dụng 2 ký hiệu này thay cho nhau ở *hầu hết* mọi chỗ. 
+
+Tuy nhiên, do dấu `=` vẫn được sử dụng để đặt tham số cho function nên luôn có xung đột về chức năng, vì R sẽ luôn hiểu dấu `=` trong code đang được dùng để đặt tham số *trước tiên*, sau đó mới hiểu là dùng để gán biến. Ví dụ:
+
+```{r}
+data.frame(
+  a = rnorm(10),
+  b <- rnorm(10)
+)
+
+#Print a
+a
+#Print b
+b
+```
+
+Để tránh tình trạng này, ta sẽ phải lồng thêm một lần dấu ngoặc nữa như sau:
+
+```{r, eval=FALSE}
+data.frame(
+  (a = rnorm(10)),
+  b <- rnorm(10)
+)
+```
+
+Việc này khiến code dài và khó đọc hơn.
+
+Ngoài ra, khi sử dụng dấu `=` để gán biến trong function, biến sẽ chỉ tồn tại ở function level/function scope, và không thể gọi biến ở global scope:
+
+```{r}
+median(x=1:20)
+x
+```
+
+Tóm lại, có thể sử dụng hai dấu `=` và `<-` tùy thích theo ý muốn, tuy nhiên vẫn cần lưu ý một số điểm liên quan đến tính thống nhất/tính dễ đọc của code:
+
+1. Tốt nhất là nên sử dụng thống nhất một loại dấu duy nhất xuyên suốt trong code, tránh sử dụng cả hai cùng một lúc.
+
+2. Do dấu `<-` là quy chuẩn về style của cộng đồng sử dụng R, vì vậy chúng ta  cũng nên sử dụng thống nhất `<-` để gán biến trong code của mình để khi chia sẻ hoặc hợp tác với người khác sẽ dễ dàng hơn.
+
+3. Khi sử dụng `<-` để gán biến, ta sẽ phân biệt được rõ ràng 3 loại dấu với 3 mục đích khác nhau: dấu `<-` cho assignment (gán biến), dấu `=` cho argument (đặt tham số), và dấu `==` cho logical comparison (so sánh).
+
+4. Dấu `<-` dễ nhìn và dễ hiểu hơn dấu `=` vì nó có chỉ hướng gán biến. Ngược lại với `x <- 5`, ta hoàn toàn có thể 
+gán biến theo chiều `5 -> x`. Tuy nhiên cách thứ 2 [không được khuyến khích sử dụng](https://google.github.io/styleguide/Rguide.html?utm_source=share&utm_medium=ios_app&utm_name=iossmf).
+
+
+### Dấu `.`
+
+
+Dấu chấm `.` trong R xuất hiện rất nhiều, ví dụ như:
+
+```{r, eval=FALSE}
+mean(x, trim = 0, na.rm = FALSE, ...)
+```
+
+Trong đó, `na.rm` có nghĩa là "remove NAs". Dấu `.` trong trường hợp này được dùng để ngăn cách tên biến có nhiều từ. Trong nhiều tài liệu hướng dẫn về R, các tác giả cũng thường chọn đặt tên biến nhiều từ có dấu `.` để ngăn cách, thay vì dùng dấu `_` hoặc đặt tên theo kiểu `FooBarFooBar`, với các chữ cái đầu tiên của từng từ viết hoa.
+
+Đây là một quy chuẩn được thừa hưởng từ ngôn ngữ S. Trong S, và trong các phiên bản cũ của R, dấu `_` được sử dụng để gán biến, giống dấu `<-` ở trên, cho đến phiên bản [R 1.8](https://cran.r-project.org/src/base/NEWS.1). Vì vậy, dấu `.` được dùng để tách các chữ khi đặt tên.
+
+Nếu chuyển từ VBA sang R, chúng ta có thể sẽ thấy lạ vì trong VBA, dấu `.` được sử dụng để [gọi method](https://docs.microsoft.com/en-us/office/vba/language/concepts/getting-started/understanding-objects-properties-methods-and-events#properties).
+
+Hiện tại trong R, chúng ta có thể thoải mái sử dụng dấu `_` khi đặt tên biến và đối tượng, ngoài trừ ký tự đầu tiên. Tuy nhiên, một số tên mặc định trong R như `na.rm` sẽ vẫn tiếp tục sử dụng dấu `.` để giúp code của người dùng có thể chạy được ở các phiên bản khác nhau (backward compatibility).
+
+
+### Dấu `%`
+
+
+Lần đầu đọc code R, nhiều người sẽ thấy khó hiểu và không quen được vì có sự xuất hiện của dấu phần trăm `%`, ví dụ như `%in%`, `%>%`, `%*%`. 
+
+Các operator có cú pháp `%abc%` với hai dấu phần trăm bên ngoài cùng là loại hàm *trung tố* (infix, giống như *hậu tố* là suffix và *tiền tố* là prefix), tức là hàm này sẽ nhận 2 (và chỉ 2) toán hạng (operand) ở trước và ở sau. Ví dụ: dấu `+` là một hàm infix, và có thể được sử dụng theo kiểu `a+b`, tức là nhận `a` ở trước và `b` ở sau.
+
+Tương tự với `%in%`:
+
+```{r}
+1 %in% c(1:5)
+```
+
+Một số infix operator có sẵn trong R:
+
+
+| Operator|  Ý nghĩa           |
+|:-------:|:------------------:|
+| `%%`    |   Modulo           |
+| `%/%`   |   Lấy phần nguyên  |
+| `%*%`   |   Nhân ma trận     |
+| `%in%`  |   Kiểm tra phần tử |
+
+Để tự tạo các infix operator, ta cũng sử dụng 2 dấu `%` giống các operator ở trên:
+
+```{r}
+`%concat%` <- function(x,y) {
+  paste0(x, y)
+}
+
+"Hello" %concat% " World!"
+```
+
+Nhờ vậy mà các package như **magrittr** đã tận dụng dấu `%` và chúng ta nhìn thấy ký hiệu này nhiều như vậy.
+
+Một điểm đặc biệt là dấu phần trăm `%` được sử dụng cho phép toán modulo trong toán học, nên để thống nhất với các operator khác, R dùng `%%` thay thế.
+
+
+### Dấu `:` và `::`
+
+Dấu `:` được dụng cho dãy số; đây cũng là [ý nghĩa chung trong toán học](https://en.wikipedia.org/wiki/Colon_%28punctuation%29#Mathematics_and_logic) của `:`.
+
+```{r}
+1:10
+```
+
+Dấu `::` thực tế không chỉ được áp dụng trong R mà còn có ở 1 số ngôn ngữ khác như C++ và Ruby. `::` dùng để gọi ra các function/method/object có thể gọi được từ một namespace (không gian tên), ví dụ như 1 package. Ví dụ: `dplyr::select`. Cú pháp kiểu này giống với VBA, ví dụ như `Cell(1,1).Select`, thay dấu `.` bằng dấu `::`.
+
+
+## Một số câu hỏi khác
+
+
+### R có thể sử dụng cho các mục đích nào khác ngoài scientific computing không?
+
+
+Ngoài mục đích nghiên cứu và tính toán khoa học, R còn có thể dùng để:
+
++ Tạo các web application bằng R **Shiny**
+
++ Tạo website/blog bằng **blogdown**
+
++ Viết tài liệu/bài báo/nghiên cứu bằng **bookdown**
+
+
+Tuy nhiên R không phù hợp để lập trình các ứng dụng phức tạp như game được (dù có thể dùng Shiny để làm game đơn giản).
+
+
+### Trong R có tồn tại hệ thống/quy chuẩn về "style" (tương đương) PEP8 trong Pythong) không?
+
+
+Vì bản chất của R nên hiện tại không tồn tại một quy chuẩn thống nhất giống PEP8 như Python. Tuy nhiên có thể tham khảo style guide của **tidyverse** và Google:
+
++ [https://style.tidyverse.org](https://style.tidyverse.org)
++ [https://google.github.io/styleguide/Rguide.html](https://google.github.io/styleguide/Rguide.html)
+
+Để tự động hóa việc điều kiểm tra syntax và style, có thể dùng package **[lintr](https://www.google.com/search?client=firefox-b-d&q=lintr)**.
+
+
+### Có nên sử dụng `require` để tải package không?
+
+
+Khi đọc code R, chúng ta sẽ thường thấy nhiều người dùng `require` thay vì dùng `library`.
+
++ function `require` sẽ *thử* load package
+
++ function `library` sẽ trực tiếp load package
+
+Như vậy, nếu muốn load 1 package thì nên dùng `library()`. Nếu có lỗi xảy ra, code sẽ dừng lại ngay lập tức, giúp chúng ta tìm và sửa lỗi dễ hơn.
+
+Nếu dùng `require` và có lỗi khi load package, các đoạn code ở sau sẽ vẫn tiếp tục chạy nếu chưa dùng đến package kia.
+
+
+## Tham khảo
+
++ [Tidyverse style guide](https://style.tidyverse.org)
++ [Google style guide](https://google.github.io/styleguide/Rguide.html)
++ [`library` vs `require`](https://yihui.name/en/2014/07/library-vs-require/)

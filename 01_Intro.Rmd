@@ -1,0 +1,249 @@
+# (PART\*) Giới thiệu chung {-}
+
+# Làm quen với R
+
+
+```{r, echo=FALSE}
+# Reset môi trường
+rm(list = ls())
+pkgs = names(sessionInfo()$otherPkgs)
+if( length(pkgs > 0)){
+  pkgs = paste('package:', pkgs, sep = "")
+  for( i in 1:length(pkgs)){
+    detach(pkgs[i], character.only = TRUE, force=TRUE)
+  }
+}
+```
+
+R là một ngôn ngữ lập trình open-source (mã nguồn mở) thường được sử dụng trong xác suất thống kê và phân tích dữ liệu. Ngôn ngữ R hoàn toàn miễn phí, có thể cài đặt và sử dụng trên hầu hết mọi hệ điều hành, và có thể tải xuống từ [www.r-project.org](www.r-project.org). R được tạo ra bởi những người học và làm về thống kê, và được tập trung rất kĩ vào mục đích này.
+
+Sau khi cài đặt R từ đường link trên, người dùng có thể sử dụng ngôn ngữ này ngay lập tức từ R-GUI (giao diện GUI của R), tuy nhiên giao diện này khá thô sơ. Tốt nhất, người dùng nên cài thêm RSudio (tải xuống từ [rstudio.com](http://www.rstudio.org)). RStudio là 1 **IDE** (Integrated Development Environment) có thể cài trên Windows và Mac, và là IDE phổ biến nhất để lập trình R.
+
+R chạy được dựa trên các script (tập lệnh), và không có giao diện dùng trỏ chuột như SAS/Stata/SPSS, vì vậy việc học R ban đầu sẽ khó hơn. Tuy nhiên, nhờ workflow dựa vào các script và project, người dùng sẽ dễ dàng chia sẻ code R cho người khác hơn, vì người đó có thể dựng lại hoàn toàn quy trình nghiên cứu/phân tích trong R bằng các script/project này.
+
+RStudio có 4 cửa sổ chính như sau:
+
++ Góc trên bên trái: Script
++ Góc dưới bên trái: console
++ Góc trên bên phải: Environment/History/Connections
++ Góc dưới bên phải: Files/Plots/Help (3 cái này quan trọng nhất)
+
+
+## Tính toán cơ bản trong R
+
+R có thể sử dụng để tính toán cơ bản bằng cách chạy code từ console (cửa sổ mặc định bên dưới, tay trái trong RStudio, gõ code từ dấu ```>```) như sau:
+
+```{r}
+# phép cộng
+173+179
+# phép trừ
+173-179
+# phép nhân
+179*173
+#phép chia
+179/173
+```
+
+Tương tự với các phép tính phức tạp hơn:
+
+```{r}
+17^9
+exp(1)  # exponetial function - hàm mũ
+pi   # 3.14159265...
+sin(0) 
+log(5) # nếu không chỉ định rõ cơ số, R sẽ lấy cơ số là e
+log(5, base=10)  # base 10
+```
+
+Các function trong R khi được gọi ra luôn có các argument (tham số, viết tắt là arg), trong số một số arg là bắt buộc, một số không, và các arg được tách biệt bằng dấu phẩy. Trong ví dụ trên, hàm log yêu cầu tối thiểu 1 arg là giá trị để lấy giá trị nghịch đảo lũy thừa. Arg ```base``` là tham số không bắt buộc, và nếu không chỉ rõ, R sẽ dùng giá trị mặc định (default value) được định nghĩa sẵn trong hàm, ở trường hợp này là $e$. Người dùng có thể đọc thêm về hàm ```log``` bằng cách gõ ```help(log)``` hoặc ```?log``` ở console. Phần giải thích (documentation) sẽ hiện ra ở cửa sổ góc dưới bên phải.
+
+Trong trường hợp của hàm log, 2 arg đầu tiên (và duy nhất) là:
+
++ x: a numeric or complex vector -> giá trị lấy logarit
+
++ base: a positive or complex number: the base with respect to which logarithms are computed. Defaults to e=exp(1) -> cơ số
+
+Các arg có thứ tự được định nghĩa sẵn theo hàm. Nếu người dùng không chỉ rõ tên của arg, ví dụ: ```base=10```, R sẽ tự hiểu giá trị đưa vào hàm đầu tiên là cho ```x```, giá trị thứ 2 là cho ```base```.
+
+```{r}
+log(3, 10)
+log(10, 3)
+```
+
+Nếu có chỉ rõ tên của arg, thứ tự đưa vào hàm không còn quan trọng nữa:
+
+```{r}
+log(x=3, base=10)
+log(base=10, x=3)
+```
+
+Chú ý: khi đặt giá trị cho tham số, phải sử dụng cú pháp ```arg_name=value```, không phải ngược lại. Đồng thời, dấu ```=``` trong trường hợp này được sử dụng để gán giá trị tạm thời, vì vậy không sử dụng dấu ```<-``` (sẽ nói ở phần sau).
+
+
+## Gán biến (Assignment)
+
+R sử dụng ```<-``` và ```=``` để gán biến (assign value to a variable). Hai cách gán biến này khác nhau như sau (trích từ [nguồn](https://stat.ethz.ch/R-manual/R-patched/library/base/html/assignOps.html)):
+
+    The operators <- and = assign into the environment in which they are evaluated. The operator <- can be used anywhere, whereas the operator = is only allowed at the top level (e.g., in the complete expression typed at the command prompt) or as one of the subexpressions in a braced list of expressions.
+    
+Bạn đọc vui lòng google để hiểu rõ hơn = )). Tuy nhiên, bài học rút ra là: chỉ sử dụng dấu bằng ```=``` để khai báo tham số trong hàm, còn các trường hợp gán biến khác thì luôn dùng ```<-```.
+
+Tên hàm không thể bắt đầu bằng số, không được bao gồm khoảng trống, và có phân biệt giữa viết hoa và viết thường (case-sensitive).
+
+```{r}
+test_var <- 100
+```
+
+Biến đã được khai báo sẽ hiện ra ở phần Environment (góc trên bên phải).
+
+
+## Vector
+
+Vector là một phần tất yếu trong R, và cũng là một trong những thứ khiến R có khả năng khai phá dữ liệu cực kì mạnh mẽ. Trong R, mọi thứ đều là một vector. Ví dụ, khi chúng ta khai báo ```x <- 7``` hoặc ```x = 7```, R sẽ hiểu rằng x đã nhận một vector có độ dài bằng 1. Tuy nhiên, các ngôn ngữ khác sẽ chỉ hiểu biến ```x``` đã nhận giá trị 7 mà thôi.
+
+Để tạo 1 vector, ta sử dụng hàm ```c()```:
+
+```{r}
+x <- c(1,7,9)
+y <- c(1,7,3)
+```
+
+Ở phần 1.1, khi chúng ta dùng R để tính toán phép cộng của 2 giá trị, thực chất R đã làm phép cộng giữa 2 vector có độ dài = 1. Như vậy, hoàn toàn có thể lấy 2 biến ```x``` và ```y``` vừa gán ở trên để làm phép cộng.
+
+```{r}
+x <- c(1,7,9)
+y <- c(1,7,3)
+x+y
+```
+
+Tương tự, có thể áp dụng với hàm ```log```:
+
+```{r}
+log(c(1,2,3), base=10)
+```
+
+R còn có thể tạo ra vector là dãy số nguyên liên tục bằng cách viết ```A:B``` để tạo vector bắt đầu từ A, tăng 1 dần đều và kết thúc ở B:
+
+```{r}
+1:7
+```
+
+Vì tính chất "vectorized" này của R, việc sử dụng vòng lặp (như `for loop`) giống trong 1 số ngôn ngữ khác (như VBA) là gần như không cần thiết, có thể khiến code chậm đi, trừ trong những trường hợp đặc biệt (sẽ lấy ví dụ sau).
+
+
+## Các gói thư viện (packages)
+
+Giống 1 số ngôn ngữ khác như Python, người dùng R có thể cài đặt thêm các thư viện bổ sung (gọi là package hoặc library) để thực hiện các công việc phức tạp hơn. Một trong số những package phổ biến nhất là ```dplyr```, nằm trong nhóm các thư viện ```tidyverse```. ```tidyverse``` cho phép người dùng khai phá dữ liệu mạnh mẽ và tiện dụng hơn, cũng như rất dễ học. Người ta thường gọi R cơ bản là **base R**, để phân biệt với **tidyverse R**. Tác giả của ```tidyverse``` là [Hadley Wickham](http://hadley.nz/), và người dùng R có thể tham khảo thêm cuốn [R for Data Science](https://r4ds.had.co.nz/data-visualisation.html) cũng có tác giả là Hadkey để hiểu hơn về ```tidyverse```.
+
+Các package được cài đặt bằng cách vào menu `Tools -> Install Packages...`, hoặc gõ hàm ```install.packages()``` vào console. Nếu muốn cài đặt nhiều package cùng 1 lúc, ta có thể dùng thêm hàm ```c()```:
+
+```{r, eval=FALSE}
+install.packages(c('dplyr', 'ggplot2'))
+```
+
+Ngoài các thư viện để bổ sung hàm mới, một số package còn cung cấp cho người dùng các bộ dữ liệu mẫu để phục vụ việc học và thí nghiệm, ví dụ như package ```nycflights13```
+
+```{r}
+library(nycflights13)
+head(flights,10)
+```
+
+
+## Tìm kiếm câu trả lời
+
+Khi lập trình, chúng ta có thể gặp phải những từng huống mà chưa ai gặp bao giờ, hoặc không có trong sách vở. Vì vậy, đặc biệt là khi tự học, việc tự tìm tòi từ nhiều nguồn là rất cần thiết.
+
+
+### Documentation của R
+
+Mọi ngôn ngữ lập trình đều có một **documentation**, ghi chép lại đầy đủ ý nghĩa của từng hàm, cách sử dụng và cả ví dụ. Vì vậy, khi không hiểu một hàm nên dùng như thế nào, việc đầu tiên là tra cứu documentation có sẵn bằng cách gõ ```help(tên_hàm)``` hoặc ```?tên_hàm``` vào console. Phần giải thích sẽ hiện ra ở cửa sổ góc dưới bên phải, mục **Help**, trong đó thường có các phần:
+
++ Description: Miêu tả hàm
++ Usage: Ví dụ
++ Arguments: Các tham số và giải thích
++ Details: giải thích cụ thể các tham số
+
+Và 1 số mục khác.
+
+Ngoài ra, bạn hoàn toàn có thể sử dụng Google để tra cứu chính bản documentation này ở trên mạng.
+
+Ngoài các hàm, documentation cũng có cả giải thích cho các package. Tuy nhiên, phần giải thích này có thể không đầy đủ, và lúc đấy, bạn nên chuyển sang dùng Google, với từ khóa như "R package ABCD".
+
+Chú ý, documentation đã được cài sẵn (built-in) theo R, vì vậy không cần kết nối với internet để sử dụng.
+
+
+### Stackoverflow
+
+Đối với các vấn đề cụ thể khác, bạn có thể sử dụng Google để tìm kiếm, và thường các kết quả đầu tiên trả về sẽ đến từ trang **Stackoverflow**. Khi đọc câu trả lời ở đây, tốt nhất bạn nên dành thời gian và hiểu rõ đoạn code có sẵn, thay vì copy về để sử dụng luôn. Ngoài ra, khi copy code về, hãy comment lại phía trên (sử dụng dấu thăng ```#``` ở đầu) nguồn gốc của code để sau này khi kiểm tra/debug, có thể dễ dàng tra cứu nguồn gốc.
+
+```{r}
+# ví dụ về comment
+```
+
+
+## Workflow cơ bản trong R
+
+Trong các phần trên, chúng ta chủ yếu lấy ví dụ bằng cách nhập code trực tiếp vào console và đưa ra kết quả ngay sau mỗi dòng lệnh. Việc này cũng không khác sử dụng máy tính bỏ túi, vốn không tiện lợi cho lắm.
+
+Để khiến việc sử dụng R dễ dàng và hiệu quả hơn, chúng ta có thể sử dụng R script, R Markdown hoặc R Notebook, trong đó hai định dạng phổ biến nhất là Script và Markdown (Tài liệu này cũng được soạn thảo bằng R Markdown).
+
+R Script là một dạng "văn bản" để lưu lại các câu lệnh đã soạn thảo, sau đó chúng ta có thể chạy (run) toàn bộ script này để đưa ra kết quả cuối cùng, thay vì chạy từng dòng lệnh từ console, hoặc thậm chí chạy từng phần một của script. Tuy nhiên, R Script chỉ có thể lưu chữ được code và các comment đi kèm, và không có khả năng trình bày, phân tách để tạo ra báo cáo/nghiên cứu hoàn chỉnh. Vì vậy R Script phù hợp với các quy trình làm việc/nghiên cứu nội bộ, không cần trình bày/xuất bản ra ngoài.
+
+```{r, eval=FALSE}
+# ví dụ về comment: có thể dùng để giải thích ý nghĩa đoạn code ở dưới
+# nguồn tham khảo của code
+# ghi chú khác
+x <- 1+1*2-3/4
+```
+
+R Markdown là một dạng của ngôn ngữ Markdown (Đọc thêm về Markdown ở [wiki](https://en.wikipedia.org/wiki/Markdown)). Ở đây mình sẽ không giải thích cụ thể về R Markdown (tham khảo tại [website của RStudio](https://rmarkdown.rstudio.com/lesson-1.html)), chỉ nêu ra 1 số điểm lợi như sau:
+
++ Biến code và phân tích thành một văn bản/báo cáo/thuyết trình có trình bày sạch đẹp, bao gồm cả bảng biểu/dashboard.
++ Có thể xuất ra nhiều định dạng (PDF, HTML, Word, website như tài liệu này, etc.)
++ Có thể tích hợp nhiều ngôn ngữ như R, Python, SQL.
++ Kết hợp cả code, comment, phân tích, biểu đồ trong cùng 1 văn bản.
+    
+Điểm bất cập duy nhất của R Mả là khó sử dụng hơn script, vì vậy chúng ta sẽ không đề cập đến R Mả quá nhiều. Tuy nhiên, học cách sử dụng R Mả là rất quan trọng để đi lên một tầm cao mới trong nghiên cứu và làm việc. 
+    
+    
+### R Script (file đuôi *.R)
+
+Định dạng script truyền thống được tạo ra bằng cách vào menu `File -> New File -> R Script` trong RStudio. Một cửa sổ mới được mở ra trong RStudio và bạn có thể gõ các hàm vào giống như đang sử dụng Word hoặc Notepad.
+
++ Để chạy dòng lệnh hiện tại (có trỏ chuột/cursor ở dòng đó), ấn nút `Run` ở góc trên phải bên cửa sổ script, hoặc dùng phím tắt `Ctrl+Enter` (trên Windows). Ngoài ra, bạn có thể chọn (highlight) một đoạn code rồi ấn `Run` hoặc `Ctrl+Enter` để chạy riêng đoạn đó.
++ Để chạy toàn bộ cả script, ấn nút `Source`, hoặc highlight (`Ctrl+A`) toàn bộ code rồi dùng `Ctrl+Enter`.
+
+Thông thường một R Script sẽ nhìn như thế này: 
+
+```{r, eval=FALSE}
+# ví dụ về comment: có thể dùng để giải thích ý nghĩa đoạn code ở dưới
+# nguồn tham khảo của code
+# ghi chú khác
+x <- c(1:50)
+
+# vẽ biểu đồ
+plot(x, exp(x))
+```
+
+Có thể thấy, đoạn code trên bao gồm 1 số comment giải thích và cuối cùng là một hàm để vẽ biểu đồ. Tuy nhiên, biểu đồ này không được bao gồm luôn trong script mà người dùng phải chạy lại toàn bộ script mỗi lần mở lên xem. Ngoài ra, việc trình bày và giải thích với comment khá rối mắt và luôn phải kèm theo ký tự ```#```.
+
+
+### R Markdown (file đuôi *.Rmd)
+
+Thông thường khi làm báo cáo hoặc viết bài nghiên cứu, chúng ta phải tính toán và vẽ biểu đồ trong các phần mềm thống kê, sau đó copy kết quả sang Word hoặc Powerpoint. Việc này khá tốn thời gian và dễ gây nhầm lẫn, trong khi R Markdown có thể vừa giúp chúng ta làm các phân tích trong R, vừa xuất ra kết quả nhanh chóng bằng dạng văn bản.
+
+Để tạo văn bản R Markdown, vào menu `File -> New File -> R Markdown...` của RStudio. Tham khảo thêm về R Markdown ở mục **Tham khảo**
+
+
+### R Project (file đuôi *.Rproj)
+
+Chưa nghĩ ra nên viết gì!!
+
+
+## Tham khảo
+
++ [Website của R Markdown](https://rmarkdown.rstudio.com/).
++ [R Markdown: Thhe Definitive Guide - tác giả của cuốn sách này cũng là đồng tác giả của R Markdown](https://bookdown.org/yihui/rmarkdown/).
++ [Trang GitHub của R Markdown](https://github.com/rstudio/rmarkdown).
+
+*Hết chương 1!!!!!!!!!!!!!*

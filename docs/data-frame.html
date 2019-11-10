@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 Data frame | Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1</title>
+  <meta name="description" content="2 Data frame | Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1" />
+  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 Data frame | Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  <meta name="github-repo" content="truonghm/R01" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 Data frame | Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1" />
+  
+  
+  
+
+<meta name="author" content="Truong Hoang" />
+
+
+<meta name="date" content="2019-11-10" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="lam-quen-vi-r.html"/>
+<link rel="next" href="ve-biu-.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Mở đầu</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#disclaimer"><i class="fa fa-check"></i>Disclaimer</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#outline-draft"><i class="fa fa-check"></i>Outline draft</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#to-do"><i class="fa fa-check"></i>To-do</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#general-resources"><i class="fa fa-check"></i>General resources</a></li>
+</ul></li>
+<li class="part"><span><b>Giới thiệu chung</b></span></li>
+<li class="chapter" data-level="1" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html"><i class="fa fa-check"></i><b>1</b> Làm quen với R</a><ul>
+<li class="chapter" data-level="1.1" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#tinh-toan-co-ban-trong-r"><i class="fa fa-check"></i><b>1.1</b> Tính toán cơ bản trong R</a></li>
+<li class="chapter" data-level="1.2" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#gan-bin-assignment"><i class="fa fa-check"></i><b>1.2</b> Gán biến (Assignment)</a></li>
+<li class="chapter" data-level="1.3" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#vector"><i class="fa fa-check"></i><b>1.3</b> Vector</a></li>
+<li class="chapter" data-level="1.4" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#cac-goi-thu-vin-packages"><i class="fa fa-check"></i><b>1.4</b> Các gói thư viện (packages)</a></li>
+<li class="chapter" data-level="1.5" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#tim-kim-cau-tra-li"><i class="fa fa-check"></i><b>1.5</b> Tìm kiếm câu trả lời</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#documentation-cua-r"><i class="fa fa-check"></i><b>1.5.1</b> Documentation của R</a></li>
+<li class="chapter" data-level="1.5.2" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#stackoverflow"><i class="fa fa-check"></i><b>1.5.2</b> Stackoverflow</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#workflow-co-ban-trong-r"><i class="fa fa-check"></i><b>1.6</b> Workflow cơ bản trong R</a><ul>
+<li class="chapter" data-level="1.6.1" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#r-script-file-uoi-.r"><i class="fa fa-check"></i><b>1.6.1</b> R Script (file đuôi *.R)</a></li>
+<li class="chapter" data-level="1.6.2" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#r-markdown-file-uoi-.rmd"><i class="fa fa-check"></i><b>1.6.2</b> R Markdown (file đuôi *.Rmd)</a></li>
+<li class="chapter" data-level="1.6.3" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#r-project-file-uoi-.rproj"><i class="fa fa-check"></i><b>1.6.3</b> R Project (file đuôi *.Rproj)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="lam-quen-vi-r.html"><a href="lam-quen-vi-r.html#tham-khao"><i class="fa fa-check"></i><b>1.7</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="data-frame.html"><a href="data-frame.html"><i class="fa fa-check"></i><b>2</b> Data frame</a><ul>
+<li class="chapter" data-level="2.1" data-path="data-frame.html"><a href="data-frame.html#import-d-liu-co-ban"><i class="fa fa-check"></i><b>2.1</b> Import dữ liệu cơ bản</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="data-frame.html"><a href="data-frame.html#t-package"><i class="fa fa-check"></i><b>2.1.1</b> Từ package</a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-frame.html"><a href="data-frame.html#import-t-excel-file-csv-hoc-file-txt"><i class="fa fa-check"></i><b>2.1.2</b> Import từ Excel, file csv hoặc file txt</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-frame.html"><a href="data-frame.html#cac-loai-d-liu-value-type"><i class="fa fa-check"></i><b>2.2</b> Các loại dữ liệu (Value type)</a></li>
+<li class="chapter" data-level="2.3" data-path="data-frame.html"><a href="data-frame.html#truy-vn-d-liu-co-ban"><i class="fa fa-check"></i><b>2.3</b> Truy vấn dữ liệu cơ bản</a></li>
+<li class="chapter" data-level="2.4" data-path="data-frame.html"><a href="data-frame.html#tham-khao-1"><i class="fa fa-check"></i><b>2.4</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ve-biu-.html"><a href="ve-biu-.html"><i class="fa fa-check"></i><b>3</b> Vẽ biểu đồ</a><ul>
+<li class="chapter" data-level="3.1" data-path="ve-biu-.html"><a href="ve-biu-.html#cac-biu--co-ban"><i class="fa fa-check"></i><b>3.1</b> Các biểu đồ cơ bản</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="ve-biu-.html"><a href="ve-biu-.html#scatterplot"><i class="fa fa-check"></i><b>3.1.1</b> Scatterplot</a></li>
+<li class="chapter" data-level="3.1.2" data-path="ve-biu-.html"><a href="ve-biu-.html#boxplot"><i class="fa fa-check"></i><b>3.1.2</b> Boxplot</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="ve-biu-.html"><a href="ve-biu-.html#tieu--va-t-ten-truc"><i class="fa fa-check"></i><b>3.2</b> Tiêu đề và đặt tên trục</a></li>
+<li class="chapter" data-level="3.3" data-path="ve-biu-.html"><a href="ve-biu-.html#dan-nhan-d-liu-annotation"><i class="fa fa-check"></i><b>3.3</b> Dán nhãn dữ liệu (annotation)</a></li>
+<li class="chapter" data-level="3.4" data-path="ve-biu-.html"><a href="ve-biu-.html#facet"><i class="fa fa-check"></i><b>3.4</b> Facet</a></li>
+<li class="chapter" data-level="3.5" data-path="ve-biu-.html"><a href="ve-biu-.html#cac-thut-ng"><i class="fa fa-check"></i><b>3.5</b> Các thuật ngữ</a></li>
+<li class="chapter" data-level="3.6" data-path="ve-biu-.html"><a href="ve-biu-.html#tham-khao-2"><i class="fa fa-check"></i><b>3.6</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html"><i class="fa fa-check"></i><b>4</b> Biến đổi dữ liệu</a><ul>
+<li class="chapter" data-level="4.1" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#gii-thiu-chung-v-dplyr-va-tibble"><i class="fa fa-check"></i><b>4.1</b> Giới thiệu chung về <strong>dplyr</strong> và <code>tibble</code></a><ul>
+<li class="chapter" data-level="4.1.1" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#tibble"><i class="fa fa-check"></i><b>4.1.1</b> Tibble</a></li>
+<li class="chapter" data-level="4.1.2" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#package-dplyr"><i class="fa fa-check"></i><b>4.1.2</b> Package <strong>dplyr</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#cac-verb-trong-dplyr"><i class="fa fa-check"></i><b>4.2</b> Các “verb” trong <strong>dplyr</strong></a><ul>
+<li class="chapter" data-level="4.2.1" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#add_row"><i class="fa fa-check"></i><b>4.2.1</b> <code>add_row()</code></a></li>
+<li class="chapter" data-level="4.2.2" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#select-filter-va-slice"><i class="fa fa-check"></i><b>4.2.2</b> <code>select()</code>, <code>filter()</code> và <code>slice()</code></a></li>
+<li class="chapter" data-level="4.2.3" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#arrange"><i class="fa fa-check"></i><b>4.2.3</b> <code>arrange()</code></a></li>
+<li class="chapter" data-level="4.2.4" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#mutate-transmute"><i class="fa fa-check"></i><b>4.2.4</b> <code>mutate()</code> &amp; <code>transmute()</code></a></li>
+<li class="chapter" data-level="4.2.5" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#summarise"><i class="fa fa-check"></i><b>4.2.5</b> <code>summarise()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#kt-hp-cac-ham-trong-dplyr"><i class="fa fa-check"></i><b>4.3</b> Kết hợp các hàm trong <strong>dplyr</strong></a><ul>
+<li class="chapter" data-level="4.3.1" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#group_by"><i class="fa fa-check"></i><b>4.3.1</b> <code>group_by()</code></a></li>
+<li class="chapter" data-level="4.3.2" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#bin-i-d-liu-co-ban"><i class="fa fa-check"></i><b>4.3.2</b> Biến đổi dữ liệu cơ bản</a></li>
+<li class="chapter" data-level="4.3.3" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#group_by-va-summarise"><i class="fa fa-check"></i><b>4.3.3</b> <code>group_by</code> và <code>summarise</code></a></li>
+<li class="chapter" data-level="4.3.4" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#kt-hp-group_by-va-mutate-filter"><i class="fa fa-check"></i><b>4.3.4</b> Kết hợp <code>group_by</code> và <code>mutate</code> / <code>filter</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="bin-i-d-liu.html"><a href="bin-i-d-liu.html#tham-khao-3"><i class="fa fa-check"></i><b>4.4</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="bin-i-d-liu-phn-2.html"><a href="bin-i-d-liu-phn-2.html"><i class="fa fa-check"></i><b>5</b> Biến đổi dữ liệu (Phần 2)</a><ul>
+<li class="chapter" data-level="5.1" data-path="bin-i-d-liu-phn-2.html"><a href="bin-i-d-liu-phn-2.html#dataset-czech-financial"><i class="fa fa-check"></i><b>5.1</b> Dataset Czech Financial</a></li>
+<li class="chapter" data-level="5.2" data-path="bin-i-d-liu-phn-2.html"><a href="bin-i-d-liu-phn-2.html#tham-khao-4"><i class="fa fa-check"></i><b>5.2</b> Tham khảo</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html"><i class="fa fa-check"></i><b>6</b> Cấu trúc điều khiển (Control flow)</a><ul>
+<li class="chapter" data-level="6.1" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#biu-thc-phuong-thc-iu-kin-expressions-operators"><i class="fa fa-check"></i><b>6.1</b> Biểu thức &amp; phương thức điều kiện (expressions &amp; operators)</a></li>
+<li class="chapter" data-level="6.2" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#mnh--iu-kin"><i class="fa fa-check"></i><b>6.2</b> Mệnh đề điều kiện</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#trong-dplyr"><i class="fa fa-check"></i><b>6.2.1</b> Trong <strong>dplyr</strong></a></li>
+<li class="chapter" data-level="6.2.2" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#mnh-if"><i class="fa fa-check"></i><b>6.2.2</b> Mệnh <code>if</code></a></li>
+<li class="chapter" data-level="6.2.3" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#tng-hp-lai"><i class="fa fa-check"></i><b>6.2.3</b> Tổng hợp lại</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#vong-lp"><i class="fa fa-check"></i><b>6.3</b> Vòng lặp</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#vong-lp-while"><i class="fa fa-check"></i><b>6.3.1</b> Vòng lặp <code>while</code></a></li>
+<li class="chapter" data-level="6.3.2" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#vong-lp-for"><i class="fa fa-check"></i><b>6.3.2</b> Vòng lặp <code>for</code></a></li>
+<li class="chapter" data-level="6.3.3" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#chu-y"><i class="fa fa-check"></i><b>6.3.3</b> Chú ý</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html#tham-khao-5"><i class="fa fa-check"></i><b>6.4</b> Tham khảo</a></li>
+</ul></li>
+<li class="part"><span><b>Misc</b></span></li>
+<li class="chapter" data-level="7" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html"><i class="fa fa-check"></i><b>7</b> FAQs ngắn gọn về R</a><ul>
+<li class="chapter" data-level="7.1" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#cac-ky-hiu-c-bit-trong-r"><i class="fa fa-check"></i><b>7.1</b> Các ký hiệu đặc biệt trong R</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#du--"><i class="fa fa-check"></i><b>7.1.1</b> Dấu <code>&lt;-</code></a></li>
+<li class="chapter" data-level="7.1.2" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#du-."><i class="fa fa-check"></i><b>7.1.2</b> Dấu <code>.</code></a></li>
+<li class="chapter" data-level="7.1.3" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#du"><i class="fa fa-check"></i><b>7.1.3</b> Dấu <code>%</code></a></li>
+<li class="chapter" data-level="7.1.4" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#du-va"><i class="fa fa-check"></i><b>7.1.4</b> Dấu <code>:</code> và <code>::</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#mt-s-cau-hoi-khac"><i class="fa fa-check"></i><b>7.2</b> Một số câu hỏi khác</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#r-co-th-s-dung-cho-cac-muc-ich-nao-khac-ngoai-scientific-computing-khong"><i class="fa fa-check"></i><b>7.2.1</b> R có thể sử dụng cho các mục đích nào khác ngoài scientific computing không?</a></li>
+<li class="chapter" data-level="7.2.2" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#trong-r-co-tn-tai-h-thngquy-chun-v-style-tuong-uong-pep8-trong-pythong-khong"><i class="fa fa-check"></i><b>7.2.2</b> Trong R có tồn tại hệ thống/quy chuẩn về “style” (tương đương) PEP8 trong Pythong) không?</a></li>
+<li class="chapter" data-level="7.2.3" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#co-nen-s-dung-require--tai-package-khong"><i class="fa fa-check"></i><b>7.2.3</b> Có nên sử dụng <code>require</code> để tải package không?</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="faqs-ngn-gon-v-r.html"><a href="faqs-ngn-gon-v-r.html#tham-khao-6"><i class="fa fa-check"></i><b>7.3</b> Tham khảo</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data-frame" class="section level1">
+<h1><span class="header-section-number">2</span> Data frame</h1>
+<p>Data frame là một loại dữ liệu dạng bảng (tabular data), hay còn gọi là data frames trong R. Về khái niệm, data frame giống như một sheet trong Excel, với nhiều cột và dòng, trong đó mỗi cột đại diện cho 1 trường có cùng kiểu dữ liệu, và mỗi dòng là một observation (bản ghi hoặc quan sát). Các tính chất của data frame:</p>
+<ul>
+<li><p>Tên cột không được trống (dòng header đầu tiên). Như vậy, khi truy cập đến các cột trong code, chúng ta sẽ gọi tên thay vì gọi số thứ tự của cột giống như trong Excel (cột A hoặc cột 1).</p></li>
+<li><p>Tên dòng không được lặp lại.</p></li>
+<li><p>Kiểu dữ liệu (value type) trong cột phải là character, numeric hoặc factor (sẽ nhắc đến sau).</p></li>
+<li><p>Độ dài của các cột (số obs) phải bằng nhau.</p></li>
+<li><p>Khi đặt tên (assign) cho data frame, chúng ta sẽ coi đây là 1 object (đối tượng) và không dùng thuật ngữ biến/variable.</p></li>
+</ul>
+<div id="import-d-liu-co-ban" class="section level2">
+<h2><span class="header-section-number">2.1</span> Import dữ liệu cơ bản</h2>
+<div id="t-package" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> Từ package</h3>
+<p>Trong khi tự học R, nhiều giáo trình (như <a href="https://r4ds.had.co.nz">R for Data Science - Hadley Wickham</a>) sẽ mở đầu bằng các bộ dữ liệu từ các package. Trong tài liệu này, chúng ta sẽ sử dụng package <code>nycflights13</code> để làm mẫu.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1"><span class="kw">install.packages</span>(<span class="st">&#39;nycflights13&#39;</span>)</a></code></pre></div>
+<p>Có 2 cách cơ bản để import dữ liệu từ package như sau:</p>
+<ul>
+<li><strong>Load toàn bộ package chứa dữ liệu</strong> bằng hàm <code>library()</code>, khi đó dữ liệu cũng sẽ được import theo. Lưu ý, khi dùng hàm <code>library()</code>, không cần dùng dấu chấm phẩy để gọi tên package giống như hàm <code>install.packages()</code>.</li>
+</ul>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="kw">library</span>(nycflights13)</a>
+<a class="sourceLine" id="cb45-2" title="2"><span class="co"># Xem thử 10 dòng đầu tiên của bộ dữ liệu &#39;flights&#39;</span></a>
+<a class="sourceLine" id="cb45-3" title="3"><span class="kw">head</span>(flights,<span class="dv">10</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 10 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     1      517            515         2      830
+##  2  2013     1     1      533            529         4      850
+##  3  2013     1     1      542            540         2      923
+##  4  2013     1     1      544            545        -1     1004
+##  5  2013     1     1      554            600        -6      812
+##  6  2013     1     1      554            558        -4      740
+##  7  2013     1     1      555            600        -5      913
+##  8  2013     1     1      557            600        -3      709
+##  9  2013     1     1      557            600        -3      838
+## 10  2013     1     1      558            600        -2      753
+## # ... with 12 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;,
+## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,
+## #   time_hour &lt;dttm&gt;</code></pre>
+<ul>
+<li><strong>Load riêng dữ liệu cần thiết thay vì load cả package</strong>, giúp tiết kiệm bộ nhớ. Hàm <code>data()</code> nhận các arg dưới dạng <code>string</code>, vì vậy cần dấu chấm phẩy.</li>
+</ul>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="kw">data</span>(<span class="st">&#39;flights&#39;</span>, <span class="dt">package =</span> <span class="st">&#39;nycflights13&#39;</span>)</a>
+<a class="sourceLine" id="cb47-2" title="2"><span class="kw">head</span>(flights,<span class="dv">10</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 10 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     1      517            515         2      830
+##  2  2013     1     1      533            529         4      850
+##  3  2013     1     1      542            540         2      923
+##  4  2013     1     1      544            545        -1     1004
+##  5  2013     1     1      554            600        -6      812
+##  6  2013     1     1      554            558        -4      740
+##  7  2013     1     1      555            600        -5      913
+##  8  2013     1     1      557            600        -3      709
+##  9  2013     1     1      557            600        -3      838
+## 10  2013     1     1      558            600        -2      753
+## # ... with 12 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;,
+## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,
+## #   time_hour &lt;dttm&gt;</code></pre>
+<p>Có thể thấy ở trên, ngoài 2 hàm <code>library()</code> và <code>data()</code>, chúng ta còn dùng hàm <code>head()</code> để xem một số lượng nhất định dòng đầu tiên của data frame. Ngoài ra, chúng ta cũng có thể xem toàn bộ data frame này bằng cách dùng hàm <code>View()</code> (lưu ý có viết hoa chữ V đầu tiên).</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1"><span class="kw">View</span>(flights)</a></code></pre></div>
+<p>Tương tự, khi chúng ta truy cập sửa sổ <code>Environment</code> ở góc trên bên phải, các data frame đã được import cũng hiện ra. Khi đưa trỏ chuột chọn 1 data frame, R cũng ngầm thực hiện hàm <code>View()</code> và sau đó một cửa sổ mới hiện ra thể hiện toàn bộ data frame.</p>
+</div>
+<div id="import-t-excel-file-csv-hoc-file-txt" class="section level3">
+<h3><span class="header-section-number">2.1.2</span> Import từ Excel, file csv hoặc file txt</h3>
+<p>Trong thực tế, dữ liệu thường xuyên được chia sẻ và lưu trữ ở các dạng .csv, .txt hoặc trong file Excel (.xls và .xlsx).
+Khi mở các loại file này ở bên ngoài (ví dụ trong Excel hoặc 1 text editor nào đó), ta có thể thấy dòng đầu tiên thường là tên cột (dòng header).</p>
+<p>Khi sử dụng RStudio, chúng ta có thể dùng chức năng <code>Import Dataset</code> ở cửa sổ <code>Environment</code> hoặc qua menu <code>File -&gt; Import Dataset</code>, tuy nhiên cách làm này thủ công và không đáp ứng được tính năng “reproducible”, vì khi chia sẻ code cho người khác, họ sẽ lại phải import data thủ công lại thay vì chỉ cần chạy code.</p>
+<p>Thay vào đó, chúng ta có thể sử dụng 1 số hàm sau (Lưu ý cách viết <code>tên_package::tên_function</code> là để tránh phải load toàn bộ package ra và chỉ gọi thằng function):</p>
+<ul>
+<li><p>dùng hàm <code>readxl::read_excel()</code>: hàm này có các argument quan trọng nhất là <code>path</code> (đường dẫn đến file), <code>sheet</code> (chọn sheet muốn import). Ngoài ra số số arg khác như <code>col_names</code>, <code>col_types</code>, <code>trim_ws</code> cũng khá hữu ích, có thể tham khảo thêm thông qua <code>?read_excel</code>.</p></li>
+<li><p>dùng hàm <code>readr::read_csv()</code>: tương tự như <code>read_excel</code>, hàm <code>read_csv</code> cũng có argument <code>file</code> (đường dẫn). Hàm này được sử dụng để import file csv. Lưu ý: <code>read_csv()</code> không hỗ trợ row names, nên có lúc import dữ liệu vào sẽ tự động thêm 1 cột row names đầu tiên.</p></li>
+<li><p>dùng hàm <code>readr::read_delim()</code>: hàm này được sử dụng để import file txt; chữ “delim” trong tên hàm là viết tắt của từ “delimiter”: nếu bất kì ai đã từng sử dụng chức năng <strong>Import from text</strong> trong Excel sẽ hiểu nghĩa từ này. Các argument quan trọng: <code>file</code> (đường dẫn), <code>delim</code> (delimiter: kí hiệu tách cột, ví dụ đối với file csv mặc định là dấu phẩy).</p></li>
+</ul>
+</div>
+</div>
+<div id="cac-loai-d-liu-value-type" class="section level2">
+<h2><span class="header-section-number">2.2</span> Các loại dữ liệu (Value type)</h2>
+<p>Data frame trong R yêu cầu mỗi cột có chung một loại dữ liệu thống nhất. Ví dụ, trong cột “Năm sinh”, tất cả dữ liệu phải thuộc dạng số. Dưới đây là các loại dữ liệu thông dụng trong R:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Integers</strong> (Số nguyên): Là các số <span class="math inline">\(\left(\dots,-2,-1,0,1,2,\dots\right)\)</span>. Để chuyển đổi dữ liệu loại khác sang số nguyên, dùng hàm <code>as.integer()</code>.</p></li>
+<li><p><strong>Numeric</strong>: là bất kì loại số nào, kể cả số thập phân. Để chuyển đổi dữ liệu loại khác sang kiểu numeric, dùng hàm <code>as.numeric()</code>.</p></li>
+<li><p><strong>String</strong>: Tương ứng với kiểu dữ liệu “Text” trong Excel; là chuỗi các kí tự bất kì, thậm chí có thể là số nhưng được lưu trữ ở dạng string. Dữ liệu kiểu string có thể là tên người, username, password, etc. Sử dụng hàm <code>as.character()</code> để chuyển đổi.</p></li>
+<li><p><strong>Factor</strong>: Là kiểu dữ liệu string nằm trong nhóm hữu hạn các giá trị cho trước. Thông thường factor còn được hiểu là biến nhóm (categorical values), tuy nhiên trong R chúng ta sẽ sử dụng thuật ngữ “Factor”. Ví dụ: giới tính (nam, nữ), điểm (A, B, C, E, D, F). Sử dụng hàm <code>as.factor()</code> để chuyển đổi.</p></li>
+<li><p><strong>Logical</strong>: Là loại dữ liệu factor đặc biệt, chỉ gồm 2 giá trị <code>TRUE</code> và <code>FALSE</code>. Dùng hàm <code>as.logical()</code> để convert <code>0</code> thành <code>FALSE</code> và mọi giá trị số còn lại thành <code>TRUE</code>.</p></li>
+</ol>
+<p>Thông thường, khi import dữ liệu, R sẽ tự động đặt kiểu giá trị cho data frame, tuy nhiên nên sử dụng argument <code>col_types</code> để tự đặt theo ý mình, tránh sai sót.</p>
+</div>
+<div id="truy-vn-d-liu-co-ban" class="section level2">
+<h2><span class="header-section-number">2.3</span> Truy vấn dữ liệu cơ bản</h2>
+<p>Thực tế, data frame là một <strong>list các vector cùng độ dài</strong> (Đọc thêm về list ở mục tham khảo - data structures). Vì vậy, ta có thể tự tạo 1 data frame cơ bản bằng cách liệt kê ra các vector.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1">animals &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
+<a class="sourceLine" id="cb50-2" title="2">  <span class="dt">Ten =</span> <span class="kw">c</span>(<span class="st">&#39;Cho&#39;</span>, <span class="st">&#39;Meo&#39;</span>, <span class="st">&#39;Lon&#39;</span>, <span class="st">&#39;Ga&#39;</span>),</a>
+<a class="sourceLine" id="cb50-3" title="3">  <span class="dt">Tuoi   =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">1</span>),</a>
+<a class="sourceLine" id="cb50-4" title="4">  <span class="dt">CanNang_kg =</span> <span class="kw">c</span>(<span class="dv">15</span>, <span class="dv">8</span>, <span class="dv">30</span>, <span class="dv">3</span>),</a>
+<a class="sourceLine" id="cb50-5" title="5">  <span class="dt">SoChan =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb50-6" title="6">)</a>
+<a class="sourceLine" id="cb50-7" title="7"></a>
+<a class="sourceLine" id="cb50-8" title="8"><span class="co"># goi ra data frame</span></a>
+<a class="sourceLine" id="cb50-9" title="9">animals</a></code></pre></div>
+<pre><code>##   Ten Tuoi CanNang_kg SoChan
+## 1 Cho    3         15      4
+## 2 Meo    5          8      4
+## 3 Lon    1         30      4
+## 4  Ga    1          3      2</code></pre>
+<p>Để truy vấn một cột trong data frame trên, data dùng cú pháp <code>$</code>:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1">animals<span class="op">$</span>Tuoi</a></code></pre></div>
+<pre><code>## [1] 3 5 1 1</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1"><span class="kw">mean</span>(animals<span class="op">$</span>Tuoi)</a></code></pre></div>
+<pre><code>## [1] 2.5</code></pre>
+<p>Ngoài ra, có thể dùng cú pháp <code>[row, column]</code>, tương đương với dòng-cột (ngược lại với cú pháp thông thường trong Excel, ví dụ ô B5):</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1">animals[ , <span class="st">&#39;Tuoi&#39;</span>]    <span class="co"># xem tất cả các dòng của cột &#39;Tuoi&#39;</span></a></code></pre></div>
+<pre><code>## [1] 3 5 1 1</code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1">animals[ <span class="dv">2</span>, <span class="st">&#39;Tuoi&#39;</span>]  <span class="co"># xem dòng 2 của cột &#39;Tuoi&#39;</span></a></code></pre></div>
+<pre><code>## [1] 5</code></pre>
+<p>Tương tự, truy vấn dữ liệu bằng số thứ tự (index) cũng theo cú pháp dòng-cột:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1">animals[,<span class="dv">2</span>]</a></code></pre></div>
+<pre><code>## [1] 3 5 1 1</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1">animals[<span class="dv">2</span>,<span class="dv">2</span>]</a></code></pre></div>
+<pre><code>## [1] 5</code></pre>
+<p>Tạo ra một cột mới:</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1">animals<span class="op">$</span>CanNang_g &lt;-<span class="st"> </span>animals<span class="op">$</span>CanNang_kg <span class="op">*</span><span class="st"> </span><span class="dv">1000</span> <span class="co"># tạo cột cân nặng theo gam</span></a>
+<a class="sourceLine" id="cb64-2" title="2">animals                                       <span class="co"># truy vấn kết quả</span></a></code></pre></div>
+<pre><code>##   Ten Tuoi CanNang_kg SoChan CanNang_g
+## 1 Cho    3         15      4     15000
+## 2 Meo    5          8      4      8000
+## 3 Lon    1         30      4     30000
+## 4  Ga    1          3      2      3000</code></pre>
+<p>Kiểm tra định dạng các biến trong data frame bằng cách dùng hàm <code>str()</code>:</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1"><span class="kw">str</span>(animals)</a></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    4 obs. of  5 variables:
+##  $ Ten       : Factor w/ 4 levels &quot;Cho&quot;,&quot;Ga&quot;,&quot;Lon&quot;,..: 1 4 3 2
+##  $ Tuoi      : num  3 5 1 1
+##  $ CanNang_kg: num  15 8 30 3
+##  $ SoChan    : num  4 4 4 2
+##  $ CanNang_g : num  15000 8000 30000 3000</code></pre>
+<p>Hàm <code>summary()</code> giúp đưa ra tóm tắt về data frame, tính toán 1 số thống kê cơ bản như mean, min, max, median, etc.</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1"><span class="kw">summary</span>(animals)</a></code></pre></div>
+<pre><code>##   Ten         Tuoi       CanNang_kg        SoChan      CanNang_g    
+##  Cho:1   Min.   :1.0   Min.   : 3.00   Min.   :2.0   Min.   : 3000  
+##  Ga :1   1st Qu.:1.0   1st Qu.: 6.75   1st Qu.:3.5   1st Qu.: 6750  
+##  Lon:1   Median :2.0   Median :11.50   Median :4.0   Median :11500  
+##  Meo:1   Mean   :2.5   Mean   :14.00   Mean   :3.5   Mean   :14000  
+##          3rd Qu.:3.5   3rd Qu.:18.75   3rd Qu.:4.0   3rd Qu.:18750  
+##          Max.   :5.0   Max.   :30.00   Max.   :4.0   Max.   :30000</code></pre>
+</div>
+<div id="tham-khao-1" class="section level2">
+<h2><span class="header-section-number">2.4</span> Tham khảo</h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Delimiter">Delimiter - Wiki</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Comma-separated_values">Comma-separated values - Wiki</a></li>
+<li><a href="https://en.wikipedia.org/wiki/String_(computer_science)">String - Wiki</a></li>
+<li><a href="https://adv-r.hadley.nz/vectors-chap.html">Data structures - Advanced R</a></li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="lam-quen-vi-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ve-biu-.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+},
+"search": true
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

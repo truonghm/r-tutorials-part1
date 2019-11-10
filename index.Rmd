@@ -1,0 +1,93 @@
+--- 
+title: "Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1"
+author: "Truong Hoang"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+github-repo: truonghm/R01
+description: ""
+---
+
+
+# Mở đầu {-}
+
+These documents are my personal notes for the R language. They will be brief, enough to get going with data analysis and statistics. These notes will be in both English and Vietnamese (and obviously predominantly Vietnamese), because of multiple reasons that I'm still too lazy to list here (but I will come back later). The language also tends to be casual and colloquial, not formal, because this is not a textbook. 
+
+Tài liệu chia ra làm 2 phần (đây sẽ là phần 1): phần 1 giới thiệu R ở mức độ cơ bản và bỏ qua 1 số chi tiết phức tạp hơn, nhưng vẫn cố gắng giải thích đi sâu nhất có thể (ví dụ như logic phía sau của 1 function); phần 2 sẽ đi sâu hơn về R nhưng vẫn dừng ở mức ngắn gọn và đầy đủ nhất có thể (data structures, user-defined functions, string manipulation, date & time, more advanced `dplyr`, automation, `apply`, functional programming with `purrr`, etc).
+
+
+## Disclaimer {-}
+
+1. I have no formal education in programming or mathematics.
+
+2. Mình không phải chuyên gia về R; thực tế là trong quá trình viết tài liệu, mình cũng phải tự đọc và nghiên cứu thêm rất nhiều. Vì vậy mới nói đây sẽ là personal notes nhằm phục vụ cho việc học của chính mình là trên hết. Hiện tại mình chưa biết cách dùng citation trong R Markdown/bookdown, tuy nhiên mình sẽ luôn bao gồm thêm 1 mục tham khảo ở cuối mỗi chương để trích dẫn các nguồn mà mình sử dụng trong bài và cung cấp tài liệu đọc thêm.
+
+
+## Outline draft {-}
+
+1. **Các mảng kiến thức chính**
+
+    1.1. *Làm quen với R* - 100%  
+        1.1.1. Sử dụng R để tính toán cơ bản (và giới thiệu về function)  
+        1.1.2. Gán biến (assignment)  
+        1.1.3. Vectors  
+        1.1.4. Các gói thư viện (packages)  
+        1.1.5. Tìm kiếm câu trả lời  
+        1.1.6. Workflow trong R  
+        1.1.7. Tham khảo
+    1.2. *Data frame* - 95%  
+        1.2.1. Nhập dữ liệu (import data)  
+        1.2.2. Các loại dữ liệu (value type)  
+        1.2.3. Truy vấn dữ liệu cơ bản  
+        1.2.4. Tham khảo  
+    1.3. *Vẽ biểu đồ* - 60%  
+        1.3.1. Các loại biểu đồ cơ bản  
+        1.3.2. Tiêu đề và đặt tên trục  
+        1.3.3. Dán nhãn dữ liệu (annotation)  
+        1.3.4. Facet
+        1.3.5. Tổng hợp thuật ngữ  
+        1.3.6. Tham khảo  
+    1.4. *Biến đổi dữ liệu (wrangling)* - 100%  
+        1.4.1. Giới thiệu chung  
+        1.4.2. Các verb trong dplyr  
+        1.4.3. Basic transformation  
+        1.4.4. Ví dụ thêm  
+        1.4.5. Tham khảo  
+    1.5. *Biến đổi dữ liệu phần 2* - 0%  
+    1.6. *Control flow (giới thiệu về if-else, for-loop, etc.)* - 90%  
+
+2. **Misc**
+
+    2.1. *FAQs*  
+    2.2. Tricks  
+        2.2.1. Kết nối với SQL server  
+        2.2.2. Liệt kê các file trong thư mục  
+        2.2.3. apply/lappy/sapply/tapply  
+        2.2.4. Tương tác với Excel  
+        2.2.5. Làm presentation  
+        2.2.6. Some basic string manipulation functions
+        2.2.7. Some basic stats functions
+        
+    
+
+## To-do {-}
+
+1. Hoàn thành tất cả trước 20191031
+2. Bổ sung về projects trong phần Workflow 1.1.6
+3. Hoàn thành phần 1.3
+4. Bổ sung ví dụ về import data mục 1.2.1
+5. Bổ sung về ví dụ `if` trong 1.5.1.3
+6. Tự tạo dummy data để làm ví dụ
+7. Bổ sung  thêm chương wrangling nâng cao (giới thiệu các loại join)
+
+
+## General resources {-}
+
++ [R for Data Science - Hadley Wickham](https://r4ds.had.co.nz)
++ [R Markdown: Thhe Definitive Guide - Yihui Xie](https://bookdown.org/yihui/rmarkdown/)
++ [bookdown: Authoring Books and Technical Documents with R Markdown - Yihui Xie](https://bookdown.org/yihui/bookdown/)
++ [Git and RStudio](https://resources.github.com/whitepapers/github-and-rstudio/)
++ [Advaned R - Hadley Wickham](https://adv-r.hadley.nz/)
+
+

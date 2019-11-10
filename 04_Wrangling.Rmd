@@ -1,0 +1,573 @@
+# Biến đổi dữ liệu
+
+```{r, echo=FALSE}
+# Reset môi trường
+rm(list = ls())
+pkgs = names(sessionInfo()$otherPkgs)
+if( length(pkgs > 0)){
+  pkgs = paste('package:', pkgs, sep = "")
+  for( i in 1:length(pkgs)){
+    detach(pkgs[i], character.only = TRUE, force=TRUE)
+  }
+}
+```
+
+
+
+
+
+
+
+```{r, message=FALSE, warning=FALSE, results='hide'}
+# load sẵn tidyverse
+library(tidyverse, quietly = TRUE)
+```
+
+Các tool có sẵn trong **base R** thường không thống nhất và khó sử dụng, nhất là cho người mới học. Vì vậy, chúng ta sẽ sử dụng package**dplyr** (Đọc mô tả package tại [[http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html]](http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)).
+
+## Giới thiệu chung về **dplyr** và `tibble`
+
+### Tibble
+
+Từ đầu đến giờ, chúng ta đã sử dụng `data.frame`, tuy nhiên có 1 số điểm mà loại dữ liệu bảng này làm chưa tốt như:
+
++ Một số chuỗi kỹ tự đặc biệt dạng `string` bị đổi thành `factor` khi import.
++ Subset (Lấy các tập hợp con) từ data dạng `data.frame` có thể bị đổi thành dạng `vector` hoặc `scalar`.
++ Tốc độ còn chậm.
+
+Vì vậy, **dplyr** giới thiệu 1 loại dữ liệu bảng mới là `tibble`. Về cơ bản, `tibble` giống `data.frame` nhưng cải thiện ở nhiều điểm. Hiện tại chúng ta có thể tạm bỏ qua những điểm này.
+
+### Package **dplyr**
+
+Một điểm đặc biệt của **dplyr** là hàm pipe `%>%`, giúp việc viết và đọc code dễ dàng hơn rất nhiều. Ý tưởng của hàm pipe là lấy kết quả của 1 hàm trước đó luôn cho hàm phía sau, tức là thay vì viết `f(a,b)`, ta có thể viết `a %>% f(b)`, dẫn đến 2 lợi ích:
+
++ **Tránh lồng các hàm vào với nhau**, ví dụ: nếu bắt đầu bằng `x`, sau đó dùng hàm `f()`, tiếp đến hàm `g()`, rồi đến hàm `h()`, ta sẽ phải viết `h(g(f(x)))`. Khi đọc đoạn code này, ta sẽ phải đọc từ *trong ra ngoài*. Khi sử dụng pipe, ta sẽ đọc từ trái sang phải như sau: `x %>% f() %>% g() %>% h()`
++ **Đặt nhiều variable mới**: Nếu không lồng các hàm vào với nhau, ta sẽ phải đặt variable mới cho từng hàm.
+
+
+|     Code            |  Ý nghĩa       |
+|:-------------------:|:--------------:|
+| `a %>% f(b)`        |   `f(a,b)`     |
+| `b %>% f(a, .)`     |   `f(a, b)`    |
+| `x %>% f() %>% g()` |  `g( f(x) )`   |
+
+Sau mỗi lần nối các hàm  với pipe, kết quả luôn là 1 dataset.
+
+
+## Các "verb" trong **dplyr**
+
+**dplyr** có 1 hệ thống các hàm, hay còn gọi là các "verb" (động từ) rất thống nhất và khoa học, giúp người mới có thể đọc hiểu và viết code dễ dàng:
+
+
+* `add_row` - Thêm dòng mới.
+
+* `select` - Chọn ra các cột theo tên hoặc STT.
+
+* `filter` - Chọn ra các dòng theo điều kiện.
+
+* `slice` - Chọn ra các dòng theo số dòng.
+
+* `arrange` - Sắp xếp lại dòng.
+
+* `mutate`& `transmute` - Thêm cột mới.
+
+* `summarise` & `group_by` - Dùng để pivot dữ liệu.
+
+Các hàm trên có cú pháp giống nhau, đều bắt đầu bằng 1 argument dataset đầu vào.
+
+Để lấy ví dụ, chúng ta sẽ tạo ra 1 data frame đơn giản làm mẫu, sử dụng hàm `tribble()` để tạo ra 1 `tibble`:
+
+```{r}
+grades <- tribble(
+  ~Ten,     ~GioiTinh, ~HS1, ~HS2, ~CuoiKi,
+  'Nguyet'    , 'F',     93,  98,     96,
+  'Truong'    , 'M',     99,  90,     80,
+  'Mat'       , 'M',     89,  70,     85,
+  'Chuoi'     , 'M',     80,  82,     81,
+  'SoyaBean'  , 'F',     70,  85,     92,
+  'KhungLong' , 'F',     77,  86,     72)
+grades
+```
+
+
+### `add_row()`
+
+Thêm dòng vào dữ liệu `grades` ở trên như sau:
+
+```{r}
+grades %>% add_row(Ten='Cuu', HS1=96, HS2=90)
+grades
+```
+
+Các trường thông tin không được thiết lập (như giới tính và điểm cuối kì) sẽ nhận giá trị `NA`. Vì chúng ta không assign kết quả của câu lệnh trên vào object nào cả, R sẽ in ra luôn kết quả. Dataset `grades` gốc vẫn không có gì thay đổi.
+
+```{r}
+grades <- grades %>%
+  add_row(Ten='Cuu', GioiTinh = 'F', HS1=96, HS2=90, CuoiKi = 69)
+grades
+```
+
+Câu lệnh trên gán kết quả sau khi thêm dòng vào chính dataset `grades`, khiến R ghi đè dataset mới lên dataset gốc.
+
+
+### `select()`, `filter()` và `slice()`
+
+Các nhóm hàm này cho phép chúng ta chọn ra nhóm những dòng/cột theo điều kiện.
+
+
+#### `select()`
+
+Hàm `select()` cho phép chọn ra các cột (hoặc bỏ đi), tương đương với `SELECT` trong SQL.
+
+**Chọn cột theo tên**:
+
+```{r}
+grades %>%
+  select(HS1, HS2)      # select by name
+```
+
+**Chọn các cột liên tiếp**:
+
+```{r}
+grades %>%
+  select(HS1:CuoiKi)    # select consecutively
+```
+
+**Loại ra một hoặc nhiều cột** khỏi dataset ban đầu (negative indexing):
+
+```{r}
+grades %>%
+  select(-HS2)         # negative indexing
+```
+
+**Chọn cột theo thứ tự/vị trí**:
+
+```{r}
+grades %>%
+  select(1:2)          # select by index/position
+```
+
+**Dùng hàm `starts_with()`** để chọn cột theo điều kiện tên cột:
+
+```{r}
+grades %>%
+  select(starts_with('HS')) # select by patterns of col name
+
+grades %>%
+  select(starts_with('HS'), starts_with('C'))
+
+grades %>%
+  select(ends_with('1'))   # áp dụng tương tự với ends_with
+```
+
+
+#### `filter()`
+
+Hàm `filter()` giúp lọc ra các dòng theo điều kiện, giống chức năng filter trong Excel và `WHERE` trong SQL:
+
+```{r}
+grades %>%
+  filter(CuoiKi > 90)
+```
+
+**Kết hợp nhiều điều kiện** với nhau dùng dấu phẩy `,` hoặc dùng dấu `&`:
+
+```{r}
+grades %>% 
+  filter(HS2 > 90, CuoiKi > 90)
+grades %>%
+  filter(HS2 > 90 & CuoiKi > 90)
+```
+
+Các logical operators trong R:
+
+|     Kí hiệu                     |  Ý nghĩa                           |  Ghi chú                                      |
+|:-------------------------------:|:----------------------------------:|:---------------------------------------------:|
+| `!x` (exclaimation)             |   not x  (logical negation)        |Chỉ nên dùng với dữ liệu dạng Logical/boolean  |
+| `x & y` (ampersand)             |   x và y (logical AND)             |Trả kết quả là vector                          |
+| `x && y` (double ampersands)    |  x và y (logical AND)              |Trả kết quả không vectorized                   |
+| `x | y` (vertical bar)          |  x hoặc y (logical OR, inclusive)  |Trả kết quả là vector                          |
+| `x || y` (double vertical bars) |  x hoặc y (logical OR, inclusive)  |Trả kết quả không vectorized                   |
+| `xor(x, y)`                     |  exclusive OR                      |                                               |
+
+
+Lưu ý về **inclusive OR** và **exclusive OR**:
+
++ *inclusive OR*: hoặc cái này hoặc cái kia, hoặc cả hai. Ví dụ: Mỗi người có thể sở hữu xe máy hoặc xe hơi, hoặc cả hai.
++ *exclusive OR*: hoặc cái này hoặc cái kia, nhưng không thể là cả hai. Ví dụ: Mọi số tự nhiên là số chẵn hoặc số lẻ, nhưng không thể là cả hai.
+
+Ví dụ:
+
+```{r}
+grades %>% 
+  filter(HS2 < 90 | CuoiKi < 90)
+grades %>% 
+  filter(xor(HS2 < 90, CuoiKi < 90))
+```
+
+#### `slice()`
+
+Hàm `slice()` cũng lọc ra dòng giống `filter()`, nhưng dựa vào số thứ tự của dòng (row number):
+
+```{r}
+# Lấy dòng đầu tiên
+grades %>%
+  slice(1)
+
+# Lấy 2 dòng đầu tiên
+grades %>%
+  slice(1:2)
+```
+
+**Kết hợp với hàm `n()`**; hàm `n()` dùng để đếm số lượng quan sát:
+
+```{r}
+grades %>%
+  slice(2:n())
+```
+
+**Loại bỏ dòng** với index âm:
+
+```{r}
+grades %>%
+  slice(-3:-n())
+```
+
+Lưu ý: Hàm `n()` chỉ sử dụng được khi lồng trong các hàm `summarise()`, `mutate()` và `filter()`. Hàm này không nhận argument nào.
+  
+
+### `arrange()`
+
+Cú pháp của hàm: `arrange(data, ...)`. Hàm `arrange()` mặc định sắp xếp theo thứ tự tăng dần (ascending). Hàm này tương đương với `ORDER BY` trong SQL.
+
+
+```{r}
+grades %>%
+  arrange(Ten)
+```
+
+**Sắp xếp giảm dần với `desc()`**:
+
+```{r}
+grades %>%
+  arrange(desc(CuoiKi))
+```
+
+**Kết hợp nhiều điều kiện xếp**:
+
+```{r}
+grades %>%
+  arrange(HS2, desc(CuoiKi))
+```
+
+### `mutate()` & `transmute()`
+
+
+#### `mutate()`
+
+Hàm `mutate()` tạo ra cột mới hoặc update cột có sẵn trong dataset. Ta có thể tạo ra nhiều cột trong cùng 1 hàm `mutate()`, và thậm chí có thể dùng cột vừa tạo ở trước đó để làm cơ sở tính cho cột tiếp theo. Ta có thể thêm những cột đơn giản như `mutate(random_col = 1)` để thêm cột chỉ có giá trị 1, hoặc kết hợp với các hàm `if_else` và `case_when` để đưa vào các điều kiện phức tạp hơn.
+
+Tạo thêm cột điểm tổng kết và xếp hạng, sau đó gán lại vào dataset cũ:
+
+```{r}
+grades <- grades %>%
+  mutate(
+    TongKet = (HS1 + HS2*2 + CuoiKi*3)/6,
+    XepHang = cut(TongKet, c(0, 40, 60, 70, 80, 90, 100),
+                           c('Yeu', 'TB', 'TB Kha', 'Kha', 'Gioi', 'XS'))) %>%
+  arrange(TongKet)
+grades
+str(grades)
+```
+
+
+
+**Kết hợp với `if_else`**:
+
+```{r}
+# Thay đổi giá trị của 1 observation nhất định - đổi điểm HS1 của Chuối thành 75
+# Lưu ý, cột TongKet đã tạo ra trước đó sẽ không tự đổng thay đổi them giá trị HS1 mới
+grades <- grades %>%
+  mutate(HS1 = if_else(Ten == 'Chuoi', 75, HS1))  # Nếu Ten không phải là Chuoi, giữ nguyên giá trị của HS1
+grades
+```
+
+Thay đổi toàn cột giới tính:
+
+```{r}
+grades %>%
+  mutate(GioiTinh = if_else(GioiTinh == 'M', 'Male','Female'))
+```
+
+Kết hợp nhiều điều kiện:
+
+```{r}
+# Lồng (nest) các hàm if_else lại với nhau:
+grades %>%
+  mutate(Grade = if_else(XepHang == 'Yeu', 'F',
+                         if_else(XepHang == 'TB', 'D',
+                                 if_else(XepHang == 'TB Kha', 'C',
+                                         if_else(XepHang == 'Kha', 'B',
+                                                 if_else(XepHang == 'Gioi', 'A', 'A+'))))))
+                         
+```
+
+Lưu ý, hàm `dplyr::if_else()` khác với hàm `base::ifelse()`. Hàm thứ 2 của base 2 có rất nhiều giới hạn so với hàm cải tiến của **dplyr**.
+
+
+**Kết hợp với `case_when`** - Về cơ bản, `if_else` và `case_when` giống nhau. Điểm khác biệt lớn nhất nằm ở mặt trình bày: Có thể thấy ở ví dụ trên, cách viết nested `if_else` đọc khá rối mắt. Áp dụng lại với `case_when`:
+
+```{r}
+grades %>%
+  mutate(Grade = case_when(XepHang == 'Yeu' ~ 'F',
+                           XepHang == 'TB' ~ 'D',
+                           XepHang == 'TB Kha' ~ 'C',
+                           XepHang == 'Kha' ~ 'B',
+                           XepHang == 'Gioi' ~ 'A',
+                           TRUE ~ 'A+'))  # case cuối cùng tương đương với tất cả các trường hợp còn lại
+```
+
+
+#### `transmute()`
+
+Hàm `transmute()` cũng tạo ra cột mới, tuy nhiên kết quả đầu ra sẽ chỉ bao gồm những cột vừa được tạo:
+
+```{r}
+grades %>%
+  transmute(GioiTinh.VN = if_else(GioiTinh == 'M', 'Nam','Nu'))
+```
+
+
+### `summarise()`
+
+Hàm `summarise()` nếu dùng riêng lẻ sẽ không thật sự hữu ích. Hàm này tính toán và tóm tắt dataset dựa vào một hoặc nhiều trường dữ liệu, sau đó trả ra kết quả là trường dữ liệu mới với 1 dòng kết quả tóm tắt tương ứng.
+
+```{r}
+grades %>%
+  summarise(TB.HS1 = mean(HS1), STD.HS1 = sd(HS1))
+```
+
+
+## Kết hợp các hàm trong **dplyr**
+
+
+### `group_by()`
+
+Do dataset đang sử dụng chỉ có 7 observation nên việc group thành các nhóm không có ý nghĩa cho lắm. Hàm `group_by` luôn kết hợp với các hàm khác như `mutate()`, `filter()` và `summarise()`, cho phép nhóm (aggregate) dữ liệu thành các nhóm khác nhau.
+
+```{r}
+# Group theo giới tính
+grades %>%
+  group_by(GioiTinh) %>%
+  summarise(SL = n())
+```
+
+Chúng ta sẽ sử dụng dataset của OpenIntro về số lượt ném của Kobe Bryant trong series chung kết NBA 2009 (LAL - Lakers vs. ORL - Magic), kéo dài 5 games:
+
+```{r, warning=FALSE,, results='hide'}
+kobe <- read_csv('https://www.openintro.org/stat/data/kobe.csv',
+                 col_types = cols(game = col_integer(),
+                                  quarter = col_character()))
+head(kobe,10)
+```
+
+Dataset trên có các trường dữ liệu sau:
+
++ **vs**: thuộc kiểu `string`, gồm team mà LAL đối đầu. Dataset này chỉ có ORL.
++ **game**: thuộc kiểu `integer`, từ 1 đến 5.
++ **quarter**: thuộc kiểu `character`, 1 game bóng rổ có 4 hiệp nhưng có thể có overtime (OT)
++ **time**: thuộc kiểu `character`, tuy nhiên vì thời gian trong 1 game bóng rổ đo theo kiểu minute:second:millisecond khiến R hiểu thành hh:mm:ss nên cột này sẽ cần sửa sau (dùng `col_character()` khiến dữ liệu bị thay đổi).
++ **description**: thuộc kiểu `string`, Mô tả từng shot
++ **basket**: thuộc kiểu `string`: H tương đương với ném vào - made shot (hit), M tương đương với ném trượt - missed shot (miss).
+
+Trong phần dưới, do dataset có 133 observation nên chúng ta sẽ không in thẳng kết quả ra console mà dùng hàm `head()` để kiểm tra 10 observation đầu tiên. Để kiểm tra toàn bộ dataset, ta dùng hàm `View(kobe)` hoặc click vào dataset ở cửa sổ Envirronment góc trên bên phải.
+
+### Biến đổi dữ liệu cơ bản
+
+
+#### Các ví dụ cụ thể
+
+Có thể thấy trong dataset `kobe` ở trên:
+
++ Không có trường dữ liệu ghi lại xem mỗi cú ném tương đương bao nhiêu điểm, chỉ có trường **description**.
++ Cột **quarter** vừa có dữ liệu kiểu số (1 đến 4) vừa có kiểu string (1OT, 2OT, etc).
++ Cột **time** đang hơi rắc rối cho việc xử lý và tính toán sau này.
+
+Chúng ta sẽ làm 1 số bước biến đổi dữ liệu như sau.
+
+1. Đổi cột **time** thành số giây còn lại trong hiệp, kết hợp với hàm `paste0()` để nối các string lại:    
+
+```{r}
+# split cột time ra làm 3 cột minute/second/millisecond
+kobe <- cbind(kobe, kobe %>%
+                transmute(time.s = as.character(time)) %>%
+                separate(time.s, into = paste0("T", 1:3), sep = ':', remove = TRUE))
+
+# có thể thấy cột T3 - millisecond chỉ có giá trị 00, vì vậy ta sẽ loại cột này đi
+kobe %>% 
+  group_by(T3) %>% # kết hợp group_by và summarise, sẽ nói kĩ hơn ở phần sau
+  summarise(n=n())
+
+kobe <- kobe %>%
+  select(-T3) %>% # bỏ T3
+  mutate(time.s = as.integer(T1) * 60 + as.integer(T2)) %>%  # Tạo lại cột time.s ~ số giây còn lại
+  mutate(time = as.character(time)) %>% # đổi định dạng cột time thành string
+  mutate(T1 = as.integer(T1)) %>%
+  rename(time.m = T1) %>% # đổi tên T1 thành time.m ~ số phút còn lại
+  select(-T2) # bỏ T2
+
+head(kobe, 10)
+
+```
+
+Ngược lại, ta cũng có thể dùng hàm `%/%` (là hàm để lấy phần nguyên của phép chia) và `%%` (lấy phần dư) để tính ngược lại từ trường **time.s** về dạng second:millisecond:
+
+```{r}
+transmute(kobe, time.x = time.s %/% 60 + (time.s %% 60)/100)
+```
+
+2. Sửa cột **quarter**, sử dụng hàm `nchar()` để đếm số ký tự trong string và hàm `substr()` để cắt string từ bên trái:   
+
+```{r, warning=FALSE}
+# Chuyển 1OT thành 5, 2OT thành 6 , etc.
+kobe <- kobe %>%
+  # nếu độ dài string = 1 -> đổi thành dạng numeric
+  mutate(quarter.n = case_when(nchar(quarter) == 1 ~ as.numeric(quarter),  
+                               # nếu độ dài string = 3 -> cột thêm 4
+                             TRUE ~ as.numeric(substr(quarter, 1, 1)) + 4))
+head(kobe, 10)
+```
+
+3. Thêm cột điểm **point**  
+
+Vì dataset khá nhỏ và việc manipulate string cũng khá phức tạp nên chúng ta sẽ bắt đầu thủ công bằng cách scan dataset sẽ đưa ra được 1 số kết luận như sau:
+
++ Dataset này không bao gồm ném phạt (free throws), và chỉ bao gồm field goal attempts, tương đương với 2 hoặc 3 điểm
++ Các cú ném 3 điểm sẽ bao gồm đoạn string "3pt" hoặc "three point", và ta chắc chắn được ra 2 đoạn string này đủ unique để indentify từng shot attempt là 2 hay 3 điểm. Đồng thời, khoảng cách từ vạch 3 điểm đến rổ là 23.75ft (22ft từ góc sân), vì vậy ở dữ liệu cho game 1-2-4-5, phần description đã bao gồm đầy đủ thông tin phân loại 3 điểm (dựa vào thông tin khoảng cách của shot).
+
+Từ 2 kết luận trên, ta có thể tạo thêm cột **point.attempt**, sử dụng hàm `grepl(string_to_find, value, ...)` trả về giá trị TRUE/FALSE để tìm kiếm các quan sát tương đương với 3 điểm:
+
+```{r}
+kobe <- kobe %>%
+  mutate(point.attempt = case_when(grepl('3pt', description, fixed = TRUE) == TRUE ~ 3,
+                           grepl('three point', description, fixed = TRUE) == TRUE ~ 3,
+                           TRUE ~ 2))
+head(kobe, 10)
+```
+
+Đồng thời, để tính toán dễ dàng hơn, ta đổi cột **basket** sang 1 và 0 để tính dễ hơn, sau đó tạo thêm cột $point.made = point.attempt * basket.n$
+
+```{r}
+kobe <- kobe %>%
+  mutate(basket.n = case_when(basket == 'H' ~ 1,
+                              TRUE ~ 0),
+         point.made = point.attempt * basket.n)
+head(kobe, 10)
+```
+
+#### Kết hợp toàn bộ với pipe
+
+Ta có thể kết hợp tất cả các ví dụ trên thành 1 đoạn script với pipe `%>%` để ra kết quả cuối như sau:
+
+```{r, warning=FALSE, eval=FALSE}
+kobe <- read_csv('https://www.openintro.org/stat/data/kobe.csv',
+                 col_types = cols(game = col_integer(),
+                                  quarter = col_character())) 
+
+kobe <- cbind(kobe, kobe %>%
+                transmute(time.s = as.character(time)) %>%
+                separate(time.s, into = paste0("T", 1:3), sep = ':', remove = TRUE)) %>%
+        select(-T3) %>%
+        mutate(time.s = as.integer(T1) * 60 + as.integer(T2)) %>%
+        mutate(time = as.character(time)) %>%
+        mutate(T1 = as.integer(T1)) %>%
+        rename(time.m = T1) %>%
+        select(-T2) %>%
+        mutate(quarter.n = case_when(nchar(quarter) == 1 ~ as.numeric(quarter),
+                                     TRUE ~ as.numeric(substr(quarter, 1, 1)) + 4),
+               point.attempt = case_when(grepl('3pt', description, fixed = TRUE) == TRUE ~ 3,
+                                         grepl('three point', description, fixed = TRUE) == TRUE ~ 3,
+                                         TRUE ~ 2),
+               basket.n = case_when(basket == 'H' ~ 1,
+                                    TRUE ~ 0),
+               point.made = point.attempt * basket.n)
+```
+
+
+### `group_by` và `summarise`
+
+Với dataset `kobe` đã biến đổi cơ bản xong, ta có thể kết hợp `group_by` và `summarise` để trả lời 1 số câu hỏi đơn giản:
+
+
+```{r}
+kobe <- arrange(kobe, game)
+
+# group theo game
+kobe %>%
+  group_by(game) %>%
+  summarise(total.fg = sum(basket.n), # tổng số lượt ném thành công
+            total.fga = n(), # tổng số lượt ném
+            total.point = sum(point.made), # tổng số điểm
+            point.per.fga = total.point/total.fga, # điểm trung bình trên mỗi lượt ném
+            avg.fg = mean(basket.n)) # tỷ lệ ném thành công
+
+# group theo game và quarter
+kobe %>%
+  group_by(game, quarter.n) %>%
+  summarise(total.fg = sum(basket.n),
+            total.fga = n(),
+            total.point = sum(point.made),
+            point.per.fga = total.point/total.fga,
+            avg.fg = mean(basket.n))
+
+```
+
+
+### Kết hợp `group_by` và `mutate` / `filter`
+
+Thêm 1 số cột accumuated points, accumulated fga, accumulated fg, fg%, point/fga:
+
+```{r}
+kobe <- kobe %>%
+  group_by(game) %>%
+  mutate(acc.pts = cumsum(point.made),
+         fga = 1,
+         acc.fga = cumsum(fga),
+         acc.fg = cumsum(basket.n),
+         pct.fg = cummean(basket.n),
+         pts.per.fga = acc.pts/acc.fga)
+head(kobe, 10)
+```
+
+Ta cũng có thể kết hợp với `filter` để xem performance trong crunch time (tức là 3 phút cuối của những game sát nhau, trong trường hợp này là game 2/3/4):
+
+```{r}
+kobe %>%
+  group_by(game) %>%
+  filter(game %in% c(2,3,4),
+         quarter == max(quarter),
+         time.m <3) %>%
+  select(-description, -vs, -time, -basket) %>%
+  head()
+```
+
+Trong các ví dụ trên, có 2 điểm mới:
+
+1. các hàm `cumsum()`, `cummean()` được gọi là window functions (tham khảo ở mục dưới), thường được dùng để tính lũy kế và các ứng dụng tương tự.  Một số window function hữu ích khác bao gồm:
+
+
+    + `cumprod()`, `cummin()`, `cummax()`, `cumsum()`, `cummean()`: Các hàm tính lũy kế  
+    + `row_number()`, `min_rank()`, `percent_rank()`, `dense_rank()`, `cume_dist()`: Các hàm xếp hạng (rank)  
+    + `lead()` và `lag()`: Các hàm offset  
+    
+    
+2. Ký hiệu `%in%`: Có thể thấy trong ví dụ, hàm này hoạt động giống `IN` trong SQL, dịch là: nếu các observation trong trường **game** nằm trong nhóm các giá trị (2, 3, 4).
+
+
+## Tham khảo
+
++ [Data transformation - R for DS](https://r4ds.had.co.nz/transform.html#grouped-summaries-with-summarise)
++ [Logical Operators in R](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Logic.html)
++ [`dplyr` vignettes](https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html)
++ [Window functions](https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html)
++ [Kobe hot hand data - OpenIntro](https://www.openintro.org/stat/data/?data=kobe)
