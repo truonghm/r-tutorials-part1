@@ -279,23 +279,23 @@ Figure 7.1: Source: Wikipedia
 <span id="cb203-3"><a href="faqs-ngn-gon-v-r.html#cb203-3"></a>  b &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>)</span>
 <span id="cb203-4"><a href="faqs-ngn-gon-v-r.html#cb203-4"></a>)</span></code></pre></div>
 <pre><code>##             a b....rnorm.10.
-## 1   0.7349368    -0.09777733
-## 2  -0.3004713     0.41471699
-## 3   0.8544411     0.25631557
-## 4   1.5588954     0.78800655
-## 5   1.0845044     1.57074822
-## 6  -0.1117576     1.47364577
-## 7  -0.5584301     0.23428570
-## 8   0.6169402     0.03269202
-## 9  -1.4114992     0.02072079
-## 10  0.7743589     1.26895236</code></pre>
+## 1   0.9459154      1.3864210
+## 2  -1.4729013      0.7730485
+## 3   0.2081213      1.1037481
+## 4  -0.7705432      1.4275194
+## 5  -1.3136513      1.4821052
+## 6   0.2344586     -0.5344968
+## 7  -0.6457929     -0.7482801
+## 8   1.6798240     -0.1833027
+## 9   0.5354570     -1.3266670
+## 10 -0.2635324      0.5833299</code></pre>
 <div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="faqs-ngn-gon-v-r.html#cb205-1"></a><span class="co">#Print a</span></span>
 <span id="cb205-2"><a href="faqs-ngn-gon-v-r.html#cb205-2"></a>a</span></code></pre></div>
 <pre><code>## Error in eval(expr, envir, enclos): object &#39;a&#39; not found</code></pre>
 <div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="faqs-ngn-gon-v-r.html#cb207-1"></a><span class="co">#Print b</span></span>
 <span id="cb207-2"><a href="faqs-ngn-gon-v-r.html#cb207-2"></a>b</span></code></pre></div>
-<pre><code>##  [1] -0.09777733  0.41471699  0.25631557  0.78800655  1.57074822
-##  [6]  1.47364577  0.23428570  0.03269202  0.02072079  1.26895236</code></pre>
+<pre><code>##  [1]  1.3864210  0.7730485  1.1037481  1.4275194  1.4821052 -0.5344968
+##  [7] -0.7482801 -0.1833027 -1.3266670  0.5833299</code></pre>
 <p>Để tránh tình trạng này, ta sẽ phải lồng thêm một lần dấu ngoặc nữa như sau:</p>
 <div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="faqs-ngn-gon-v-r.html#cb209-1"></a><span class="kw">data.frame</span>(</span>
 <span id="cb209-2"><a href="faqs-ngn-gon-v-r.html#cb209-2"></a>  (<span class="dt">a =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>)),</span>
