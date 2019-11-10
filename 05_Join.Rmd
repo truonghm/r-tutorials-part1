@@ -33,7 +33,7 @@ library(datamodelr, quietly = TRUE)
 
 Trong phần này, chúng ta sẽ sử dụng (thử) dataset [Czech Bank Financial](https://sorry.vse.cz/~berka/challenge/pkdd1999/berka.htm). Dataset này là tập hợp thông tin giao dịch tài chính từ 1 ngân hàng ở Czech từ năm 1993 đến 1999. Đây là data thật, đã ẩn danh thông tin khách hàng. Có khoảng 5300 khách hàng cùng 4500 tài khoản, sở hữu gần 900 thẻ tín dụng, đã thực hiện hơn 1 triệu giao dịch và có gần 700 khoản vay.
 
-Mọi người có thể truy cập dữ liệu đã được xử lý thô về mặt format [tại đây](/code/czech_financial_cleaning.R).
+Mọi người có thể truy cập dữ liệu đã được xử lý thô về mặt format [tại đây](/code/czech_financial_cleaning.html).
 ```{r, warning=FALSE, message=FALSE}
 file_path <- "data/czech_financial_formatted/"
 file_list <- list.files(path=file_path)

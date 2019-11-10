@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Tham khảo R script hoàn chỉnh cho quy trình dưới [tại đây](/code/czech_financial_cleaning.R).
+Tham khảo R script hoàn chỉnh cho quy trình dưới [tại đây](https://github.com/truonghm/R01/blob/master/code/czech_financial_cleaning.R).
 
 ## Set up
 

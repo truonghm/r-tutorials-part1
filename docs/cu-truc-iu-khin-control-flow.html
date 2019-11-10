@@ -366,13 +366,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb189-6"><a href="cu-truc-iu-khin-control-flow.html#cb189-6"></a>)</span></code></pre></div>
 <pre><code>## Unit: microseconds
 ##                                            expr   min     lq    mean
-##  case_when(1:1000 &lt; 100 ~ &quot;low&quot;, TRUE ~ &quot;high&quot;) 121.0 124.50 141.647
-##              if_else(1:1000 &lt; 3, &quot;low&quot;, &quot;high&quot;)  38.2  39.75  46.380
-##               ifelse(1:1000 &lt; 3, &quot;low&quot;, &quot;high&quot;) 195.0 198.05 207.778
+##  case_when(1:1000 &lt; 100 ~ &quot;low&quot;, TRUE ~ &quot;high&quot;) 118.2 120.70 125.752
+##              if_else(1:1000 &lt; 3, &quot;low&quot;, &quot;high&quot;)  36.9  38.05  39.747
+##               ifelse(1:1000 &lt; 3, &quot;low&quot;, &quot;high&quot;) 190.6 192.50 196.065
 ##  median    uq   max neval
-##  131.20 157.4 310.5   100
-##   41.00  59.5  70.7   100
-##  200.05 214.7 405.8   100</code></pre>
+##  122.95 125.0 214.6   100
+##   39.00  40.2  69.3   100
+##  193.60 194.8 310.1   100</code></pre>
 <p>Như vậy, có thể kết luận là nếu chúng ta chỉ có ý định viết mệnh đề quan hệ với 2 điều kiện <code>TRUE</code> hoặc <code>FALSE</code>, hãy dùng <code>if_else()</code>. Nếu cần dùng nhiều điều kiện, hãy dùng <code>case_when()</code> để code dễ đọc hơn (more readability).</p>
 </div>
 <div id="if_else-va-ifelse" class="section level4">
