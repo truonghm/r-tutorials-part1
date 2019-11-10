@@ -24,7 +24,7 @@
 <meta name="author" content="Truong Hoang" />
 
 
-<meta name="date" content="2019-11-10" />
+<meta name="date" content="2019-11-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -365,14 +365,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb189-5"><a href="cu-truc-iu-khin-control-flow.html#cb189-5"></a>  <span class="kw">ifelse</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span> <span class="op">&lt;</span><span class="st"> </span><span class="dv">3</span>, <span class="st">&quot;low&quot;</span>, <span class="st">&quot;high&quot;</span>)</span>
 <span id="cb189-6"><a href="cu-truc-iu-khin-control-flow.html#cb189-6"></a>)</span></code></pre></div>
 <pre><code>## Unit: microseconds
-##                                            expr   min    lq    mean median
-##  case_when(1:1000 &lt; 100 ~ &quot;low&quot;, TRUE ~ &quot;high&quot;) 120.6 124.5 141.320  127.5
-##              if_else(1:1000 &lt; 3, &quot;low&quot;, &quot;high&quot;)  38.0  39.7  45.122   40.6
-##               ifelse(1:1000 &lt; 3, &quot;low&quot;, &quot;high&quot;) 194.5 196.6 200.614  198.0
-##      uq   max neval
-##  130.55 428.0   100
-##   41.90  94.7   100
-##  199.30 298.9   100</code></pre>
+##                                            expr   min     lq    mean
+##  case_when(1:1000 &lt; 100 ~ &quot;low&quot;, TRUE ~ &quot;high&quot;) 119.8 125.60 147.220
+##              if_else(1:1000 &lt; 3, &quot;low&quot;, &quot;high&quot;)  38.4  39.70  52.351
+##               ifelse(1:1000 &lt; 3, &quot;low&quot;, &quot;high&quot;) 195.6 198.55 212.927
+##  median     uq   max neval
+##   133.8 160.80 279.5   100
+##    42.1  61.40 152.6   100
+##   201.8 215.75 324.8   100</code></pre>
 <p>Như vậy, có thể kết luận là nếu chúng ta chỉ có ý định viết mệnh đề quan hệ với 2 điều kiện <code>TRUE</code> hoặc <code>FALSE</code>, hãy dùng <code>if_else()</code>. Nếu cần dùng nhiều điều kiện, hãy dùng <code>case_when()</code> để code dễ đọc hơn (more readability).</p>
 </div>
 <div id="if_else-va-ifelse" class="section level4">
