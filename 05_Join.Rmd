@@ -1,4 +1,4 @@
-# Biến đổi dữ liệu (Phần 2)
+# Biến đổi dữ liệu: join
 
 ```{r, echo=FALSE}
 # Reset môi trường
@@ -21,20 +21,29 @@ if( length(pkgs > 0)){
 ```{r, message=FALSE, warning=FALSE, results='hide'}
 # load sẵn tidyverse
 library(tidyverse, quietly = TRUE)
-library(datamodelr, quietly = TRUE)
+if (!require(datamodelr)) install.packages('datamodelr')
+library(VennDiagram, quietly = TRUE)
+if (!require(DiagrammeR)) install.packages('DiagrammeR')
+library(DiagrammeR, quietly = TRUE)
 ```
 
 Ở bài trước, chúng ta đã đi qua phần giới thiệu cơ bản về biến đổi dữ liệu trong R thông qua **dplyr**. Tuy nhiên, trong cả bài, chúng ta chỉ mới làm việc với 1 dataset duy nhất, nhưng trong thực tế, ta sẽ cần kết nối thông tin giữa nhiều dataset hay table khác nhau. Ví dụ, trong Excel, ta sẽ dùng các hàm VLOOKUP/HLOOKUP hoặc INDEX/MATCH. Trong SQL, ta sử dụng các hàm JOIN hoặc UNION.
 
 **dplyr** cũng cung cấp 1 số function để làm điều này, cụ thể là nhóm các hàm `join`.
 
+Các dữ liệu dạng bảng có quan hệ với nhau được gọi là *relational data*.
+
 
 ## Dataset Czech Financial
 
 Trong phần này, chúng ta sẽ sử dụng (thử) dataset [Czech Bank Financial](https://sorry.vse.cz/~berka/challenge/pkdd1999/berka.htm). Dataset này là tập hợp thông tin giao dịch tài chính từ 1 ngân hàng ở Czech từ năm 1993 đến 1999. Đây là data thật, đã ẩn danh thông tin khách hàng. Có khoảng 5300 khách hàng cùng 4500 tài khoản, sở hữu gần 900 thẻ tín dụng, đã thực hiện hơn 1 triệu giao dịch và có gần 700 khoản vay.
 
-Mọi người có thể truy cập dữ liệu đã được xử lý thô về mặt format [tại đây](code/czech_financial_cleaning.html).
+[Dữ liệu](https://github.com/truonghm/R01/tree/master/data/czech_financial_formatted) sử dụng dưới đây đã được xử lý cơ bản. Mọi người có thể tải dữ liệu gốc [tại đây](https://github.com/truonghm/R01/tree/master/data/czech_financial_raw), và tham khảo code để xử lý dữ liệu [tại đây](code/czech_financial_cleaning.html).
+
+
 ```{r, warning=FALSE, message=FALSE}
+# load data
+
 file_path <- "data/czech_financial_formatted/"
 file_list <- list.files(path=file_path)
 
@@ -44,40 +53,102 @@ for(i in 1:length(file_list)) {
                   row.names=1) ) }
 ```
 
-Khi làm việc với 
+### Ý nghĩa của các data frames
 
 
-```{r, echo=FALSE}
+Dataset **Czech Bank Financial** có 8 table/data frame:
 
-dm_f <- dm_from_data_frames(account_df,
-                            card_df,
-                            client_df,
-                            disp_df,
-                            district_df,
-                            loan_df,
-                            order_df,
-                            trans_df)
+1. **Account** (`account_df`): là dữ liệu tài khoản ngân hàng
 
-dm_f <- dm_add_references(
-  dm_f,
-  
-  # loan, order, trans
-  loan_df$account_id == account_df$account_id,
-  order_df$account_id == account_df$account_id,
-  trans_df$account_id == account_df$account_id,
-  # account
-  account_df$district_id == district_df$district_id,
-  # card
-  card_df$disp_id == disp_df$disp_id,
-  # disp
-  disp_df$client_id == client_df$client_id,
-  disp_df$account_id == account_df$account_id,
-  # client
-  client_df$district_id == district_df$district_id
-  )
+2. **Client** (`client_df`): là dữ liệu khách hàng
 
-graph <- dm_create_graph(dm_f, view_type = "keys_only", rankdir = "RL", col_attr = c("column", "type"))
-dm_render_graph(graph)
+3. **Disposition** (`disp_df`): là dữ liệu về cấp độ quyền vận hành tài khoản của các khách hàng
+
+4. **Order** (`order_df`): là dữ liệu về các khoản thanh toán theo kiểu ghi nợ (debit)
+
+5. **Transactions** (`trans_df`): là dữ liệu về các khoản giao dịch của tài khoản
+
+6. **Loans** (`loan_df`): là dữ liệu khoản vay
+
+7. **Credit cards** (`card_df`): là dữ liệu thẻ tín dụng
+
+8. **District** (`district_df`): là dữ liệu thống kê nhân khẩu, vùng miền sinh sống của khách hàng
+
+
+### Diễn giải mối quan hệ
+
+
+Khi làm việc với relational data, chúng ta nên hiểu rõ mối quan hệ giữa các table/data frame bằng cách vẽ ra các diagram. Có nhiều cách để vẽ diagram:
+
++ Đơn giản nhất là có thể lấy giấy bút ra để vẽ.
+
++ Sử dụng 1 số phần mềm như Visio
+
++ Sử dụng 1 số package có sẵn trong R như **datamodelr** ([github](https://github.com/bergant/datamodelr)) hoặc **DiagrammeR** ([website](http://rich-iannone.github.io/DiagrammeR/io.html))
+
++ Sử dụng các công cụ chuyên biệt để vẽ [ERM](https://en.wikipedia.org/wiki/Entity%E2%80%93relationship_model)
+
+```{r, out.width='80%', fig.align='center', fig.cap="Czech Financial Diagram"}
+knitr::include_graphics('images/1-5-czech-financial-diagram.png')
+```
+
+
+Diagram ở trên được vẽ bằng [dbdiagram.io](https://dbdiagram.io/d/5dc920beedf08a25543dc311), là một công vụ vẽ entity-relationship diagram sử dụng code khá hiệu quả. Có thể thấy trong biểu đồ, các mối quan hệ được thể hiện theo kiểu:
+
++ một-một (one-to-one): các đường dẫn sẽ có số $1$ ở hai đầu. Ví dụ: bảng `disp_df` và `client_df` có mối quan hệ một-một vì mỗi dòng ở `disposition` sẽ miêu tả quyền vận hành tài khoản của một client tương ứng. Ngoài ra,  dù một account bình thường có thể  có nhiều khoản vay, nhưng mối quan hệ giữa `account` và `loan` cũng là một-một, tức là trong dataset này một account chỉ có 1 khoản vay:
+
+```{r}
+loan_df %>%
+  count(account_id) %>%
+  filter(n>1)
+```
+
++ một-nhiều (one-to-many): các đường dẫn sẽ có $1$ ở một đầu và dấu $*$ ở đầu còn lại. Ví dụ: giữa `client` và `district`, một district có thể có nhiều client, tức là mối quan hệ district-client là một-nhiều.
+
++ nhiều nhiều (many-to-many): không có trong dataset này
+
+
+### Primary key và foreign key
+
+Các variable dùng để kết nối giữa các table với nhau được gọi là "key" (khóa). Đây là các biến giúp chúng ta nhận diện dữ liệu. Đối với các table trong dataset **Czech Bank Financial**, luôn có 1 hoặc nhiều cột `*_id` đầu tiên đóng vai trò là key. Có 2 loại key trong một bảng:
+
++ Primary key: Khóa chính; giúp nhận diện dữ liệu tại bảng hiện hành:
+
+    + Primary key luôn độc nhất, tức là không có dòng nào lặp lại
+    + Nếu data có sẵn primary key thì đây thường là cột đầu tiên (row names)
+    + Một số dataset có nhiều primary key, tức là có thể phải nốt các variable này với nhau để tạo thành key (ví dụ: first name + last name). Tuy nhiên dataset chúng ta đang sử dụng đã có sẵn cột primary key duy nhất ở đầu.
+
++ Foreign key: Khóa ngoại; giúp nhận diện dữ liệu tại các bảng khác. Ví dụ: variable `district_id` trong bảng `client_df` sẽ giúp nối dữ liệu sang bảng `district_df`, tức là mỗi client sẽ liên kết được đến với một district.
+
+    + Foreign key có thể lặp lại
+    + Primary key ở 1 bảng có thể đóng vai trò làm foreign key ở bảng khác
+
+Sau khi xác định được các key trong dữ liệu, chúng ta nên kiểm tra lại xem các primary key có thực sự độc nhất (unique) không:
+
+```{r}
+account_df %>% 
+  count(account_id) %>% 
+  filter(n > 1)
+```
+
+
+## Hàm `join` trong `dplyr`
+
+
+Các hàm `join` trong `dplyr` sử dụng được với các kiểu dữ liệu data frame (`data.frame`) và tibble (`tbl_df`).
+
+Có 2 kiểu join chính trong `dplyr` là:
+
++ **Mutating joins**: tức là join dữ liệu ở bảng A với bảng B, từ đó bảng A sẽ có thêm các variable mới, gồm các observation khớp với dữ liệu ở bảng B
+
++ **Filtering joins**: tức là lọc dữ liệu ở bảng A dựa trên các kết quả khớp với dữ liệu ở bảng B
+
+Do đây là tài liệu cơ bản nên sẽ chỉ dừng lại ở mutating join, do mảng relational data là một mảng khác rộng và phức tạp.
+
+Có các hàm mutating join sau:
+
+```{r, out.width='80%', fig.align='center', fig.cap="Source: Datacamp"}
+knitr::include_graphics('images/1-5-join-functions.png')
 ```
 
 
