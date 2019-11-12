@@ -40,6 +40,7 @@ Trong phần này, chúng ta sẽ sử dụng (thử) dataset [Czech Bank Financ
 
 [Dữ liệu](https://github.com/truonghm/R01/tree/master/data/czech_financial_formatted) sử dụng dưới đây đã được xử lý cơ bản. Mọi người có thể tải dữ liệu gốc [tại đây](https://github.com/truonghm/R01/tree/master/data/czech_financial_raw), và tham khảo code để xử lý dữ liệu [tại đây](code/czech_financial_cleaning.html).
 
+Dữ liệu này rất phù hợp để giới thiệu về relational data trong R, vì bộ dữ liệu gốc đã có sẵn các cột id đóng vai trò là primary key và foreign key.
 
 ```{r, warning=FALSE, message=FALSE}
 # load data
@@ -88,7 +89,7 @@ Khi làm việc với relational data, chúng ta nên hiểu rõ mối quan hệ
 
 + Sử dụng các công cụ chuyên biệt để vẽ [ERM](https://en.wikipedia.org/wiki/Entity%E2%80%93relationship_model)
 
-```{r, out.width='80%', fig.align='center', fig.cap="Czech Financial Diagram"}
+```{r, echo=FALSE, out.width='80%', fig.align='center', fig.cap="Czech Financial Diagram"}
 knitr::include_graphics('images/1-5-czech-financial-diagram.png')
 ```
 
@@ -116,7 +117,7 @@ Các variable dùng để kết nối giữa các table với nhau được gọ
 
     + Primary key luôn độc nhất, tức là không có dòng nào lặp lại
     + Nếu data có sẵn primary key thì đây thường là cột đầu tiên (row names)
-    + Một số dataset có nhiều primary key, tức là có thể phải nốt các variable này với nhau để tạo thành key (ví dụ: first name + last name). Tuy nhiên dataset chúng ta đang sử dụng đã có sẵn cột primary key duy nhất ở đầu.
+    + Một số dataset có nhiều primary key, tức là có thể phải nối các variable này với nhau để tạo thành key (ví dụ: first name + last name). Tuy nhiên dataset chúng ta đang sử dụng đã có sẵn cột primary key duy nhất ở đầu.
 
 + Foreign key: Khóa ngoại; giúp nhận diện dữ liệu tại các bảng khác. Ví dụ: variable `district_id` trong bảng `client_df` sẽ giúp nối dữ liệu sang bảng `district_df`, tức là mỗi client sẽ liên kết được đến với một district.
 
@@ -132,28 +133,212 @@ account_df %>%
 ```
 
 
-## Hàm `join` trong `dplyr`
+## Hàm join trong `dplyr`
 
 
 Các hàm `join` trong `dplyr` sử dụng được với các kiểu dữ liệu data frame (`data.frame`) và tibble (`tbl_df`).
 
-Có 2 kiểu join chính trong `dplyr` là:
+Các kiểu join chính trong `dplyr` là:
 
 + **Mutating joins**: tức là join dữ liệu ở bảng A với bảng B, từ đó bảng A sẽ có thêm các variable mới, gồm các observation khớp với dữ liệu ở bảng B
 
 + **Filtering joins**: tức là lọc dữ liệu ở bảng A dựa trên các kết quả khớp với dữ liệu ở bảng B
 
-Do đây là tài liệu cơ bản nên sẽ chỉ dừng lại ở mutating join, do mảng relational data là một mảng khác rộng và phức tạp.
++ **Các phép toán tập hợp**: giống như trong toán học, tập hợp dữ liệu có thể áp dụng các phép toán như `union` hay `intersect`
 
-Có các hàm mutating join sau:
 
-```{r, out.width='80%', fig.align='center', fig.cap="Source: Datacamp"}
+### Cách hàm join hoạt động
+
+
+Một hàm join cơ bản có cú pháp `join_function(x, y, by = ...`, với `x` và `y` là 2 data frame. Ví dụ:
+
+```{r}
+account_df %>%
+  left_join(loan_df, by = c("account_id" = "account_id")) %>%
+  head()
+```
+
+Argument `by = c()` nhận vector là tên 2 variable để join với nhau ở mỗi bảng. Trong 2 table `account_df` và `loan_df`, 2 variable này có cùng tên, vì thế thực chất ta có thể rút gọn lại thành:
+
+```{r}
+account_df %>%
+  left_join(loan_df, by = c("account_id")) %>%
+  head()
+```
+
+Thậm chí, ta có thể viết như sau:
+
+```{r}
+account_df %>%
+  left_join(loan_df) %>%
+  head()
+```
+
+3 cách viết trên cho kết quả giống như nhau, và cách cuối cùng là cách mặc định, tức là thực tế `by = NULL`, và **dplyr** sẽ dùng tất cả các variable có xuất hiện ở cả 2 table để join. Khi áp dụng, tốt nhất là nên luôn sử dụng `by = c()` để cho ra kết quả đúng với mong muốn nhất. Trong 2 table chúng ta đang dùng, chỉ có variable `account_id` là xuất hiện ở cả 2.
+
+
+### Các hàm mutating join
+
+
+Có 4 hàm mutating join sau:
+
+```{r, echo=FALSE, out.width='80%', fig.align='center', fig.cap="Source: Datacamp"}
 knitr::include_graphics('images/1-5-join-functions.png')
 ```
 
+
+Các hàm `left_join`, `right_join` và `full_join` được gọi là "outer joins", nghĩa là khi các observation ở bảng này không match được với bảng kia, các variable mới sẽ nhận giá trị `NA`.
+
+Trong phần này, chúng ta sẽ sử dụng thêm 1 ví dụ đơn giản để minh họa:
+
+```{r}
+df1 <- tibble(x = c('meo', 'cho'), y = 2:1)
+df2 <- tibble(x = c('meo', 'ga'), a = 7, b = "a")
+```
+
+
+#### inner join
+
+
+Function `inner_join` chỉ bao gồm các observation có xuất hiện ở cả 2 data frame: 
+
+```{r}
+df1 %>% inner_join(df2, by = "x") %>% knitr::kable()
+```
+
+Có thể thấy observation 'cho' ở `x` không xuất hiện trong kết quả.
+
+Áp dụng với **czech financial**:
+
+
+```{r}
+account_df %>%
+  inner_join(loan_df, by = c("account_id")) %>%
+  head()
+```
+
+
+#### left join
+
+
+Function `left_join` bao gồm tất cả các observation ở `x` (tức là data frame bên trái), cho dù chúng có khớp với `y` (data frame bên phải) hay không. Đây cũng là hàm join được sử dụng phổ biến nhất vì hàm này đảm bảo rằng người dùng giữ nguyên các observation của table chính.
+
+
+```{r}
+df1 %>% left_join(df2, by = "x") %>% knitr::kable(align='c')
+```
+
+
+Các observation ở `x` không match được với `y` sẽ nhận giá trị `NA` tại các variable mới.
+
+
+```{r}
+account_df %>%
+  left_join(loan_df) %>%
+  head()
+```
+
+
+#### right join
+
+`right_join` tương tự với left join, nhưng ngược lại. Function này ưu tiên data frame ở bên phải, khiến vị trí các cột được sắp xếp khác so với kết quả của `left_join`:
+
+```{r}
+df1 %>% right_join(df2, by = "x") %>% knitr::kable(align='c')
+df2 %>% left_join(df1, by = "x") %>% knitr::kable(align='c')
+```
+
+
+#### full join
+
+`full_join` bao gồm tất cả các observation ở 2 dataframe.
+
+```{r}
+df1 %>% full_join(df2) %>% knitr::kable(align='c')
+```
+
+### Các hàm filtering joins
+
+
+Các hàm filtering joins match dữ liệu giống mutating joins, nhưng chỉ ảnh hưởng đến observation, không ảnh hưởng đến variable (tức là không tạo thêm cột mới).
+
+Có 2 hàm filtering joins:
+
++ `semi_join (x, y)` giữ lại tất cả observation trong `x` khớp với `y`
+
++ `anti_join (x, y)` bỏ đi tất cả observation trong `x` khớp với `y`
+
+Giả sử chúng ta muốn tìm ra tất cả những client có sở hữu credit card:
+
+```{r}
+disp_df %>% 
+  semi_join(card_df, by = "disp_id") %>%
+  glimpse()
+```
+
+`disp_df` ban đầu chứa thông tin của 5349 khách hàng, sau đó được lọc ra chỉ còn 892 khách hàng, đúng bằng số observation trong `card_df`.
+
+Ngược lại, ta có thể lọc ra tất cả client **không** sở hữu credit card:
+
+```{r}
+disp_df %>% 
+  anti_join(card_df, by = "disp_id") %>%
+  glimpse()
+```
+
+
+### Các hàm tập hợp
+
+Các hàm tập hợp (set operations) coi observation trong 2 data frame `x` và `y` là 2 tập hợp:
+
++ `intersect(x, y)`: trả về observation chỉ xuất hiện trong `x` và `y`
+
++ `union(x, y)` trả về tất cả observation *không lặp lại* (unique) trong `x` và `y`, tức là nối 2 data frame lại, sau đó bỏ đi observation bị lặp
+
++ `setdiff(x, y)` trả về observation trong `x`, nhưng không có trong `y`
+
+Tạo ra 2 data frame giả định sau:
+
+```{r}
+(df1 <- tibble(x = 1:2, y = c(1L, 1L)))
+(df2 <- tibble(x = 1:2, y = 1:2))
+```
+
+Có 4 cách áp dụng các set operations:
+
+```{r}
+intersect(df1, df2)
+# Kết quả union trả về có 3 dòng, không phải 4 (bỏ dòng lặp)
+union(df1, df2)
+
+setdiff(df1, df2)
+
+setdiff(df2, df1)
+
+```
+
+
+Chúng ta tạo ra 2 data frame giả định `loan_1` và `loan_2`, sử dụng `loan_df`:
+
+```{r}
+loan_1 <- tibble(loan_id = sample(min(loan_df$loan_id):max(loan_df$loan_id),
+                                  size=200,
+                                  replace=TRUE)) %>%
+  inner_join(loan_df, by = "loan_id")
+loan_2 <- tibble(loan_id = sample(min(loan_df$loan_id):max(loan_df$loan_id),
+                                  size=300,
+                                  replace=TRUE)) %>%
+  inner_join(loan_df, by = "loan_id")
+
+# áp dụng intersect
+intersect(loan_1, loan_2)
+```
 
 
 ## Tham khảo
 
 + [Relational data - R for DS](https://r4ds.had.co.nz/relational-data.html)
+
++ [Data wrangling cheatsheet](https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+
 

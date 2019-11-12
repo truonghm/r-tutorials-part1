@@ -50,7 +50,7 @@ Ngôn ngữ R có nguồn gốc từ một ngôn ngữ lập trình khác là [S
 
 Trước đó, S lại thừa hưởng từ một ngôn ngữ khác là [APL](https://en.wikipedia.org/wiki/APL_(programming_language)). APL sử dụng `<-` vì ngôn ngữ này được phát triển trên một cỗ máy có [sử dụng bàn phím chứa nút `<-`](https://en.wikipedia.org/wiki/APL_syntax_and_symbols). Vì vậy, các nhà phát triển đã sử dụng luôn ký hiệu này cho mục đích gán biến ([Tham khảo thêm tại APL Reference Manual](http://www.softwarepreservation.org/projects/apl/Books/APL360ReferenceManual)).
 
-```{r, out.width='50%', fig.align='center', fig.cap="Source: Wikipedia"}
+```{r, echo=FALSE, out.width='50%', fig.align='center', fig.cap="Source: Wikipedia"}
 knitr::include_graphics('images/APL2-nappaimisto.png')
 ```
 

@@ -24,7 +24,7 @@
 <meta name="author" content="Truong Hoang" />
 
 
-<meta name="date" content="2019-11-11" />
+<meta name="date" content="2019-11-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -195,7 +195,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.1.2" data-path="bin-i-d-liu-join.html"><a href="bin-i-d-liu-join.html#din-giai-mi-quan-h"><i class="fa fa-check"></i><b>5.1.2</b> Diễn giải mối quan hệ</a></li>
 <li class="chapter" data-level="5.1.3" data-path="bin-i-d-liu-join.html"><a href="bin-i-d-liu-join.html#primary-key-va-foreign-key"><i class="fa fa-check"></i><b>5.1.3</b> Primary key và foreign key</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="bin-i-d-liu-join.html"><a href="bin-i-d-liu-join.html#ham-join-trong-dplyr"><i class="fa fa-check"></i><b>5.2</b> Hàm <code>join</code> trong <code>dplyr</code></a></li>
+<li class="chapter" data-level="5.2" data-path="bin-i-d-liu-join.html"><a href="bin-i-d-liu-join.html#ham-join-trong-dplyr"><i class="fa fa-check"></i><b>5.2</b> Hàm join trong <code>dplyr</code></a><ul>
+<li class="chapter" data-level="5.2.1" data-path="bin-i-d-liu-join.html"><a href="bin-i-d-liu-join.html#cach-ham-join-hoat-ng"><i class="fa fa-check"></i><b>5.2.1</b> Cách hàm join hoạt động</a></li>
+<li class="chapter" data-level="5.2.2" data-path="bin-i-d-liu-join.html"><a href="bin-i-d-liu-join.html#cac-ham-mutating-join"><i class="fa fa-check"></i><b>5.2.2</b> Các hàm mutating join</a></li>
+<li class="chapter" data-level="5.2.3" data-path="bin-i-d-liu-join.html"><a href="bin-i-d-liu-join.html#cac-ham-filtering-joins"><i class="fa fa-check"></i><b>5.2.3</b> Các hàm filtering joins</a></li>
+<li class="chapter" data-level="5.2.4" data-path="bin-i-d-liu-join.html"><a href="bin-i-d-liu-join.html#cac-ham-tp-hp"><i class="fa fa-check"></i><b>5.2.4</b> Các hàm tập hợp</a></li>
+</ul></li>
 <li class="chapter" data-level="5.3" data-path="bin-i-d-liu-join.html"><a href="bin-i-d-liu-join.html#tham-khao-4"><i class="fa fa-check"></i><b>5.3</b> Tham khảo</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="cu-truc-iu-khin-control-flow.html"><a href="cu-truc-iu-khin-control-flow.html"><i class="fa fa-check"></i><b>6</b> Cấu trúc điều khiển (Control flow)</a><ul>
@@ -246,8 +251,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="cu-truc-iu-khin-control-flow" class="section level1">
 <h1><span class="header-section-number">6</span> Cấu trúc điều khiển (Control flow)</h1>
-<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="cu-truc-iu-khin-control-flow.html#cb180-1"></a><span class="co"># load sẵn tidyverse</span></span>
-<span id="cb180-2"><a href="cu-truc-iu-khin-control-flow.html#cb180-2"></a><span class="kw">library</span>(tidyverse, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="cu-truc-iu-khin-control-flow.html#cb215-1"></a><span class="co"># load sẵn tidyverse</span></span>
+<span id="cb215-2"><a href="cu-truc-iu-khin-control-flow.html#cb215-2"></a><span class="kw">library</span>(tidyverse, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <p>Có 2 kiểu cấu trúc điều khiển (control flow) trong R:</p>
 <ol style="list-style-type: decimal">
 <li>Sử dụng các mệnh đề điều kiện <code>if</code> và <code>switch</code>, trong đó ở phần này, chúng ta sẽ chỉ đề cập đến <code>if</code></li>
@@ -303,8 +308,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="cu-truc-iu-khin-control-flow.html#cb181-1"></a>df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">A=</span><span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">B=</span><span class="dv">5</span><span class="op">:</span><span class="dv">10</span>)</span>
-<span id="cb181-2"><a href="cu-truc-iu-khin-control-flow.html#cb181-2"></a>df</span></code></pre></div>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="cu-truc-iu-khin-control-flow.html#cb216-1"></a>df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">A=</span><span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">B=</span><span class="dv">5</span><span class="op">:</span><span class="dv">10</span>)</span>
+<span id="cb216-2"><a href="cu-truc-iu-khin-control-flow.html#cb216-2"></a>df</span></code></pre></div>
 <pre><code>##   A  B
 ## 1 1  5
 ## 2 2  6
@@ -312,10 +317,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4 4  8
 ## 5 5  9
 ## 6 6 10</code></pre>
-<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="cu-truc-iu-khin-control-flow.html#cb183-1"></a>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="st">`</span><span class="dt">A==3?</span><span class="st">`</span>         =<span class="st">  </span>A <span class="op">==</span><span class="st"> </span><span class="dv">3</span>,</span>
-<span id="cb183-2"><a href="cu-truc-iu-khin-control-flow.html#cb183-2"></a>              <span class="st">`</span><span class="dt">A&lt;=3?</span><span class="st">`</span>         =<span class="st">  </span>A <span class="op">&lt;=</span><span class="st"> </span><span class="dv">3</span>,</span>
-<span id="cb183-3"><a href="cu-truc-iu-khin-control-flow.html#cb183-3"></a>              <span class="st">`</span><span class="dt">A!=3?</span><span class="st">`</span>         =<span class="st">  </span>A <span class="op">!=</span><span class="st"> </span><span class="dv">3</span>,</span>
-<span id="cb183-4"><a href="cu-truc-iu-khin-control-flow.html#cb183-4"></a>              <span class="st">`</span><span class="dt">Not</span><span class="st">`</span> =<span class="st"> </span><span class="op">!</span><span class="st"> `</span><span class="dt">A!=3?</span><span class="st">`</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="cu-truc-iu-khin-control-flow.html#cb218-1"></a>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="st">`</span><span class="dt">A==3?</span><span class="st">`</span>         =<span class="st">  </span>A <span class="op">==</span><span class="st"> </span><span class="dv">3</span>,</span>
+<span id="cb218-2"><a href="cu-truc-iu-khin-control-flow.html#cb218-2"></a>              <span class="st">`</span><span class="dt">A&lt;=3?</span><span class="st">`</span>         =<span class="st">  </span>A <span class="op">&lt;=</span><span class="st"> </span><span class="dv">3</span>,</span>
+<span id="cb218-3"><a href="cu-truc-iu-khin-control-flow.html#cb218-3"></a>              <span class="st">`</span><span class="dt">A!=3?</span><span class="st">`</span>         =<span class="st">  </span>A <span class="op">!=</span><span class="st"> </span><span class="dv">3</span>,</span>
+<span id="cb218-4"><a href="cu-truc-iu-khin-control-flow.html#cb218-4"></a>              <span class="st">`</span><span class="dt">Not</span><span class="st">`</span> =<span class="st"> </span><span class="op">!</span><span class="st"> `</span><span class="dt">A!=3?</span><span class="st">`</span>)</span></code></pre></div>
 <pre><code>##   A  B A==3? A&lt;=3? A!=3?   Not
 ## 1 1  5 FALSE  TRUE  TRUE FALSE
 ## 2 2  6 FALSE  TRUE  TRUE FALSE
@@ -324,17 +329,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 5  9 FALSE FALSE  TRUE FALSE
 ## 6 6 10 FALSE FALSE  TRUE FALSE</code></pre>
 <p>Ngoài các toán tử trên, R còn có các hàm <code>any()</code>, <code>all()</code> và <code>which()</code>. Các hàm này có ý nghĩa đúng như tên gọi:</p>
-<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="cu-truc-iu-khin-control-flow.html#cb185-1"></a><span class="kw">any</span>(<span class="dv">6</span><span class="op">:</span><span class="dv">10</span> <span class="op">&lt;=</span><span class="st"> </span><span class="dv">7</span>)   <span class="co"># Trả về TRUE nếu có bất kì giá trị nào &lt;= 7 (TRUE)</span></span></code></pre></div>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="cu-truc-iu-khin-control-flow.html#cb220-1"></a><span class="kw">any</span>(<span class="dv">6</span><span class="op">:</span><span class="dv">10</span> <span class="op">&lt;=</span><span class="st"> </span><span class="dv">7</span>)   <span class="co"># Trả về TRUE nếu có bất kì giá trị nào &lt;= 7 (TRUE)</span></span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="cu-truc-iu-khin-control-flow.html#cb187-1"></a><span class="kw">all</span>(<span class="dv">6</span><span class="op">:</span><span class="dv">10</span> <span class="op">&lt;=</span><span class="st"> </span><span class="dv">7</span>)   <span class="co"># Trả về TRUE nếu tất cả mọi giá trị đều &lt;= 7 (FALSE)</span></span></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="cu-truc-iu-khin-control-flow.html#cb222-1"></a><span class="kw">all</span>(<span class="dv">6</span><span class="op">:</span><span class="dv">10</span> <span class="op">&lt;=</span><span class="st"> </span><span class="dv">7</span>)   <span class="co"># Trả về TRUE nếu tất cả mọi giá trị đều &lt;= 7 (FALSE)</span></span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="cu-truc-iu-khin-control-flow.html#cb189-1"></a><span class="kw">which</span>(<span class="dv">6</span><span class="op">:</span><span class="dv">10</span> <span class="op">&lt;=</span><span class="st"> </span><span class="dv">7</span>) <span class="co"># Trả về vị trí (index) của những giá trị đáp ứng điều kiện</span></span></code></pre></div>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="cu-truc-iu-khin-control-flow.html#cb224-1"></a><span class="kw">which</span>(<span class="dv">6</span><span class="op">:</span><span class="dv">10</span> <span class="op">&lt;=</span><span class="st"> </span><span class="dv">7</span>) <span class="co"># Trả về vị trí (index) của những giá trị đáp ứng điều kiện</span></span></code></pre></div>
 <pre><code>## [1] 1 2</code></pre>
 <p>Lưu ý: R đếm (index) bắt đầu từ 1, thể hiện qua kết quả của hàm <code>which()</code> ở trên. Trong một số ngôn ngữ khác như Python, index bắt đầu từ 0 (VBA cũng có 1 số chỗ index từ 0).</p>
 <p>Ở phần 1.4 trước đó, chúng ta đã làm quen với <code>%in%</code>, tương tự như hàm <code>IN</code> trong SQL.</p>
-<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="cu-truc-iu-khin-control-flow.html#cb191-1"></a><span class="co"># dùng hàm rep() để repeat các kí tự A B C D</span></span>
-<span id="cb191-2"><a href="cu-truc-iu-khin-control-flow.html#cb191-2"></a>df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Letter =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&#39;A&#39;</span>,<span class="st">&#39;B&#39;</span>,<span class="st">&#39;C&#39;</span>,<span class="st">&#39;D&#39;</span>), <span class="dt">each=</span><span class="dv">2</span>), <span class="dt">Value=</span><span class="dv">1</span><span class="op">:</span><span class="dv">8</span>)</span>
-<span id="cb191-3"><a href="cu-truc-iu-khin-control-flow.html#cb191-3"></a>df</span></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="cu-truc-iu-khin-control-flow.html#cb226-1"></a><span class="co"># dùng hàm rep() để repeat các kí tự A B C D</span></span>
+<span id="cb226-2"><a href="cu-truc-iu-khin-control-flow.html#cb226-2"></a>df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Letter =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&#39;A&#39;</span>,<span class="st">&#39;B&#39;</span>,<span class="st">&#39;C&#39;</span>,<span class="st">&#39;D&#39;</span>), <span class="dt">each=</span><span class="dv">2</span>), <span class="dt">Value=</span><span class="dv">1</span><span class="op">:</span><span class="dv">8</span>)</span>
+<span id="cb226-3"><a href="cu-truc-iu-khin-control-flow.html#cb226-3"></a>df</span></code></pre></div>
 <pre><code>##   Letter Value
 ## 1      A     1
 ## 2      A     2
@@ -344,7 +349,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 6      C     6
 ## 7      D     7
 ## 8      D     8</code></pre>
-<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="cu-truc-iu-khin-control-flow.html#cb193-1"></a>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Letter <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;A&#39;</span>, <span class="st">&#39;B&#39;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="cu-truc-iu-khin-control-flow.html#cb228-1"></a>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Letter <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;A&#39;</span>, <span class="st">&#39;B&#39;</span>))</span></code></pre></div>
 <pre><code>##   Letter Value
 ## 1      A     1
 ## 2      A     2
@@ -359,21 +364,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="if_else-va-case_when" class="section level4">
 <h4><span class="header-section-number">6.2.1.1</span> <code>if_else()</code> và <code>case_when()</code></h4>
 <p>Điểm chung của 2 hàm này là cùng thuộc package <strong>dplyr</strong>, và được tạo ra để làm việc với kiểu dữ liệu vector. Nói chung, 2 hàm này khác nhau không quá nhiều về công dụng (functionality), tuy nhiên qua nhiều thử nghiệm, có thể thấy <code>if_else()</code> nhanh hơn <code>case_when()</code>:</p>
-<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="cu-truc-iu-khin-control-flow.html#cb195-1"></a><span class="co"># Đoạn code này có tham khảo ở rstudio forum, link ở phần tham khảo</span></span>
-<span id="cb195-2"><a href="cu-truc-iu-khin-control-flow.html#cb195-2"></a>microbenchmark<span class="op">::</span><span class="kw">microbenchmark</span>(</span>
-<span id="cb195-3"><a href="cu-truc-iu-khin-control-flow.html#cb195-3"></a>  <span class="kw">case_when</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span> <span class="op">&lt;</span><span class="st"> </span><span class="dv">100</span> <span class="op">~</span><span class="st"> &quot;low&quot;</span>, <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &quot;high&quot;</span>),</span>
-<span id="cb195-4"><a href="cu-truc-iu-khin-control-flow.html#cb195-4"></a>  <span class="kw">if_else</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span> <span class="op">&lt;</span><span class="st"> </span><span class="dv">3</span>, <span class="st">&quot;low&quot;</span>, <span class="st">&quot;high&quot;</span>),</span>
-<span id="cb195-5"><a href="cu-truc-iu-khin-control-flow.html#cb195-5"></a>  <span class="kw">ifelse</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span> <span class="op">&lt;</span><span class="st"> </span><span class="dv">3</span>, <span class="st">&quot;low&quot;</span>, <span class="st">&quot;high&quot;</span>)</span>
-<span id="cb195-6"><a href="cu-truc-iu-khin-control-flow.html#cb195-6"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="cu-truc-iu-khin-control-flow.html#cb230-1"></a><span class="co"># Đoạn code này có tham khảo ở rstudio forum, link ở phần tham khảo</span></span>
+<span id="cb230-2"><a href="cu-truc-iu-khin-control-flow.html#cb230-2"></a>microbenchmark<span class="op">::</span><span class="kw">microbenchmark</span>(</span>
+<span id="cb230-3"><a href="cu-truc-iu-khin-control-flow.html#cb230-3"></a>  <span class="kw">case_when</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span> <span class="op">&lt;</span><span class="st"> </span><span class="dv">100</span> <span class="op">~</span><span class="st"> &quot;low&quot;</span>, <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &quot;high&quot;</span>),</span>
+<span id="cb230-4"><a href="cu-truc-iu-khin-control-flow.html#cb230-4"></a>  <span class="kw">if_else</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span> <span class="op">&lt;</span><span class="st"> </span><span class="dv">3</span>, <span class="st">&quot;low&quot;</span>, <span class="st">&quot;high&quot;</span>),</span>
+<span id="cb230-5"><a href="cu-truc-iu-khin-control-flow.html#cb230-5"></a>  <span class="kw">ifelse</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span> <span class="op">&lt;</span><span class="st"> </span><span class="dv">3</span>, <span class="st">&quot;low&quot;</span>, <span class="st">&quot;high&quot;</span>)</span>
+<span id="cb230-6"><a href="cu-truc-iu-khin-control-flow.html#cb230-6"></a>)</span></code></pre></div>
 <pre><code>## Unit: microseconds
 ##                                            expr   min     lq    mean
-##  case_when(1:1000 &lt; 100 ~ &quot;low&quot;, TRUE ~ &quot;high&quot;) 121.9 158.65 180.224
-##              if_else(1:1000 &lt; 3, &quot;low&quot;, &quot;high&quot;)  37.0  59.40  61.702
-##               ifelse(1:1000 &lt; 3, &quot;low&quot;, &quot;high&quot;) 194.9 214.30 230.365
-##  median    uq   max neval
-##  164.85 181.3 544.8   100
-##   61.25  64.4 155.5   100
-##  216.90 228.0 406.2   100</code></pre>
+##  case_when(1:1000 &lt; 100 ~ &quot;low&quot;, TRUE ~ &quot;high&quot;) 120.8 127.75 170.332
+##              if_else(1:1000 &lt; 3, &quot;low&quot;, &quot;high&quot;)  37.7  39.60  56.928
+##               ifelse(1:1000 &lt; 3, &quot;low&quot;, &quot;high&quot;) 197.0 199.60 250.842
+##  median     uq   max neval
+##  144.50 201.40 378.4   100
+##   41.65  72.35 160.4   100
+##  206.20 287.60 565.4   100</code></pre>
 <p>Như vậy, có thể kết luận là nếu chúng ta chỉ có ý định viết mệnh đề quan hệ với 2 điều kiện <code>TRUE</code> hoặc <code>FALSE</code>, hãy dùng <code>if_else()</code>. Nếu cần dùng nhiều điều kiện, hãy dùng <code>case_when()</code> để code dễ đọc hơn (more readability).</p>
 </div>
 <div id="if_else-va-ifelse" class="section level4">
@@ -384,17 +389,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="mnh-if" class="section level3">
 <h3><span class="header-section-number">6.2.2</span> Mệnh <code>if</code></h3>
 <p>Ngoài các mệnh đề điều kiện ở trên, chúng ta còn có thể dùng hàm <code>if</code> (khác với <code>if_else()</code> hay <code>ifelse()</code>) trong các tình huống cần đánh giá điều kiện phức tạp hơn, và với kiểu dữ liệu scalar (vô hướng, tức là 1 giá trị). Cấu trúc chung của mệnh đề <code>if</code> như sau:</p>
-<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="cu-truc-iu-khin-control-flow.html#cb197-1"></a><span class="co"># Cơ bản</span></span>
-<span id="cb197-2"><a href="cu-truc-iu-khin-control-flow.html#cb197-2"></a><span class="cf">if</span>( kiểm tra điều kiện ){</span>
-<span id="cb197-3"><a href="cu-truc-iu-khin-control-flow.html#cb197-3"></a>  các biểu thức kết quả</span>
-<span id="cb197-4"><a href="cu-truc-iu-khin-control-flow.html#cb197-4"></a>}</span>
-<span id="cb197-5"><a href="cu-truc-iu-khin-control-flow.html#cb197-5"></a></span>
-<span id="cb197-6"><a href="cu-truc-iu-khin-control-flow.html#cb197-6"></a><span class="co"># Bao gồm cả mệnh đề else</span></span>
-<span id="cb197-7"><a href="cu-truc-iu-khin-control-flow.html#cb197-7"></a><span class="cf">if</span>( kiểm tra điều kiện ){</span>
-<span id="cb197-8"><a href="cu-truc-iu-khin-control-flow.html#cb197-8"></a>  các biểu thức kết quả</span>
-<span id="cb197-9"><a href="cu-truc-iu-khin-control-flow.html#cb197-9"></a>}<span class="cf">else</span>{</span>
-<span id="cb197-10"><a href="cu-truc-iu-khin-control-flow.html#cb197-10"></a>  các biểu thức kết quả</span>
-<span id="cb197-11"><a href="cu-truc-iu-khin-control-flow.html#cb197-11"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="cu-truc-iu-khin-control-flow.html#cb232-1"></a><span class="co"># Cơ bản</span></span>
+<span id="cb232-2"><a href="cu-truc-iu-khin-control-flow.html#cb232-2"></a><span class="cf">if</span>( kiểm tra điều kiện ){</span>
+<span id="cb232-3"><a href="cu-truc-iu-khin-control-flow.html#cb232-3"></a>  các biểu thức kết quả</span>
+<span id="cb232-4"><a href="cu-truc-iu-khin-control-flow.html#cb232-4"></a>}</span>
+<span id="cb232-5"><a href="cu-truc-iu-khin-control-flow.html#cb232-5"></a></span>
+<span id="cb232-6"><a href="cu-truc-iu-khin-control-flow.html#cb232-6"></a><span class="co"># Bao gồm cả mệnh đề else</span></span>
+<span id="cb232-7"><a href="cu-truc-iu-khin-control-flow.html#cb232-7"></a><span class="cf">if</span>( kiểm tra điều kiện ){</span>
+<span id="cb232-8"><a href="cu-truc-iu-khin-control-flow.html#cb232-8"></a>  các biểu thức kết quả</span>
+<span id="cb232-9"><a href="cu-truc-iu-khin-control-flow.html#cb232-9"></a>}<span class="cf">else</span>{</span>
+<span id="cb232-10"><a href="cu-truc-iu-khin-control-flow.html#cb232-10"></a>  các biểu thức kết quả</span>
+<span id="cb232-11"><a href="cu-truc-iu-khin-control-flow.html#cb232-11"></a>}</span></code></pre></div>
 </div>
 <div id="tng-hp-lai" class="section level3">
 <h3><span class="header-section-number">6.2.3</span> Tổng hợp lại</h3>
@@ -416,15 +421,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="vong-lp-while" class="section level3">
 <h3><span class="header-section-number">6.3.1</span> Vòng lặp <code>while</code></h3>
 <p>Cấu trúc cơ bản của vòng lặp <code>while</code></p>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="cu-truc-iu-khin-control-flow.html#cb198-1"></a><span class="cf">while</span>( kiểm tra điều kiện ){</span>
-<span id="cb198-2"><a href="cu-truc-iu-khin-control-flow.html#cb198-2"></a>  các biểu thức cần lặp lại</span>
-<span id="cb198-3"><a href="cu-truc-iu-khin-control-flow.html#cb198-3"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="cu-truc-iu-khin-control-flow.html#cb233-1"></a><span class="cf">while</span>( kiểm tra điều kiện ){</span>
+<span id="cb233-2"><a href="cu-truc-iu-khin-control-flow.html#cb233-2"></a>  các biểu thức cần lặp lại</span>
+<span id="cb233-3"><a href="cu-truc-iu-khin-control-flow.html#cb233-3"></a>}</span></code></pre></div>
 <p>R sẽ bắt đầu bằng việc đánh giá điều kiện: Nếu điều kiện đúng, R sẽ thi hành các biểu thức bên trong ngoặc <code>{}</code> một lần. Sau đó, R sẽ lặp lại quá trình này cho đến khi điều kiện không còn đúng nữa.</p>
-<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="cu-truc-iu-khin-control-flow.html#cb199-1"></a>x &lt;-<span class="st"> </span><span class="dv">2</span></span>
-<span id="cb199-2"><a href="cu-truc-iu-khin-control-flow.html#cb199-2"></a><span class="cf">while</span>( x <span class="op">&lt;</span><span class="st"> </span><span class="dv">10</span> ){</span>
-<span id="cb199-3"><a href="cu-truc-iu-khin-control-flow.html#cb199-3"></a>  <span class="kw">print</span>( <span class="kw">paste</span>(<span class="st">&quot;Giá trị của x hiện đang là:&quot;</span>, x) )</span>
-<span id="cb199-4"><a href="cu-truc-iu-khin-control-flow.html#cb199-4"></a>  x &lt;-<span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="co"># tăng thêm 1 vào biến x ~ biểu thức cập nhật biến điều kiện</span></span>
-<span id="cb199-5"><a href="cu-truc-iu-khin-control-flow.html#cb199-5"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="cu-truc-iu-khin-control-flow.html#cb234-1"></a>x &lt;-<span class="st"> </span><span class="dv">2</span></span>
+<span id="cb234-2"><a href="cu-truc-iu-khin-control-flow.html#cb234-2"></a><span class="cf">while</span>( x <span class="op">&lt;</span><span class="st"> </span><span class="dv">10</span> ){</span>
+<span id="cb234-3"><a href="cu-truc-iu-khin-control-flow.html#cb234-3"></a>  <span class="kw">print</span>( <span class="kw">paste</span>(<span class="st">&quot;Giá trị của x hiện đang là:&quot;</span>, x) )</span>
+<span id="cb234-4"><a href="cu-truc-iu-khin-control-flow.html#cb234-4"></a>  x &lt;-<span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="co"># tăng thêm 1 vào biến x ~ biểu thức cập nhật biến điều kiện</span></span>
+<span id="cb234-5"><a href="cu-truc-iu-khin-control-flow.html#cb234-5"></a>}</span></code></pre></div>
 <pre><code>## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 2&quot;
 ## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 3&quot;
 ## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 4&quot;
@@ -439,13 +444,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="vong-lp-for" class="section level3">
 <h3><span class="header-section-number">6.3.2</span> Vòng lặp <code>for</code></h3>
 <p>Vòng lặp <code>for</code> là kiểu vòng lặp phổ biến hơn. Khi dùng <code>for</code>, chúng ta cần biết chính xác số lần chạy vòng lặp. cấu trúc chung của <code>for</code> loop như sau:</p>
-<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="cu-truc-iu-khin-control-flow.html#cb201-1"></a><span class="cf">for</span>( item <span class="cf">in</span> vector ){</span>
-<span id="cb201-2"><a href="cu-truc-iu-khin-control-flow.html#cb201-2"></a>  các biểu thức</span>
-<span id="cb201-3"><a href="cu-truc-iu-khin-control-flow.html#cb201-3"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="cu-truc-iu-khin-control-flow.html#cb236-1"></a><span class="cf">for</span>( item <span class="cf">in</span> vector ){</span>
+<span id="cb236-2"><a href="cu-truc-iu-khin-control-flow.html#cb236-2"></a>  các biểu thức</span>
+<span id="cb236-3"><a href="cu-truc-iu-khin-control-flow.html#cb236-3"></a>}</span></code></pre></div>
 <p>Ví dụ:</p>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="cu-truc-iu-khin-control-flow.html#cb202-1"></a><span class="cf">for</span>(x <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>){</span>
-<span id="cb202-2"><a href="cu-truc-iu-khin-control-flow.html#cb202-2"></a>  <span class="kw">print</span>( <span class="kw">paste</span>(<span class="st">&quot;Giá trị của x hiện đang là:&quot;</span>, x) )</span>
-<span id="cb202-3"><a href="cu-truc-iu-khin-control-flow.html#cb202-3"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="cu-truc-iu-khin-control-flow.html#cb237-1"></a><span class="cf">for</span>(x <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>){</span>
+<span id="cb237-2"><a href="cu-truc-iu-khin-control-flow.html#cb237-2"></a>  <span class="kw">print</span>( <span class="kw">paste</span>(<span class="st">&quot;Giá trị của x hiện đang là:&quot;</span>, x) )</span>
+<span id="cb237-3"><a href="cu-truc-iu-khin-control-flow.html#cb237-3"></a>}</span></code></pre></div>
 <pre><code>## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 1&quot;
 ## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 2&quot;
 ## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 3&quot;
@@ -458,14 +463,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [1] &quot;Giá tr&lt;U+1ECB&gt; c&lt;U+1EE7&gt;a x hi&lt;U+1EC7&gt;n dang là: 10&quot;</code></pre>
 <p>Trong ví dụ này, x sẽ đi lần lượt từng giá trị trong vector <code>c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)</code>, và các biểu thức trong ngoặc <code>{}</code> được thi hành mỗi lần x nhận 1 giá trị.</p>
 <p>Chúng ta có thể dùng vòng lặp <code>for</code> để tạo ra 10 giá trị đầu tiên của dãy số Fibonacci (được định nghĩa là: <span class="math inline">\(F_{n}=F_{n-1}+F_{n-2}\)</span> với <span class="math inline">\(F_{1}=0\)</span> và <span class="math inline">\(F_{2}=1\)</span>) như sau:</p>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="cu-truc-iu-khin-control-flow.html#cb204-1"></a>F &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>, <span class="dv">10</span>)          <span class="co"># tạo ra 1 dãy 10 giá trị NA</span></span>
-<span id="cb204-2"><a href="cu-truc-iu-khin-control-flow.html#cb204-2"></a>F[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">0</span>                 <span class="co"># Đặt giá trị cho F1 và F2</span></span>
-<span id="cb204-3"><a href="cu-truc-iu-khin-control-flow.html#cb204-3"></a>F[<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="dv">1</span>   </span>
-<span id="cb204-4"><a href="cu-truc-iu-khin-control-flow.html#cb204-4"></a></span>
-<span id="cb204-5"><a href="cu-truc-iu-khin-control-flow.html#cb204-5"></a><span class="cf">for</span>( n <span class="cf">in</span> <span class="dv">3</span><span class="op">:</span><span class="dv">10</span> ){         <span class="co"># Vòng lặp đi từ F3</span></span>
-<span id="cb204-6"><a href="cu-truc-iu-khin-control-flow.html#cb204-6"></a>  F[n] &lt;-<span class="st"> </span>F[n<span class="dv">-1</span>] <span class="op">+</span><span class="st"> </span>F[n<span class="dv">-2</span>] </span>
-<span id="cb204-7"><a href="cu-truc-iu-khin-control-flow.html#cb204-7"></a>  <span class="kw">print</span>(F)                <span class="co"># in ra quá trình sau mỗi lần tính</span></span>
-<span id="cb204-8"><a href="cu-truc-iu-khin-control-flow.html#cb204-8"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="cu-truc-iu-khin-control-flow.html#cb239-1"></a>F &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>, <span class="dv">10</span>)          <span class="co"># tạo ra 1 dãy 10 giá trị NA</span></span>
+<span id="cb239-2"><a href="cu-truc-iu-khin-control-flow.html#cb239-2"></a>F[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">0</span>                 <span class="co"># Đặt giá trị cho F1 và F2</span></span>
+<span id="cb239-3"><a href="cu-truc-iu-khin-control-flow.html#cb239-3"></a>F[<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="dv">1</span>   </span>
+<span id="cb239-4"><a href="cu-truc-iu-khin-control-flow.html#cb239-4"></a></span>
+<span id="cb239-5"><a href="cu-truc-iu-khin-control-flow.html#cb239-5"></a><span class="cf">for</span>( n <span class="cf">in</span> <span class="dv">3</span><span class="op">:</span><span class="dv">10</span> ){         <span class="co"># Vòng lặp đi từ F3</span></span>
+<span id="cb239-6"><a href="cu-truc-iu-khin-control-flow.html#cb239-6"></a>  F[n] &lt;-<span class="st"> </span>F[n<span class="dv">-1</span>] <span class="op">+</span><span class="st"> </span>F[n<span class="dv">-2</span>] </span>
+<span id="cb239-7"><a href="cu-truc-iu-khin-control-flow.html#cb239-7"></a>  <span class="kw">print</span>(F)                <span class="co"># in ra quá trình sau mỗi lần tính</span></span>
+<span id="cb239-8"><a href="cu-truc-iu-khin-control-flow.html#cb239-8"></a>}</span></code></pre></div>
 <pre><code>##  [1]  0  1  1 NA NA NA NA NA NA NA
 ##  [1]  0  1  1  2 NA NA NA NA NA NA
 ##  [1]  0  1  1  2  3 NA NA NA NA NA
