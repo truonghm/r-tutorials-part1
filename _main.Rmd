@@ -1,0 +1,2107 @@
+--- 
+title: "Giới thiệu ngắn gọn về ngôn ngữ R - Phần 1"
+author: "Truong Hoang"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+github-repo: truonghm/R01
+description: ""
+---
+
+
+# Mở đầu {-}
+
+These documents are my personal notes for the R language. They will be brief, enough to get going with data analysis and statistics. These notes will be in both English and Vietnamese (and obviously predominantly Vietnamese), because of multiple reasons that I'm still too lazy to list here (but I will come back later). The language also tends to be casual and colloquial, not formal, because this is not a textbook. 
+
+Tài liệu chia ra làm 2 phần (đây sẽ là phần 1): phần 1 giới thiệu R ở mức độ cơ bản và bỏ qua 1 số chi tiết phức tạp hơn, nhưng vẫn cố gắng giải thích đi sâu nhất có thể (ví dụ như logic phía sau của 1 function); phần 2 sẽ đi sâu hơn về R nhưng vẫn dừng ở mức ngắn gọn và đầy đủ nhất có thể (data structures, user-defined functions, string manipulation, date & time, more advanced `dplyr`, automation, `apply`, functional programming with `purrr`, etc).
+
+
+## Disclaimer {-}
+
+1. I have no formal education in programming or mathematics.
+
+2. Mình không phải chuyên gia về R; thực tế là trong quá trình viết tài liệu, mình cũng phải tự đọc và nghiên cứu thêm rất nhiều. Vì vậy mới nói đây sẽ là personal notes nhằm phục vụ cho việc học của chính mình là trên hết. Hiện tại mình chưa biết cách dùng citation trong R Markdown/bookdown, tuy nhiên mình sẽ luôn bao gồm thêm 1 mục tham khảo ở cuối mỗi chương để trích dẫn các nguồn mà mình sử dụng trong bài và cung cấp tài liệu đọc thêm.
+
+
+## Outline draft {-}
+
+1. **Các mảng kiến thức chính**
+
+    1.1. *Làm quen với R* - 100%  
+        1.1.1. Sử dụng R để tính toán cơ bản (và giới thiệu về function)  
+        1.1.2. Gán biến (assignment)  
+        1.1.3. Vectors  
+        1.1.4. Các gói thư viện (packages)  
+        1.1.5. Tìm kiếm câu trả lời  
+        1.1.6. Workflow trong R  
+        1.1.7. Tham khảo
+    1.2. *Data frame* - 95%  
+        1.2.1. Nhập dữ liệu (import data)  
+        1.2.2. Các loại dữ liệu (value type)  
+        1.2.3. Truy vấn dữ liệu cơ bản  
+        1.2.4. Tham khảo  
+    1.3. *Vẽ biểu đồ* - 60%  
+        1.3.1. Các loại biểu đồ cơ bản  
+        1.3.2. Tiêu đề và đặt tên trục  
+        1.3.3. Dán nhãn dữ liệu (annotation)  
+        1.3.4. Facet
+        1.3.5. Tổng hợp thuật ngữ  
+        1.3.6. Tham khảo  
+    1.4. *Biến đổi dữ liệu (wrangling)* - 100%  
+        1.4.1. Giới thiệu chung  
+        1.4.2. Các verb trong dplyr  
+        1.4.3. Basic transformation  
+        1.4.4. Ví dụ thêm  
+        1.4.5. Tham khảo  
+    1.5. *Biến đổi dữ liệu phần 2* - 90%  
+    1.6. *Control flow (giới thiệu về if-else, for-loop, etc.)* - 90%  
+
+2. **Misc**
+
+    2.1. *FAQs*  
+    2.2. Tricks  
+        2.2.1. Kết nối với SQL server  
+        2.2.2. Liệt kê các file trong thư mục  
+        2.2.3. apply/lappy/sapply/tapply  
+        2.2.4. Tương tác với Excel  
+        2.2.5. Làm presentation  
+        2.2.6. Some basic string manipulation functions
+        2.2.7. Some basic stats functions
+        
+    
+
+## To-do {-}
+
+1. Hoàn thành tất cả trước 20191031
+2. Bổ sung về projects trong phần Workflow 1.1.6
+3. Hoàn thành phần 1.3
+4. Bổ sung ví dụ về import data mục 1.2.1
+5. Bổ sung về ví dụ `if` trong 1.5.1.3
+6. Tự tạo dummy data để làm ví dụ
+7. Bổ sung  thêm chương wrangling nâng cao (giới thiệu các loại join)
+
+
+## General resources {-}
+
++ [R for Data Science - Hadley Wickham](https://r4ds.had.co.nz)
++ [R Markdown: Thhe Definitive Guide - Yihui Xie](https://bookdown.org/yihui/rmarkdown/)
++ [bookdown: Authoring Books and Technical Documents with R Markdown - Yihui Xie](https://bookdown.org/yihui/bookdown/)
++ [Git and RStudio](https://resources.github.com/whitepapers/github-and-rstudio/)
++ [Advaned R - Hadley Wickham](https://adv-r.hadley.nz/)
+
+
+
+<!--chapter:end:index.Rmd-->
+
+# (PART\*) Giới thiệu chung {-}
+
+# Làm quen với R
+
+
+```{r, echo=FALSE}
+# Reset môi trường
+rm(list = ls())
+pkgs = names(sessionInfo()$otherPkgs)
+if( length(pkgs > 0)){
+  pkgs = paste('package:', pkgs, sep = "")
+  for( i in 1:length(pkgs)){
+    detach(pkgs[i], character.only = TRUE, force=TRUE)
+  }
+}
+```
+
+R là một ngôn ngữ lập trình open-source (mã nguồn mở) thường được sử dụng trong xác suất thống kê và phân tích dữ liệu. Ngôn ngữ R hoàn toàn miễn phí, có thể cài đặt và sử dụng trên hầu hết mọi hệ điều hành, và có thể tải xuống từ [www.r-project.org](www.r-project.org). R được tạo ra bởi những người học và làm về thống kê, và được tập trung rất kĩ vào mục đích này.
+
+Sau khi cài đặt R từ đường link trên, người dùng có thể sử dụng ngôn ngữ này ngay lập tức từ R-GUI (giao diện GUI của R), tuy nhiên giao diện này khá thô sơ. Tốt nhất, người dùng nên cài thêm RSudio (tải xuống từ [rstudio.com](http://www.rstudio.org)). RStudio là 1 **IDE** (Integrated Development Environment) có thể cài trên Windows và Mac, và là IDE phổ biến nhất để lập trình R.
+
+R chạy được dựa trên các script (tập lệnh), và không có giao diện dùng trỏ chuột như SAS/Stata/SPSS, vì vậy việc học R ban đầu sẽ khó hơn. Tuy nhiên, nhờ workflow dựa vào các script và project, người dùng sẽ dễ dàng chia sẻ code R cho người khác hơn, vì người đó có thể dựng lại hoàn toàn quy trình nghiên cứu/phân tích trong R bằng các script/project này.
+
+RStudio có 4 cửa sổ chính như sau:
+
++ Góc trên bên trái: Script
++ Góc dưới bên trái: console
++ Góc trên bên phải: Environment/History/Connections
++ Góc dưới bên phải: Files/Plots/Help (3 cái này quan trọng nhất)
+
+
+## Tính toán cơ bản trong R
+
+R có thể sử dụng để tính toán cơ bản bằng cách chạy code từ console (cửa sổ mặc định bên dưới, tay trái trong RStudio, gõ code từ dấu ```>```) như sau:
+
+```{r}
+# phép cộng
+173+179
+# phép trừ
+173-179
+# phép nhân
+179*173
+#phép chia
+179/173
+```
+
+Tương tự với các phép tính phức tạp hơn:
+
+```{r}
+17^9
+exp(1)  # exponetial function - hàm mũ
+pi   # 3.14159265...
+sin(0) 
+log(5) # nếu không chỉ định rõ cơ số, R sẽ lấy cơ số là e
+log(5, base=10)  # base 10
+```
+
+Các function trong R khi được gọi ra luôn có các argument (tham số, viết tắt là arg), trong số một số arg là bắt buộc, một số không, và các arg được tách biệt bằng dấu phẩy. Trong ví dụ trên, hàm log yêu cầu tối thiểu 1 arg là giá trị để lấy giá trị nghịch đảo lũy thừa. Arg ```base``` là tham số không bắt buộc, và nếu không chỉ rõ, R sẽ dùng giá trị mặc định (default value) được định nghĩa sẵn trong hàm, ở trường hợp này là $e$. Người dùng có thể đọc thêm về hàm ```log``` bằng cách gõ ```help(log)``` hoặc ```?log``` ở console. Phần giải thích (documentation) sẽ hiện ra ở cửa sổ góc dưới bên phải.
+
+Trong trường hợp của hàm log, 2 arg đầu tiên (và duy nhất) là:
+
++ x: a numeric or complex vector -> giá trị lấy logarit
+
++ base: a positive or complex number: the base with respect to which logarithms are computed. Defaults to e=exp(1) -> cơ số
+
+Các arg có thứ tự được định nghĩa sẵn theo hàm. Nếu người dùng không chỉ rõ tên của arg, ví dụ: ```base=10```, R sẽ tự hiểu giá trị đưa vào hàm đầu tiên là cho ```x```, giá trị thứ 2 là cho ```base```.
+
+```{r}
+log(3, 10)
+log(10, 3)
+```
+
+Nếu có chỉ rõ tên của arg, thứ tự đưa vào hàm không còn quan trọng nữa:
+
+```{r}
+log(x=3, base=10)
+log(base=10, x=3)
+```
+
+Chú ý: khi đặt giá trị cho tham số, phải sử dụng cú pháp ```arg_name=value```, không phải ngược lại. Đồng thời, dấu ```=``` trong trường hợp này được sử dụng để gán giá trị tạm thời, vì vậy không sử dụng dấu ```<-``` (sẽ nói ở phần sau).
+
+
+## Gán biến (Assignment)
+
+R sử dụng ```<-``` và ```=``` để gán biến (assign value to a variable). Hai cách gán biến này khác nhau như sau (trích từ [nguồn](https://stat.ethz.ch/R-manual/R-patched/library/base/html/assignOps.html)):
+
+    The operators <- and = assign into the environment in which they are evaluated. The operator <- can be used anywhere, whereas the operator = is only allowed at the top level (e.g., in the complete expression typed at the command prompt) or as one of the subexpressions in a braced list of expressions.
+    
+Bạn đọc vui lòng google để hiểu rõ hơn = )). Tuy nhiên, bài học rút ra là: chỉ sử dụng dấu bằng ```=``` để khai báo tham số trong hàm, còn các trường hợp gán biến khác thì luôn dùng ```<-```.
+
+Tên hàm không thể bắt đầu bằng số, không được bao gồm khoảng trống, và có phân biệt giữa viết hoa và viết thường (case-sensitive).
+
+```{r}
+test_var <- 100
+```
+
+Biến đã được khai báo sẽ hiện ra ở phần Environment (góc trên bên phải).
+
+
+## Vector
+
+Vector là một phần tất yếu trong R, và cũng là một trong những thứ khiến R có khả năng khai phá dữ liệu cực kì mạnh mẽ. Trong R, mọi thứ đều là một vector. Ví dụ, khi chúng ta khai báo ```x <- 7``` hoặc ```x = 7```, R sẽ hiểu rằng x đã nhận một vector có độ dài bằng 1. Tuy nhiên, các ngôn ngữ khác sẽ chỉ hiểu biến ```x``` đã nhận giá trị 7 mà thôi.
+
+Để tạo 1 vector, ta sử dụng hàm ```c()```:
+
+```{r}
+x <- c(1,7,9)
+y <- c(1,7,3)
+```
+
+Ở phần 1.1, khi chúng ta dùng R để tính toán phép cộng của 2 giá trị, thực chất R đã làm phép cộng giữa 2 vector có độ dài = 1. Như vậy, hoàn toàn có thể lấy 2 biến ```x``` và ```y``` vừa gán ở trên để làm phép cộng.
+
+```{r}
+x <- c(1,7,9)
+y <- c(1,7,3)
+x+y
+```
+
+Tương tự, có thể áp dụng với hàm ```log```:
+
+```{r}
+log(c(1,2,3), base=10)
+```
+
+R còn có thể tạo ra vector là dãy số nguyên liên tục bằng cách viết ```A:B``` để tạo vector bắt đầu từ A, tăng 1 dần đều và kết thúc ở B:
+
+```{r}
+1:7
+```
+
+Vì tính chất "vectorized" này của R, việc sử dụng vòng lặp (như `for loop`) giống trong 1 số ngôn ngữ khác (như VBA) là gần như không cần thiết, có thể khiến code chậm đi, trừ trong những trường hợp đặc biệt (sẽ lấy ví dụ sau).
+
+
+## Các gói thư viện (packages)
+
+Giống 1 số ngôn ngữ khác như Python, người dùng R có thể cài đặt thêm các thư viện bổ sung (gọi là package hoặc library) để thực hiện các công việc phức tạp hơn. Một trong số những package phổ biến nhất là ```dplyr```, nằm trong nhóm các thư viện ```tidyverse```. ```tidyverse``` cho phép người dùng khai phá dữ liệu mạnh mẽ và tiện dụng hơn, cũng như rất dễ học. Người ta thường gọi R cơ bản là **base R**, để phân biệt với **tidyverse R**. Tác giả của ```tidyverse``` là [Hadley Wickham](http://hadley.nz/), và người dùng R có thể tham khảo thêm cuốn [R for Data Science](https://r4ds.had.co.nz/data-visualisation.html) cũng có tác giả là Hadkey để hiểu hơn về ```tidyverse```.
+
+Các package được cài đặt bằng cách vào menu `Tools -> Install Packages...`, hoặc gõ hàm ```install.packages()``` vào console. Nếu muốn cài đặt nhiều package cùng 1 lúc, ta có thể dùng thêm hàm ```c()```:
+
+```{r, eval=FALSE}
+install.packages(c('dplyr', 'ggplot2'))
+```
+
+Ngoài các thư viện để bổ sung hàm mới, một số package còn cung cấp cho người dùng các bộ dữ liệu mẫu để phục vụ việc học và thí nghiệm, ví dụ như package ```nycflights13```
+
+```{r}
+library(nycflights13)
+head(flights,10)
+```
+
+
+## Tìm kiếm câu trả lời
+
+Khi lập trình, chúng ta có thể gặp phải những từng huống mà chưa ai gặp bao giờ, hoặc không có trong sách vở. Vì vậy, đặc biệt là khi tự học, việc tự tìm tòi từ nhiều nguồn là rất cần thiết.
+
+
+### Documentation của R
+
+Mọi ngôn ngữ lập trình đều có một **documentation**, ghi chép lại đầy đủ ý nghĩa của từng hàm, cách sử dụng và cả ví dụ. Vì vậy, khi không hiểu một hàm nên dùng như thế nào, việc đầu tiên là tra cứu documentation có sẵn bằng cách gõ ```help(tên_hàm)``` hoặc ```?tên_hàm``` vào console. Phần giải thích sẽ hiện ra ở cửa sổ góc dưới bên phải, mục **Help**, trong đó thường có các phần:
+
++ Description: Miêu tả hàm
++ Usage: Ví dụ
++ Arguments: Các tham số và giải thích
++ Details: giải thích cụ thể các tham số
+
+Và 1 số mục khác.
+
+Ngoài ra, bạn hoàn toàn có thể sử dụng Google để tra cứu chính bản documentation này ở trên mạng.
+
+Ngoài các hàm, documentation cũng có cả giải thích cho các package. Tuy nhiên, phần giải thích này có thể không đầy đủ, và lúc đấy, bạn nên chuyển sang dùng Google, với từ khóa như "R package ABCD".
+
+Chú ý, documentation đã được cài sẵn (built-in) theo R, vì vậy không cần kết nối với internet để sử dụng.
+
+
+### Stackoverflow
+
+Đối với các vấn đề cụ thể khác, bạn có thể sử dụng Google để tìm kiếm, và thường các kết quả đầu tiên trả về sẽ đến từ trang **Stackoverflow**. Khi đọc câu trả lời ở đây, tốt nhất bạn nên dành thời gian và hiểu rõ đoạn code có sẵn, thay vì copy về để sử dụng luôn. Ngoài ra, khi copy code về, hãy comment lại phía trên (sử dụng dấu thăng ```#``` ở đầu) nguồn gốc của code để sau này khi kiểm tra/debug, có thể dễ dàng tra cứu nguồn gốc.
+
+```{r}
+# ví dụ về comment
+```
+
+
+## Workflow cơ bản trong R
+
+Trong các phần trên, chúng ta chủ yếu lấy ví dụ bằng cách nhập code trực tiếp vào console và đưa ra kết quả ngay sau mỗi dòng lệnh. Việc này cũng không khác sử dụng máy tính bỏ túi, vốn không tiện lợi cho lắm.
+
+Để khiến việc sử dụng R dễ dàng và hiệu quả hơn, chúng ta có thể sử dụng R script, R Markdown hoặc R Notebook, trong đó hai định dạng phổ biến nhất là Script và Markdown (Tài liệu này cũng được soạn thảo bằng R Markdown).
+
+R Script là một dạng "văn bản" để lưu lại các câu lệnh đã soạn thảo, sau đó chúng ta có thể chạy (run) toàn bộ script này để đưa ra kết quả cuối cùng, thay vì chạy từng dòng lệnh từ console, hoặc thậm chí chạy từng phần một của script. Tuy nhiên, R Script chỉ có thể lưu chữ được code và các comment đi kèm, và không có khả năng trình bày, phân tách để tạo ra báo cáo/nghiên cứu hoàn chỉnh. Vì vậy R Script phù hợp với các quy trình làm việc/nghiên cứu nội bộ, không cần trình bày/xuất bản ra ngoài.
+
+```{r, eval=FALSE}
+# ví dụ về comment: có thể dùng để giải thích ý nghĩa đoạn code ở dưới
+# nguồn tham khảo của code
+# ghi chú khác
+x <- 1+1*2-3/4
+```
+
+R Markdown là một dạng của ngôn ngữ Markdown (Đọc thêm về Markdown ở [wiki](https://en.wikipedia.org/wiki/Markdown)). Ở đây mình sẽ không giải thích cụ thể về R Markdown (tham khảo tại [website của RStudio](https://rmarkdown.rstudio.com/lesson-1.html)), chỉ nêu ra 1 số điểm lợi như sau:
+
++ Biến code và phân tích thành một văn bản/báo cáo/thuyết trình có trình bày sạch đẹp, bao gồm cả bảng biểu/dashboard.
++ Có thể xuất ra nhiều định dạng (PDF, HTML, Word, website như tài liệu này, etc.)
++ Có thể tích hợp nhiều ngôn ngữ như R, Python, SQL.
++ Kết hợp cả code, comment, phân tích, biểu đồ trong cùng 1 văn bản.
+    
+Điểm bất cập duy nhất của R Mả là khó sử dụng hơn script, vì vậy chúng ta sẽ không đề cập đến R Mả quá nhiều. Tuy nhiên, học cách sử dụng R Mả là rất quan trọng để đi lên một tầm cao mới trong nghiên cứu và làm việc. 
+    
+    
+### R Script (file đuôi *.R)
+
+Định dạng script truyền thống được tạo ra bằng cách vào menu `File -> New File -> R Script` trong RStudio. Một cửa sổ mới được mở ra trong RStudio và bạn có thể gõ các hàm vào giống như đang sử dụng Word hoặc Notepad.
+
++ Để chạy dòng lệnh hiện tại (có trỏ chuột/cursor ở dòng đó), ấn nút `Run` ở góc trên phải bên cửa sổ script, hoặc dùng phím tắt `Ctrl+Enter` (trên Windows). Ngoài ra, bạn có thể chọn (highlight) một đoạn code rồi ấn `Run` hoặc `Ctrl+Enter` để chạy riêng đoạn đó.
++ Để chạy toàn bộ cả script, ấn nút `Source`, hoặc highlight (`Ctrl+A`) toàn bộ code rồi dùng `Ctrl+Enter`.
+
+Thông thường một R Script sẽ nhìn như thế này: 
+
+```{r, eval=FALSE}
+# ví dụ về comment: có thể dùng để giải thích ý nghĩa đoạn code ở dưới
+# nguồn tham khảo của code
+# ghi chú khác
+x <- c(1:50)
+
+# vẽ biểu đồ
+plot(x, exp(x))
+```
+
+Có thể thấy, đoạn code trên bao gồm 1 số comment giải thích và cuối cùng là một hàm để vẽ biểu đồ. Tuy nhiên, biểu đồ này không được bao gồm luôn trong script mà người dùng phải chạy lại toàn bộ script mỗi lần mở lên xem. Ngoài ra, việc trình bày và giải thích với comment khá rối mắt và luôn phải kèm theo ký tự ```#```.
+
+
+### R Markdown (file đuôi *.Rmd)
+
+Thông thường khi làm báo cáo hoặc viết bài nghiên cứu, chúng ta phải tính toán và vẽ biểu đồ trong các phần mềm thống kê, sau đó copy kết quả sang Word hoặc Powerpoint. Việc này khá tốn thời gian và dễ gây nhầm lẫn, trong khi R Markdown có thể vừa giúp chúng ta làm các phân tích trong R, vừa xuất ra kết quả nhanh chóng bằng dạng văn bản.
+
+Để tạo văn bản R Markdown, vào menu `File -> New File -> R Markdown...` của RStudio. Tham khảo thêm về R Markdown ở mục **Tham khảo**
+
+
+### R Project (file đuôi *.Rproj)
+
+Chưa nghĩ ra nên viết gì!!
+
+
+## Tham khảo
+
++ [Website của R Markdown](https://rmarkdown.rstudio.com/).
++ [R Markdown: Thhe Definitive Guide - tác giả của cuốn sách này cũng là đồng tác giả của R Markdown](https://bookdown.org/yihui/rmarkdown/).
++ [Trang GitHub của R Markdown](https://github.com/rstudio/rmarkdown).
+
+*Hết chương 1!!!!!!!!!!!!!*
+
+<!--chapter:end:01_Intro.Rmd-->
+
+
+```{r, echo=FALSE}
+# Reset môi trường
+rm(list = ls())
+pkgs = names(sessionInfo()$otherPkgs)
+if( length(pkgs > 0)){
+  pkgs = paste('package:', pkgs, sep = "")
+  for( i in 1:length(pkgs)){
+    detach(pkgs[i], character.only = TRUE, force=TRUE)
+  }
+}
+```
+
+
+
+
+
+
+# Data frame
+
+Data frame là một loại dữ liệu dạng bảng (tabular data), hay còn gọi là data frames trong R. Về khái niệm, data frame giống như một sheet trong Excel, với nhiều cột và dòng, trong đó mỗi cột đại diện cho 1 trường có cùng kiểu dữ liệu, và mỗi dòng là một observation (bản ghi hoặc quan sát). Các tính chất của data frame: 
+
++ Tên cột không được trống (dòng header đầu tiên). Như vậy, khi truy cập đến các cột trong code, chúng ta sẽ gọi tên thay vì gọi số thứ tự của cột giống như trong Excel (cột A hoặc cột 1).
+
++ Tên dòng không được lặp lại.
+
++ Kiểu dữ liệu (value type) trong cột phải là character, numeric hoặc factor (sẽ nhắc đến sau).
+
++ Độ dài của các cột (số obs) phải bằng nhau.
+
++ Khi đặt tên (assign) cho data frame, chúng ta sẽ coi đây là 1 object (đối tượng) và không dùng thuật ngữ biến/variable.
+
+
+## Import dữ liệu cơ bản
+
+
+### Từ package
+
+Trong khi tự học R, nhiều giáo trình (như [R for Data Science - Hadley Wickham](https://r4ds.had.co.nz)) sẽ mở đầu bằng các bộ dữ liệu từ các package. Trong tài liệu này, chúng ta sẽ sử dụng package `nycflights13` để làm mẫu.
+
+```{r, eval=FALSE}
+install.packages('nycflights13')
+```
+
+Có 2 cách cơ bản để import dữ liệu từ package như sau:
+
++ **Load toàn bộ package chứa dữ liệu** bằng hàm ```library()```, khi đó dữ liệu cũng sẽ được import theo. Lưu ý, khi dùng hàm ```library()```, không cần dùng dấu chấm phẩy để gọi tên package giống như hàm ```install.packages()```.
+
+```{r}
+library(nycflights13)
+# Xem thử 10 dòng đầu tiên của bộ dữ liệu 'flights'
+head(flights,10)
+```
+
++ **Load riêng dữ liệu cần thiết thay vì load cả package**, giúp tiết kiệm bộ nhớ. Hàm ```data()``` nhận các arg dưới dạng `string`, vì vậy cần dấu chấm phẩy.
+
+```{r}
+data('flights', package = 'nycflights13')
+head(flights,10)
+```
+
+Có thể thấy ở trên, ngoài 2 hàm ```library()``` và ```data()```, chúng ta còn dùng hàm ```head()``` để xem một số lượng nhất định dòng đầu tiên của data frame. Ngoài ra, chúng ta cũng có thể xem toàn bộ data frame này bằng cách dùng hàm ```View()``` (lưu ý có viết hoa chữ V đầu tiên).
+
+```{r,eval=FALSE}
+View(flights)
+```
+
+Tương tự, khi chúng ta truy cập sửa sổ `Environment` ở góc trên bên phải, các data frame đã được import cũng hiện ra. Khi đưa trỏ chuột chọn 1 data frame, R cũng ngầm thực hiện hàm ```View()``` và sau đó một  cửa sổ mới hiện ra thể hiện toàn bộ data frame. 
+
+
+### Import từ Excel, file csv hoặc file txt
+
+Trong thực tế, dữ liệu thường xuyên được chia sẻ và lưu trữ ở các dạng .csv, .txt hoặc trong file Excel (.xls và .xlsx). 
+Khi mở các loại file này ở bên ngoài (ví dụ trong Excel hoặc 1 text editor nào đó), ta có thể thấy dòng đầu tiên thường là tên cột (dòng header).
+
+Khi sử dụng RStudio, chúng ta có thể  dùng chức năng `Import Dataset` ở cửa sổ `Environment` hoặc qua menu `File -> Import Dataset`, tuy nhiên cách làm này thủ công và không đáp ứng được tính năng "reproducible", vì khi chia sẻ code cho người khác, họ sẽ lại phải import data thủ công lại thay vì chỉ cần chạy code.
+
+Thay vào đó, chúng ta có thể sử dụng 1 số hàm sau (Lưu ý cách viết ```tên_package::tên_function``` là để tránh phải load toàn bộ package ra và chỉ gọi thằng function):
+
++ dùng hàm ```readxl::read_excel()```: hàm này có các argument quan trọng nhất là `path` (đường dẫn đến file), `sheet` (chọn sheet muốn import). Ngoài ra số số arg khác như `col_names`, `col_types`, `trim_ws` cũng khá hữu ích, có thể tham khảo thêm thông qua ```?read_excel```.
+
++ dùng hàm ```readr::read_csv()```: tương tự như ```read_excel```, hàm ```read_csv``` cũng có argument `file` (đường dẫn). Hàm này được sử dụng để import file csv. Lưu ý: `read_csv()` không hỗ trợ row names, nên có lúc import dữ liệu vào sẽ tự động thêm 1 cột row names đầu tiên.
+
++ dùng hàm ```readr::read_delim()```: hàm này được sử dụng để import file txt; chữ "delim" trong tên hàm là viết tắt của từ "delimiter": nếu bất kì ai đã từng sử dụng chức năng **Import from text** trong Excel sẽ hiểu nghĩa từ này. Các argument quan trọng: `file` (đường dẫn), `delim` (delimiter: kí hiệu tách cột, ví dụ đối với file csv mặc định là dấu phẩy).
+
+
+## Các loại dữ liệu (Value type)
+
+Data frame trong R yêu cầu mỗi cột có chung một loại dữ liệu thống nhất. Ví dụ, trong cột "Năm sinh", tất cả dữ liệu phải thuộc dạng số. Dưới đây là các loại dữ liệu thông dụng trong R:
+
+1. **Integers** (Số nguyên): Là các số $\left(\dots,-2,-1,0,1,2,\dots\right)$. Để chuyển đổi dữ liệu loại khác sang số nguyên, dùng hàm ```as.integer()```.
+
+2. **Numeric**: là bất kì loại số nào, kể cả số thập phân. Để chuyển đổi dữ liệu loại khác sang kiểu numeric, dùng hàm ```as.numeric()```.
+
+3. **String**: Tương ứng với kiểu dữ liệu "Text" trong Excel; là chuỗi các kí tự bất kì, thậm chí có thể là số nhưng được lưu trữ ở dạng string. Dữ liệu kiểu string có thể là tên người, username, password, etc. Sử dụng hàm ```as.character()``` để chuyển đổi.
+
+4. **Factor**: Là kiểu dữ liệu string nằm trong nhóm hữu hạn các giá trị cho trước. Thông thường factor còn được hiểu là biến nhóm (categorical values), tuy nhiên trong R chúng ta sẽ sử dụng thuật ngữ "Factor". Ví dụ: giới tính (nam, nữ), điểm (A, B, C, E, D, F). Sử dụng hàm ```as.factor()``` để chuyển đổi.
+
+5. **Logical**: Là loại dữ liệu factor đặc biệt, chỉ gồm 2 giá trị `TRUE` và `FALSE`. Dùng hàm `as.logical()` để convert `0` thành `FALSE` và mọi giá trị số còn lại thành `TRUE`.
+
+Thông thường, khi import dữ liệu, R sẽ tự động đặt kiểu giá trị cho data frame, tuy nhiên nên sử dụng argument `col_types` để tự đặt theo ý mình, tránh sai sót.
+
+
+## Truy vấn dữ liệu cơ bản
+
+Thực tế, data frame là một **list các vector cùng độ dài** (Đọc thêm về list ở mục tham khảo - data structures). Vì vậy, ta có thể tự tạo 1 data frame cơ bản bằng cách liệt kê ra các vector.
+
+
+```{r}
+animals <- data.frame(
+  Ten = c('Cho', 'Meo', 'Lon', 'Ga'),
+  Tuoi   = c(3, 5, 1, 1),
+  CanNang_kg = c(15, 8, 30, 3),
+  SoChan = c(4, 4, 4, 2)
+)
+
+# goi ra data frame
+animals
+```
+
+Để truy vấn một cột trong data frame trên, data dùng cú pháp `$`:
+
+```{r}
+animals$Tuoi
+mean(animals$Tuoi)
+```
+
+Ngoài ra, có thể dùng cú pháp `[row, column]`, tương đương với dòng-cột (ngược lại với cú pháp thông thường trong Excel, ví dụ ô B5):
+
+```{r}
+animals[ , 'Tuoi']    # xem tất cả các dòng của cột 'Tuoi'
+animals[ 2, 'Tuoi']  # xem dòng 2 của cột 'Tuoi'
+```
+
+Tương tự, truy vấn dữ liệu bằng số thứ tự (index) cũng theo cú pháp dòng-cột:
+
+```{r}
+animals[,2]
+animals[2,2]
+```
+
+Tạo ra một cột mới:
+
+```{r}
+animals$CanNang_g <- animals$CanNang_kg * 1000 # tạo cột cân nặng theo gam
+animals                                       # truy vấn kết quả
+```
+
+Kiểm tra định dạng các biến trong data frame bằng cách dùng hàm `str()`:
+
+```{r}
+str(animals)
+```
+
+Hàm `summary()` giúp đưa ra tóm tắt về data frame, tính toán 1 số thống kê cơ bản như mean, min, max, median, etc.
+
+```{r}
+summary(animals)
+```
+
+
+## Tham khảo
+
++ [Delimiter - Wiki](https://en.wikipedia.org/wiki/Delimiter)
++ [Comma-separated values - Wiki](https://en.wikipedia.org/wiki/Comma-separated_values)
++ [String - Wiki](https://en.wikipedia.org/wiki/String_(computer_science))
++ [Data structures - Advanced R](https://adv-r.hadley.nz/vectors-chap.html)
+
+<!--chapter:end:02_DataFrames.Rmd-->
+
+# Vẽ biểu đồ
+
+
+```{r, echo=FALSE}
+# Reset môi trường
+rm(list = ls())
+pkgs = names(sessionInfo()$otherPkgs)
+if( length(pkgs > 0)){
+  pkgs = paste('package:', pkgs, sep = "")
+  for( i in 1:length(pkgs)){
+    detach(pkgs[i], character.only = TRUE, force=TRUE)
+  }
+}
+```
+
+
+
+
+
+
+```{r, message=FALSE, warning=FALSE, results='hide'}
+# load sẵn ggplot2 (đã bao gồm trong tidyverse)
+library(tidyverse, quietly = TRUE)
+```
+
+Do vẽ biểu đồ (graphing) là một mảng phức tạp trong R nói riêng và data analysis/statistics nói chung nên phần này sẽ chỉ dừng ở mức cơ  bản.
+
+Có một số loại biểu đồ quan trọng nhất như sau:
+
+1. Nhóm Line (`geom_path`, `geom_line`, `geom_step`)
+
+2. Nhóm Point (`geom_point`, được sử dụng để vẽ các biểu đồ dạng scatterplot)
+
+3. Histogram (`geom_freqpoly`, `geom_histogram`, `stat_bin`)
+
+4. Density (`geom_density`, `stat_density`)
+
+5. Boxplot (`geom_boxplot`, `stat_boxplot`)
+
+6. Candle chart (không hỗ trợ trong **ggplot2**)
+
+Các biểu đồ đề cập tới trong phần 3 này là scatterplot và boxplot. Các bộ dữ liệu được sử dụng minh họa là `iris` và `mpg`.
+
+`iris` là một dataset chứa các observation của 3 loài hoa thuộc chi [iris](https://vi.wikipedia.org/wiki/Chi_Di%C3%AAn_v%C4%A9), trong đó độ dài và rộng của cách hoa (petal) và đài hoa (sepal) được đo và ghi lại.
+
+```{r}
+data(iris)
+str(iris)  # xem loại dữ liệu
+```
+
+Package được sử dụng trong phần này là **ggplot2**. **ggplot2** có rất nhiều công cụ (các hàm) để giúp người dùng vẽ được loại biểu đồ mong muốn (danh sách đầy đủ có ở [https://ggplot2.tidyverse.org/reference/](https://ggplot2.tidyverse.org/reference/)).
+
+Một biểu đồ sẽ được dựng lên theo từng layer (lớp), với lớp ban đầu là:
+
+```{r}
+ggplot(data = iris)
+ggplot(iris, aes(x = Sepal.Length,y = Sepal.Width))
+```
+
+Có thể thấy cả 2 kết quả trả về là một biểu đồ trống, với kết quả ở dưới có thêm 2 trục x (trục tung) và y (trục hoành). Để thêm một lớp, ta dùng cú pháp chung như sau:
+
+  ```
+  ggplot(data = <DATA>) + 
+    <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))
+  ```
+
+Hoặc:
+
+  ```
+  ggplot(data = <DATA>, aes(<MAPPINGS>)) + 
+    <GEOM_FUNCTION>()
+  ```
+  
+Phân biệt cụ thể giữa 2 cú pháp này sẽ giải thích kĩ hơn ở phần nâng cao.
+
+
+Ví dụ với `geom_point`:
+
+```{r, fig.height=3, warning=FALSE, message=FALSE}
+p <- ggplot(data = iris, aes(x = Sepal.Length,y = Sepal.Width))
+p + geom_point()
+
+
+p + geom_point() + geom_smooth() # Thêm 1 lớp geom_smooth()
+```
+
+Lưu ý:
+
++ Các hàm `geom_point()` và `geom_smooth()` không nhận argument nào, và R sẽ tự động thừa kế các argument của hàm `ggplot` phía trước.
++ Mỗi layer có thể nhận những dataset khác nhau.
++ Layer có thể được thêm vào  bằng dấu `+`.
++ Dataset sử dụng để visualize bắt buộc phải là dạng data frame.
+
+
+## Các biểu đồ cơ bản
+
+
+### Scatterplot
+
+Đây là biểu đồ được dùng để thể hiện mối quan hệ giữa 2 biến liên tục.
+
+**Cú pháp chung** cho biểu dồ scatterplot (`?geom_point` để đọc thêm documentation):
+
+```
+geom_point(mapping = NULL, data = NULL, stat = "identity",
+  position = "identity", ..., na.rm = FALSE, show.legend = NA,
+  inherit.aes = TRUE)
+```
+
+**Ý nghĩa của các argument**:
+
+Chú ý rằng các giá trị gán sẵn cho từng argument trong cú pháp trên là giá trị mặc định; nếu không có thiết kệ cụ thể, argument sẽ nhận giá trị mặc định.
+
++ `mapping`: Thiết lập 2 trục tung hoành (với `aes()`). Nếu `mapping = NULL` (tức là để trống), `geom_point` nhận `mapping` từ layer đầu tiên (top level) của plot, tức là từ hàm `ggplot` trước đó. Nếu không có layer đầu, `mapping` không thể để trống.
++ `data`: data frame được dùng. Nếu `data = NULL`, `geom_point` nhận `data` từ layer đầu tiên, tức là từ hàm `ggplot` trước đó.
++ `stat`: Biến đổi thống kê sử dụng trong dữ liệu để vẽ đồ thị.
++ `position`: Điều chỉnh vị trí của đồ thị.
++ `…`: Những argument khác được pass vào đồ thị. Thông thường là các giá trị qui định về color, size của đồ thị.
++ `na.rm`: bỏ giá trị NA. Nếu bằng `FALSE`, hàm sẽ bỏ NA và có cảnh báo (warning). Nếu bằng `TRUE`, hàm sẽ bỏ NA mà không cảnh báo.
++ `show.legend`: Có thể hiện layer này trong legend hay không. Mặc định `show.legend = NA`, tức là có bao gồm trong legend (Còn nhận 1 số value khác, đọc thêm ở doc).
++ `inherit.aes`: Nếu bằng `FALSE`, đè lên aestheticis mặc định, thay vì kết hợp với nhau.
+
+Trước mắt, chúng ta sẽ chỉ quan tâm đến 2 argument là `mapping` và `data`. Ngoài ra argument `stat` cũng nên được chú ý.
+
+Vẽ biểu đồ với `x=Sepal.Length` và `y=Petal.Length`:
+
+```{r, fig.height=3, warning=FALSE, message=FALSE}
+p <- ggplot(data = iris, aes(x = Sepal.Length, y = Petal.Length)) 
+p + geom_point()
+```
+
+Như đã nói ở trên, geom_point không nhận argument nào, tức là thừa kế từ ggplot (hay nói cách khác, `mapping` và `data` bằng NULL và thừa kế từ `ggplot`, còn các argument còn lại nhận giá trị mặc định).
+
+Ta có thể thêm đặc tính (attribute) về màu sắc, với màu sắc thay đổi dựa theo một trường dữ liệu thứ 3 là *Species*:
+
+```{r, fig.height=3, warning=FALSE, message=FALSE}
+p + geom_point(aes(color = Species))
+```
+
+Như vậy, không chỉ có trục tung/hoành là có thể nhận dữ liệu mà ta còn gán thêm được các trường dữ liệu khác vào trục.
+
+**Các tham số về hình dạng của biểu đồ**:
+
++ `alpha`: Độ trong suốt
+
++ `colour/color`: Màu sắc (trong bài này sẽ viết là color)
+
++ `fill`: Màu sắc bên trong trong trường hợp có viền bao ngoài
+
++ `group`: Các nhóm
+
++ `shape`: Hình dạng của point
+
++ `size`: Kích thước điểm
+
++ `stroke`: Kích thước viền
+
+Tuy nhiên, nếu muốn, chúng ta cũng hoàn toàn có thể chỉ gán một giá trị cố định vào các tham số trên, thay vì gán theo trường dữ liệu:
+
+```{r, fig.height=3, warning=FALSE, message=FALSE}
+p + geom_point( color = 'blue', size = 3)
+```
+
+Có thể thấy, nếu gán theo giá trị cố định, các tham số `color` hay `size` sẽ không nằm trong hàm `aes()`:
+
+1. Các tham số bên trong `aes()` sẽ nhận giá trị là 1 trường dữ liệu (`attribute=Column_Name`), và thay đổi theo dữ liệu.
+2. Các tham số bên ngoài `aes()` sẽ nhận giá trị cố định (`attribute=fixed_value`).
+
+
+**Một số ví dụ khác**:
+
+Thay đổi `shape` dựa theo *Species*:
+
+```{r, fig.height=3, warning=FALSE, message=FALSE}
+p + geom_point(aes(shape = Species))
+```
+
+Lồng thêm 3 layer vào nhau:
+
+```{r, fig.height=3, warning=FALSE, message=FALSE}
+p + geom_point(color = 'black', size = 4.5) +
+  geom_point(color = 'pink', size = 4) + 
+  geom_point(color = 'black', size = 1.8)
+```
+
+
+### Boxplot
+
+Biểu đồ boxplot, hay còn gọi là *box and whiskers*, thể hiện 5 thống kê quan trọng:
+
++ median: trung vị, (đường thẳng ở giữa hình hộp), là giá trị ở giữa của dataset (Q2/0th Percentile).
++ 2 điểm hinge: là 1st quartile và 3rd quartile, là khoảng phần tư thứ nhất và thứ 3 (tứ phân vị), hay nói cách khác là 2 giá trị ở giữa giá trị lớn nhất/nhỏ nhất và giá trị median. 
++ 2 điểm whisker: 
+
+
+## Tiêu đề và đặt tên trục
+
+Tiêu đề (title) và tên trục (axis labels)
+
+
+## Dán nhãn dữ liệu (annotation)
+
+
+## Facet
+
+
+## Các thuật ngữ
+
+Phần này sẽ tổng hợp lại các thuật ngữ bằng tiếng Anh và nghĩa tiếng Việt.
+
+
+## Tham khảo
+
+
+
+<!--chapter:end:03_Graph.Rmd-->
+
+# Biến đổi dữ liệu: basic
+
+```{r, echo=FALSE}
+# Reset môi trường
+rm(list = ls())
+pkgs = names(sessionInfo()$otherPkgs)
+if( length(pkgs > 0)){
+  pkgs = paste('package:', pkgs, sep = "")
+  for( i in 1:length(pkgs)){
+    detach(pkgs[i], character.only = TRUE, force=TRUE)
+  }
+}
+```
+
+
+
+
+
+
+
+```{r, message=FALSE, warning=FALSE, results='hide'}
+# load sẵn tidyverse
+library(tidyverse, quietly = TRUE)
+```
+
+Các tool có sẵn trong **base R** thường không thống nhất và khó sử dụng, nhất là cho người mới học. Vì vậy, chúng ta sẽ sử dụng package**dplyr** (Đọc mô tả package tại [[http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html]](http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)).
+
+## Giới thiệu chung về **dplyr** và `tibble`
+
+### Tibble
+
+Từ đầu đến giờ, chúng ta đã sử dụng `data.frame`, tuy nhiên có 1 số điểm mà loại dữ liệu bảng này làm chưa tốt như:
+
++ Một số chuỗi kỹ tự đặc biệt dạng `string` bị đổi thành `factor` khi import.
++ Subset (Lấy các tập hợp con) từ data dạng `data.frame` có thể bị đổi thành dạng `vector` hoặc `scalar`.
++ Tốc độ còn chậm.
+
+Vì vậy, **dplyr** giới thiệu 1 loại dữ liệu bảng mới là `tibble`. Về cơ bản, `tibble` giống `data.frame` nhưng cải thiện ở nhiều điểm. Hiện tại chúng ta có thể tạm bỏ qua những điểm này.
+
+### Package **dplyr**
+
+Một điểm đặc biệt của **dplyr** là hàm pipe `%>%`, giúp việc viết và đọc code dễ dàng hơn rất nhiều. Ý tưởng của hàm pipe là lấy kết quả của 1 hàm trước đó luôn cho hàm phía sau, tức là thay vì viết `f(a,b)`, ta có thể viết `a %>% f(b)`, dẫn đến 2 lợi ích:
+
++ **Tránh lồng các hàm vào với nhau**, ví dụ: nếu bắt đầu bằng `x`, sau đó dùng hàm `f()`, tiếp đến hàm `g()`, rồi đến hàm `h()`, ta sẽ phải viết `h(g(f(x)))`. Khi đọc đoạn code này, ta sẽ phải đọc từ *trong ra ngoài*. Khi sử dụng pipe, ta sẽ đọc từ trái sang phải như sau: `x %>% f() %>% g() %>% h()`
++ **Đặt nhiều variable mới**: Nếu không lồng các hàm vào với nhau, ta sẽ phải đặt variable mới cho từng hàm.
+
+
+|     Code            |  Ý nghĩa       |
+|:-------------------:|:--------------:|
+| `a %>% f(b)`        |   `f(a,b)`     |
+| `b %>% f(a, .)`     |   `f(a, b)`    |
+| `x %>% f() %>% g()` |  `g( f(x) )`   |
+
+Sau mỗi lần nối các hàm  với pipe, kết quả luôn là 1 dataset.
+
+
+## Các "verb" trong **dplyr**
+
+**dplyr** có 1 hệ thống các hàm, hay còn gọi là các "verb" (động từ) rất thống nhất và khoa học, giúp người mới có thể đọc hiểu và viết code dễ dàng:
+
+
+* `add_row` - Thêm dòng mới.
+
+* `select` - Chọn ra các cột theo tên hoặc STT.
+
+* `filter` - Chọn ra các dòng theo điều kiện.
+
+* `slice` - Chọn ra các dòng theo số dòng.
+
+* `arrange` - Sắp xếp lại dòng.
+
+* `mutate`& `transmute` - Thêm cột mới.
+
+* `summarise` & `group_by` - Dùng để pivot dữ liệu.
+
+Các hàm trên có cú pháp giống nhau, đều bắt đầu bằng 1 argument dataset đầu vào.
+
+Để lấy ví dụ, chúng ta sẽ tạo ra 1 data frame đơn giản làm mẫu, sử dụng hàm `tribble()` để tạo ra 1 `tibble`:
+
+```{r}
+grades <- tribble(
+  ~Ten,     ~GioiTinh, ~HS1, ~HS2, ~CuoiKi,
+  'Nguyet'    , 'F',     93,  98,     96,
+  'Truong'    , 'M',     99,  90,     80,
+  'Mat'       , 'M',     89,  70,     85,
+  'Chuoi'     , 'M',     80,  82,     81,
+  'SoyaBean'  , 'F',     70,  85,     92,
+  'KhungLong' , 'F',     77,  86,     72)
+grades
+```
+
+
+### `add_row()`
+
+Thêm dòng vào dữ liệu `grades` ở trên như sau:
+
+```{r}
+grades %>% add_row(Ten='Cuu', HS1=96, HS2=90)
+grades
+```
+
+Các trường thông tin không được thiết lập (như giới tính và điểm cuối kì) sẽ nhận giá trị `NA`. Vì chúng ta không assign kết quả của câu lệnh trên vào object nào cả, R sẽ in ra luôn kết quả. Dataset `grades` gốc vẫn không có gì thay đổi.
+
+```{r}
+grades <- grades %>%
+  add_row(Ten='Cuu', GioiTinh = 'F', HS1=96, HS2=90, CuoiKi = 69)
+grades
+```
+
+Câu lệnh trên gán kết quả sau khi thêm dòng vào chính dataset `grades`, khiến R ghi đè dataset mới lên dataset gốc.
+
+
+### `select()`, `filter()` và `slice()`
+
+Các nhóm hàm này cho phép chúng ta chọn ra nhóm những dòng/cột theo điều kiện.
+
+
+#### `select()`
+
+Hàm `select()` cho phép chọn ra các cột (hoặc bỏ đi), tương đương với `SELECT` trong SQL.
+
+**Chọn cột theo tên**:
+
+```{r}
+grades %>%
+  select(HS1, HS2)      # select by name
+```
+
+**Chọn các cột liên tiếp**:
+
+```{r}
+grades %>%
+  select(HS1:CuoiKi)    # select consecutively
+```
+
+**Loại ra một hoặc nhiều cột** khỏi dataset ban đầu (negative indexing):
+
+```{r}
+grades %>%
+  select(-HS2)         # negative indexing
+```
+
+**Chọn cột theo thứ tự/vị trí**:
+
+```{r}
+grades %>%
+  select(1:2)          # select by index/position
+```
+
+**Dùng hàm `starts_with()`** để chọn cột theo điều kiện tên cột:
+
+```{r}
+grades %>%
+  select(starts_with('HS')) # select by patterns of col name
+
+grades %>%
+  select(starts_with('HS'), starts_with('C'))
+
+grades %>%
+  select(ends_with('1'))   # áp dụng tương tự với ends_with
+```
+
+
+#### `filter()`
+
+Hàm `filter()` giúp lọc ra các dòng theo điều kiện, giống chức năng filter trong Excel và `WHERE` trong SQL:
+
+```{r}
+grades %>%
+  filter(CuoiKi > 90)
+```
+
+**Kết hợp nhiều điều kiện** với nhau dùng dấu phẩy `,` hoặc dùng dấu `&`:
+
+```{r}
+grades %>% 
+  filter(HS2 > 90, CuoiKi > 90)
+grades %>%
+  filter(HS2 > 90 & CuoiKi > 90)
+```
+
+Các logical operators trong R:
+
+|     Kí hiệu                     |  Ý nghĩa                           |  Ghi chú                                      |
+|:-------------------------------:|:----------------------------------:|:---------------------------------------------:|
+| `!x` (exclaimation)             |   not x  (logical negation)        |Chỉ nên dùng với dữ liệu dạng Logical/boolean  |
+| `x & y` (ampersand)             |   x và y (logical AND)             |Trả kết quả là vector                          |
+| `x && y` (double ampersands)    |  x và y (logical AND)              |Trả kết quả không vectorized                   |
+| `x | y` (vertical bar)          |  x hoặc y (logical OR, inclusive)  |Trả kết quả là vector                          |
+| `x || y` (double vertical bars) |  x hoặc y (logical OR, inclusive)  |Trả kết quả không vectorized                   |
+| `xor(x, y)`                     |  exclusive OR                      |                                               |
+
+
+Lưu ý về **inclusive OR** và **exclusive OR**:
+
++ *inclusive OR*: hoặc cái này hoặc cái kia, hoặc cả hai. Ví dụ: Mỗi người có thể sở hữu xe máy hoặc xe hơi, hoặc cả hai.
++ *exclusive OR*: hoặc cái này hoặc cái kia, nhưng không thể là cả hai. Ví dụ: Mọi số tự nhiên là số chẵn hoặc số lẻ, nhưng không thể là cả hai.
+
+Ví dụ:
+
+```{r}
+grades %>% 
+  filter(HS2 < 90 | CuoiKi < 90)
+grades %>% 
+  filter(xor(HS2 < 90, CuoiKi < 90))
+```
+
+#### `slice()`
+
+Hàm `slice()` cũng lọc ra dòng giống `filter()`, nhưng dựa vào số thứ tự của dòng (row number):
+
+```{r}
+# Lấy dòng đầu tiên
+grades %>%
+  slice(1)
+
+# Lấy 2 dòng đầu tiên
+grades %>%
+  slice(1:2)
+```
+
+**Kết hợp với hàm `n()`**; hàm `n()` dùng để đếm số lượng quan sát:
+
+```{r}
+grades %>%
+  slice(2:n())
+```
+
+**Loại bỏ dòng** với index âm:
+
+```{r}
+grades %>%
+  slice(-3:-n())
+```
+
+Lưu ý: Hàm `n()` chỉ sử dụng được khi lồng trong các hàm `summarise()`, `mutate()` và `filter()`. Hàm này không nhận argument nào.
+  
+
+### `arrange()`
+
+Cú pháp của hàm: `arrange(data, ...)`. Hàm `arrange()` mặc định sắp xếp theo thứ tự tăng dần (ascending). Hàm này tương đương với `ORDER BY` trong SQL.
+
+
+```{r}
+grades %>%
+  arrange(Ten)
+```
+
+**Sắp xếp giảm dần với `desc()`**:
+
+```{r}
+grades %>%
+  arrange(desc(CuoiKi))
+```
+
+**Kết hợp nhiều điều kiện xếp**:
+
+```{r}
+grades %>%
+  arrange(HS2, desc(CuoiKi))
+```
+
+### `mutate()` & `transmute()`
+
+
+#### `mutate()`
+
+Hàm `mutate()` tạo ra cột mới hoặc update cột có sẵn trong dataset. Ta có thể tạo ra nhiều cột trong cùng 1 hàm `mutate()`, và thậm chí có thể dùng cột vừa tạo ở trước đó để làm cơ sở tính cho cột tiếp theo. Ta có thể thêm những cột đơn giản như `mutate(random_col = 1)` để thêm cột chỉ có giá trị 1, hoặc kết hợp với các hàm `if_else` và `case_when` để đưa vào các điều kiện phức tạp hơn.
+
+Tạo thêm cột điểm tổng kết và xếp hạng, sau đó gán lại vào dataset cũ:
+
+```{r}
+grades <- grades %>%
+  mutate(
+    TongKet = (HS1 + HS2*2 + CuoiKi*3)/6,
+    XepHang = cut(TongKet, c(0, 40, 60, 70, 80, 90, 100),
+                           c('Yeu', 'TB', 'TB Kha', 'Kha', 'Gioi', 'XS'))) %>%
+  arrange(TongKet)
+grades
+str(grades)
+```
+
+
+
+**Kết hợp với `if_else`**:
+
+```{r}
+# Thay đổi giá trị của 1 observation nhất định - đổi điểm HS1 của Chuối thành 75
+# Lưu ý, cột TongKet đã tạo ra trước đó sẽ không tự đổng thay đổi them giá trị HS1 mới
+grades <- grades %>%
+  mutate(HS1 = if_else(Ten == 'Chuoi', 75, HS1))  # Nếu Ten không phải là Chuoi, giữ nguyên giá trị của HS1
+grades
+```
+
+Thay đổi toàn cột giới tính:
+
+```{r}
+grades %>%
+  mutate(GioiTinh = if_else(GioiTinh == 'M', 'Male','Female'))
+```
+
+Kết hợp nhiều điều kiện:
+
+```{r}
+# Lồng (nest) các hàm if_else lại với nhau:
+grades %>%
+  mutate(Grade = if_else(XepHang == 'Yeu', 'F',
+                         if_else(XepHang == 'TB', 'D',
+                                 if_else(XepHang == 'TB Kha', 'C',
+                                         if_else(XepHang == 'Kha', 'B',
+                                                 if_else(XepHang == 'Gioi', 'A', 'A+'))))))
+                         
+```
+
+Lưu ý, hàm `dplyr::if_else()` khác với hàm `base::ifelse()`. Hàm thứ 2 của base 2 có rất nhiều giới hạn so với hàm cải tiến của **dplyr**.
+
+
+**Kết hợp với `case_when`** - Về cơ bản, `if_else` và `case_when` giống nhau. Điểm khác biệt lớn nhất nằm ở mặt trình bày: Có thể thấy ở ví dụ trên, cách viết nested `if_else` đọc khá rối mắt. Áp dụng lại với `case_when`:
+
+```{r}
+grades %>%
+  mutate(Grade = case_when(XepHang == 'Yeu' ~ 'F',
+                           XepHang == 'TB' ~ 'D',
+                           XepHang == 'TB Kha' ~ 'C',
+                           XepHang == 'Kha' ~ 'B',
+                           XepHang == 'Gioi' ~ 'A',
+                           TRUE ~ 'A+'))  # case cuối cùng tương đương với tất cả các trường hợp còn lại
+```
+
+
+#### `transmute()`
+
+Hàm `transmute()` cũng tạo ra cột mới, tuy nhiên kết quả đầu ra sẽ chỉ bao gồm những cột vừa được tạo:
+
+```{r}
+grades %>%
+  transmute(GioiTinh.VN = if_else(GioiTinh == 'M', 'Nam','Nu'))
+```
+
+
+### `summarise()`
+
+Hàm `summarise()` nếu dùng riêng lẻ sẽ không thật sự hữu ích. Hàm này tính toán và tóm tắt dataset dựa vào một hoặc nhiều trường dữ liệu, sau đó trả ra kết quả là trường dữ liệu mới với 1 dòng kết quả tóm tắt tương ứng.
+
+```{r}
+grades %>%
+  summarise(TB.HS1 = mean(HS1), STD.HS1 = sd(HS1))
+```
+
+
+## Kết hợp các hàm trong **dplyr**
+
+
+### `group_by()`
+
+Do dataset đang sử dụng chỉ có 7 observation nên việc group thành các nhóm không có ý nghĩa cho lắm. Hàm `group_by` luôn kết hợp với các hàm khác như `mutate()`, `filter()` và `summarise()`, cho phép nhóm (aggregate) dữ liệu thành các nhóm khác nhau.
+
+```{r}
+# Group theo giới tính
+grades %>%
+  group_by(GioiTinh) %>%
+  summarise(SL = n())
+```
+
+Chúng ta sẽ sử dụng dataset của OpenIntro về số lượt ném của Kobe Bryant trong series chung kết NBA 2009 (LAL - Lakers vs. ORL - Magic), kéo dài 5 games:
+
+```{r, warning=FALSE,, results='hide'}
+kobe <- read_csv('https://www.openintro.org/stat/data/kobe.csv',
+                 col_types = cols(game = col_integer(),
+                                  quarter = col_character()))
+head(kobe,10)
+```
+
+Dataset trên có các trường dữ liệu sau:
+
++ **vs**: thuộc kiểu `string`, gồm team mà LAL đối đầu. Dataset này chỉ có ORL.
++ **game**: thuộc kiểu `integer`, từ 1 đến 5.
++ **quarter**: thuộc kiểu `character`, 1 game bóng rổ có 4 hiệp nhưng có thể có overtime (OT)
++ **time**: thuộc kiểu `character`, tuy nhiên vì thời gian trong 1 game bóng rổ đo theo kiểu minute:second:millisecond khiến R hiểu thành hh:mm:ss nên cột này sẽ cần sửa sau (dùng `col_character()` khiến dữ liệu bị thay đổi).
++ **description**: thuộc kiểu `string`, Mô tả từng shot
++ **basket**: thuộc kiểu `string`: H tương đương với ném vào - made shot (hit), M tương đương với ném trượt - missed shot (miss).
+
+Trong phần dưới, do dataset có 133 observation nên chúng ta sẽ không in thẳng kết quả ra console mà dùng hàm `head()` để kiểm tra 10 observation đầu tiên. Để kiểm tra toàn bộ dataset, ta dùng hàm `View(kobe)` hoặc click vào dataset ở cửa sổ Envirronment góc trên bên phải.
+
+### Biến đổi dữ liệu cơ bản
+
+
+#### Các ví dụ cụ thể
+
+Có thể thấy trong dataset `kobe` ở trên:
+
++ Không có trường dữ liệu ghi lại xem mỗi cú ném tương đương bao nhiêu điểm, chỉ có trường **description**.
++ Cột **quarter** vừa có dữ liệu kiểu số (1 đến 4) vừa có kiểu string (1OT, 2OT, etc).
++ Cột **time** đang hơi rắc rối cho việc xử lý và tính toán sau này.
+
+Chúng ta sẽ làm 1 số bước biến đổi dữ liệu như sau.
+
+1. Đổi cột **time** thành số giây còn lại trong hiệp, kết hợp với hàm `paste0()` để nối các string lại:    
+
+```{r}
+# split cột time ra làm 3 cột minute/second/millisecond
+kobe <- cbind(kobe, kobe %>%
+                transmute(time.s = as.character(time)) %>%
+                separate(time.s, into = paste0("T", 1:3), sep = ':', remove = TRUE))
+
+# có thể thấy cột T3 - millisecond chỉ có giá trị 00, vì vậy ta sẽ loại cột này đi
+kobe %>% 
+  group_by(T3) %>% # kết hợp group_by và summarise, sẽ nói kĩ hơn ở phần sau
+  summarise(n=n())
+
+kobe <- kobe %>%
+  select(-T3) %>% # bỏ T3
+  mutate(time.s = as.integer(T1) * 60 + as.integer(T2)) %>%  # Tạo lại cột time.s ~ số giây còn lại
+  mutate(time = as.character(time)) %>% # đổi định dạng cột time thành string
+  mutate(T1 = as.integer(T1)) %>%
+  rename(time.m = T1) %>% # đổi tên T1 thành time.m ~ số phút còn lại
+  select(-T2) # bỏ T2
+
+head(kobe, 10)
+
+```
+
+Ngược lại, ta cũng có thể dùng hàm `%/%` (là hàm để lấy phần nguyên của phép chia) và `%%` (lấy phần dư) để tính ngược lại từ trường **time.s** về dạng second:millisecond:
+
+```{r}
+transmute(kobe, time.x = time.s %/% 60 + (time.s %% 60)/100)
+```
+
+2. Sửa cột **quarter**, sử dụng hàm `nchar()` để đếm số ký tự trong string và hàm `substr()` để cắt string từ bên trái:   
+
+```{r, warning=FALSE}
+# Chuyển 1OT thành 5, 2OT thành 6 , etc.
+kobe <- kobe %>%
+  # nếu độ dài string = 1 -> đổi thành dạng numeric
+  mutate(quarter.n = case_when(nchar(quarter) == 1 ~ as.numeric(quarter),  
+                               # nếu độ dài string = 3 -> cột thêm 4
+                             TRUE ~ as.numeric(substr(quarter, 1, 1)) + 4))
+head(kobe, 10)
+```
+
+3. Thêm cột điểm **point**  
+
+Vì dataset khá nhỏ và việc manipulate string cũng khá phức tạp nên chúng ta sẽ bắt đầu thủ công bằng cách scan dataset sẽ đưa ra được 1 số kết luận như sau:
+
++ Dataset này không bao gồm ném phạt (free throws), và chỉ bao gồm field goal attempts, tương đương với 2 hoặc 3 điểm
++ Các cú ném 3 điểm sẽ bao gồm đoạn string "3pt" hoặc "three point", và ta chắc chắn được ra 2 đoạn string này đủ unique để indentify từng shot attempt là 2 hay 3 điểm. Đồng thời, khoảng cách từ vạch 3 điểm đến rổ là 23.75ft (22ft từ góc sân), vì vậy ở dữ liệu cho game 1-2-4-5, phần description đã bao gồm đầy đủ thông tin phân loại 3 điểm (dựa vào thông tin khoảng cách của shot).
+
+Từ 2 kết luận trên, ta có thể tạo thêm cột **point.attempt**, sử dụng hàm `grepl(string_to_find, value, ...)` trả về giá trị TRUE/FALSE để tìm kiếm các quan sát tương đương với 3 điểm:
+
+```{r}
+kobe <- kobe %>%
+  mutate(point.attempt = case_when(grepl('3pt', description, fixed = TRUE) == TRUE ~ 3,
+                           grepl('three point', description, fixed = TRUE) == TRUE ~ 3,
+                           TRUE ~ 2))
+head(kobe, 10)
+```
+
+Đồng thời, để tính toán dễ dàng hơn, ta đổi cột **basket** sang 1 và 0 để tính dễ hơn, sau đó tạo thêm cột $point.made = point.attempt * basket.n$
+
+```{r}
+kobe <- kobe %>%
+  mutate(basket.n = case_when(basket == 'H' ~ 1,
+                              TRUE ~ 0),
+         point.made = point.attempt * basket.n)
+head(kobe, 10)
+```
+
+#### Kết hợp toàn bộ với pipe
+
+Ta có thể kết hợp tất cả các ví dụ trên thành 1 đoạn script với pipe `%>%` để ra kết quả cuối như sau:
+
+```{r, warning=FALSE, eval=FALSE}
+kobe <- read_csv('https://www.openintro.org/stat/data/kobe.csv',
+                 col_types = cols(game = col_integer(),
+                                  quarter = col_character())) 
+
+kobe <- cbind(kobe, kobe %>%
+                transmute(time.s = as.character(time)) %>%
+                separate(time.s, into = paste0("T", 1:3), sep = ':', remove = TRUE)) %>%
+        select(-T3) %>%
+        mutate(time.s = as.integer(T1) * 60 + as.integer(T2)) %>%
+        mutate(time = as.character(time)) %>%
+        mutate(T1 = as.integer(T1)) %>%
+        rename(time.m = T1) %>%
+        select(-T2) %>%
+        mutate(quarter.n = case_when(nchar(quarter) == 1 ~ as.numeric(quarter),
+                                     TRUE ~ as.numeric(substr(quarter, 1, 1)) + 4),
+               point.attempt = case_when(grepl('3pt', description, fixed = TRUE) == TRUE ~ 3,
+                                         grepl('three point', description, fixed = TRUE) == TRUE ~ 3,
+                                         TRUE ~ 2),
+               basket.n = case_when(basket == 'H' ~ 1,
+                                    TRUE ~ 0),
+               point.made = point.attempt * basket.n)
+```
+
+
+### `group_by` và `summarise`
+
+Với dataset `kobe` đã biến đổi cơ bản xong, ta có thể kết hợp `group_by` và `summarise` để trả lời 1 số câu hỏi đơn giản:
+
+
+```{r}
+kobe <- arrange(kobe, game)
+
+# group theo game
+kobe %>%
+  group_by(game) %>%
+  summarise(total.fg = sum(basket.n), # tổng số lượt ném thành công
+            total.fga = n(), # tổng số lượt ném
+            total.point = sum(point.made), # tổng số điểm
+            point.per.fga = total.point/total.fga, # điểm trung bình trên mỗi lượt ném
+            avg.fg = mean(basket.n)) # tỷ lệ ném thành công
+
+# group theo game và quarter
+kobe %>%
+  group_by(game, quarter.n) %>%
+  summarise(total.fg = sum(basket.n),
+            total.fga = n(),
+            total.point = sum(point.made),
+            point.per.fga = total.point/total.fga,
+            avg.fg = mean(basket.n))
+
+```
+
+
+### Kết hợp `group_by` và `mutate` / `filter`
+
+Thêm 1 số cột accumuated points, accumulated fga, accumulated fg, fg%, point/fga:
+
+```{r}
+kobe <- kobe %>%
+  group_by(game) %>%
+  mutate(acc.pts = cumsum(point.made),
+         fga = 1,
+         acc.fga = cumsum(fga),
+         acc.fg = cumsum(basket.n),
+         pct.fg = cummean(basket.n),
+         pts.per.fga = acc.pts/acc.fga)
+head(kobe, 10)
+```
+
+Ta cũng có thể kết hợp với `filter` để xem performance trong crunch time (tức là 3 phút cuối của những game sát nhau, trong trường hợp này là game 2/3/4):
+
+```{r}
+kobe %>%
+  group_by(game) %>%
+  filter(game %in% c(2,3,4),
+         quarter == max(quarter),
+         time.m <3) %>%
+  select(-description, -vs, -time, -basket) %>%
+  head()
+```
+
+Trong các ví dụ trên, có 2 điểm mới:
+
+1. các hàm `cumsum()`, `cummean()` được gọi là window functions (tham khảo ở mục dưới), thường được dùng để tính lũy kế và các ứng dụng tương tự.  Một số window function hữu ích khác bao gồm:
+
+
+    + `cumprod()`, `cummin()`, `cummax()`, `cumsum()`, `cummean()`: Các hàm tính lũy kế  
+    + `row_number()`, `min_rank()`, `percent_rank()`, `dense_rank()`, `cume_dist()`: Các hàm xếp hạng (rank)  
+    + `lead()` và `lag()`: Các hàm offset  
+    
+    
+2. Ký hiệu `%in%`: Có thể thấy trong ví dụ, hàm này hoạt động giống `IN` trong SQL, dịch là: nếu các observation trong trường **game** nằm trong nhóm các giá trị (2, 3, 4).
+
+
+## Tham khảo
+
++ [Data transformation - R for DS](https://r4ds.had.co.nz/transform.html#grouped-summaries-with-summarise)
++ [Logical Operators in R](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Logic.html)
++ [`dplyr` vignettes](https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html)
++ [Window functions](https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html)
++ [Kobe hot hand data - OpenIntro](https://www.openintro.org/stat/data/?data=kobe)
+
+<!--chapter:end:04_Wrangling.Rmd-->
+
+# Biến đổi dữ liệu: join
+
+```{r, echo=FALSE}
+# Reset môi trường
+rm(list = ls())
+pkgs = names(sessionInfo()$otherPkgs)
+if( length(pkgs > 0)){
+  pkgs = paste('package:', pkgs, sep = "")
+  for( i in 1:length(pkgs)){
+    detach(pkgs[i], character.only = TRUE, force=TRUE)
+  }
+}
+```
+
+
+
+
+
+
+
+```{r, message=FALSE, warning=FALSE, results='hide'}
+# load sẵn tidyverse
+library(tidyverse, quietly = TRUE)
+if (!require(datamodelr)) install.packages('datamodelr')
+library(VennDiagram, quietly = TRUE)
+if (!require(DiagrammeR)) install.packages('DiagrammeR')
+library(DiagrammeR, quietly = TRUE)
+```
+
+Ở bài trước, chúng ta đã đi qua phần giới thiệu cơ bản về biến đổi dữ liệu trong R thông qua **dplyr**. Tuy nhiên, trong cả bài, chúng ta chỉ mới làm việc với 1 dataset duy nhất, nhưng trong thực tế, ta sẽ cần kết nối thông tin giữa nhiều dataset hay table khác nhau. Ví dụ, trong Excel, ta sẽ dùng các hàm VLOOKUP/HLOOKUP hoặc INDEX/MATCH. Trong SQL, ta sử dụng các hàm JOIN hoặc UNION.
+
+**dplyr** cũng cung cấp 1 số function để làm điều này, cụ thể là nhóm các hàm `join`.
+
+Các dữ liệu dạng bảng có quan hệ với nhau được gọi là *relational data*.
+
+
+## Dataset Czech Financial
+
+Trong phần này, chúng ta sẽ sử dụng (thử) dataset [Czech Bank Financial](https://sorry.vse.cz/~berka/challenge/pkdd1999/berka.htm). Dataset này là tập hợp thông tin giao dịch tài chính từ 1 ngân hàng ở Czech từ năm 1993 đến 1999. Đây là data thật, đã ẩn danh thông tin khách hàng. Có khoảng 5300 khách hàng cùng 4500 tài khoản, sở hữu gần 900 thẻ tín dụng, đã thực hiện hơn 1 triệu giao dịch và có gần 700 khoản vay.
+
+[Dữ liệu](https://github.com/truonghm/R01/tree/master/data/czech_financial_formatted) sử dụng dưới đây đã được xử lý cơ bản. Mọi người có thể tải dữ liệu gốc [tại đây](https://github.com/truonghm/R01/tree/master/data/czech_financial_raw), và tham khảo code để xử lý dữ liệu [tại đây](code/czech_financial_cleaning.html).
+
+Dữ liệu này rất phù hợp để giới thiệu về relational data trong R, vì bộ dữ liệu gốc đã có sẵn các cột id đóng vai trò là primary key và foreign key.
+
+```{r, warning=FALSE, message=FALSE}
+# load data
+load(file="data/czech_financial_formatted/czech-financial.RData")
+lapply(names(df_list),function(x) assign(x,df_list[[x]],.GlobalEnv))
+rm(df_list)
+```
+
+### Ý nghĩa của các data frames
+
+
+Dataset **Czech Bank Financial** có 8 table/data frame:
+
+1. **Account** (`account_df`): là dữ liệu tài khoản ngân hàng
+
+2. **Client** (`client_df`): là dữ liệu khách hàng
+
+3. **Disposition** (`disp_df`): là dữ liệu về cấp độ quyền vận hành tài khoản của các khách hàng
+
+4. **Order** (`order_df`): là dữ liệu về các khoản thanh toán theo kiểu ghi nợ (debit)
+
+5. **Transactions** (`trans_df`): là dữ liệu về các khoản giao dịch của tài khoản
+
+6. **Loans** (`loan_df`): là dữ liệu khoản vay
+
+7. **Credit cards** (`card_df`): là dữ liệu thẻ tín dụng
+
+8. **District** (`district_df`): là dữ liệu thống kê nhân khẩu, vùng miền sinh sống của khách hàng
+
+
+### Diễn giải mối quan hệ
+
+
+Khi làm việc với relational data, chúng ta nên hiểu rõ mối quan hệ giữa các table/data frame bằng cách vẽ ra các diagram. Có nhiều cách để vẽ diagram:
+
++ Đơn giản nhất là có thể lấy giấy bút ra để vẽ.
+
++ Sử dụng 1 số phần mềm như Visio
+
++ Sử dụng 1 số package có sẵn trong R như **datamodelr** ([github](https://github.com/bergant/datamodelr)) hoặc **DiagrammeR** ([website](http://rich-iannone.github.io/DiagrammeR/io.html))
+
++ Sử dụng các công cụ chuyên biệt để vẽ [ERM](https://en.wikipedia.org/wiki/Entity%E2%80%93relationship_model)
+
+```{r, echo=FALSE, out.width='80%', fig.align='center', fig.cap="Czech Financial Diagram"}
+knitr::include_graphics('images/1-5-czech-financial-diagram.png')
+```
+
+
+Diagram ở trên được vẽ bằng [dbdiagram.io](https://dbdiagram.io/d/5dc920beedf08a25543dc311), là một công vụ vẽ entity-relationship diagram sử dụng code khá hiệu quả. Có thể thấy trong biểu đồ, các mối quan hệ được thể hiện theo kiểu:
+
++ một-một (one-to-one): các đường dẫn sẽ có số $1$ ở hai đầu. Ví dụ: bảng `disp_df` và `client_df` có mối quan hệ một-một vì mỗi dòng ở `disposition` sẽ miêu tả quyền vận hành tài khoản của một client tương ứng. Ngoài ra,  dù một account bình thường có thể  có nhiều khoản vay, nhưng mối quan hệ giữa `account` và `loan` cũng là một-một, tức là trong dataset này một account chỉ có 1 khoản vay:
+
+```{r}
+loan_df %>%
+  count(account_id) %>%
+  filter(n>1)
+```
+
++ một-nhiều (one-to-many): các đường dẫn sẽ có $1$ ở một đầu và dấu $*$ ở đầu còn lại. Ví dụ: giữa `client` và `district`, một district có thể có nhiều client, tức là mối quan hệ district-client là một-nhiều.
+
++ nhiều nhiều (many-to-many): không có trong dataset này
+
+
+### Primary key và foreign key
+
+Các variable dùng để kết nối giữa các table với nhau được gọi là "key" (khóa). Đây là các biến giúp chúng ta nhận diện dữ liệu. Đối với các table trong dataset **Czech Bank Financial**, luôn có 1 hoặc nhiều cột `*_id` đầu tiên đóng vai trò là key. Có 2 loại key trong một bảng:
+
++ Primary key: Khóa chính; giúp nhận diện dữ liệu tại bảng hiện hành:
+
+    + Primary key luôn độc nhất, tức là không có dòng nào lặp lại
+    + Nếu data có sẵn primary key thì đây thường là cột đầu tiên (row names)
+    + Một số dataset có nhiều primary key, tức là có thể phải nối các variable này với nhau để tạo thành key (ví dụ: first name + last name). Tuy nhiên dataset chúng ta đang sử dụng đã có sẵn cột primary key duy nhất ở đầu.
+
++ Foreign key: Khóa ngoại; giúp nhận diện dữ liệu tại các bảng khác. Ví dụ: variable `district_id` trong bảng `client_df` sẽ giúp nối dữ liệu sang bảng `district_df`, tức là mỗi client sẽ liên kết được đến với một district.
+
+    + Foreign key có thể lặp lại
+    + Primary key ở 1 bảng có thể đóng vai trò làm foreign key ở bảng khác
+
+Sau khi xác định được các key trong dữ liệu, chúng ta nên kiểm tra lại xem các primary key có thực sự độc nhất (unique) không:
+
+```{r}
+account_df %>% 
+  count(account_id) %>% 
+  filter(n > 1)
+```
+
+
+## Hàm join trong `dplyr`
+
+
+Các hàm `join` trong `dplyr` sử dụng được với các kiểu dữ liệu data frame (`data.frame`) và tibble (`tbl_df`).
+
+Các kiểu join chính trong `dplyr` là:
+
++ **Mutating joins**: tức là join dữ liệu ở bảng A với bảng B, từ đó bảng A sẽ có thêm các variable mới, gồm các observation khớp với dữ liệu ở bảng B
+
++ **Filtering joins**: tức là lọc dữ liệu ở bảng A dựa trên các kết quả khớp với dữ liệu ở bảng B
+
++ **Các phép toán tập hợp**: giống như trong toán học, tập hợp dữ liệu có thể áp dụng các phép toán như `union` hay `intersect`
+
+
+### Cách hàm join hoạt động
+
+
+Một hàm join cơ bản có cú pháp `join_function(x, y, by = ...`, với `x` và `y` là 2 data frame. Ví dụ:
+
+```{r}
+account_df %>%
+  left_join(loan_df, by = c("account_id" = "account_id")) %>%
+  head()
+```
+
+Argument `by = c()` nhận vector là tên 2 variable để join với nhau ở mỗi bảng. Trong 2 table `account_df` và `loan_df`, 2 variable này có cùng tên, vì thế thực chất ta có thể rút gọn lại thành:
+
+```{r}
+account_df %>%
+  left_join(loan_df, by = c("account_id")) %>%
+  head()
+```
+
+Thậm chí, ta có thể viết như sau:
+
+```{r}
+account_df %>%
+  left_join(loan_df) %>%
+  head()
+```
+
+3 cách viết trên cho kết quả giống như nhau, và cách cuối cùng là cách mặc định, tức là thực tế `by = NULL`, và **dplyr** sẽ dùng tất cả các variable có xuất hiện ở cả 2 table để join. Khi áp dụng, tốt nhất là nên luôn sử dụng `by = c()` để cho ra kết quả đúng với mong muốn nhất. Trong 2 table chúng ta đang dùng, chỉ có variable `account_id` là xuất hiện ở cả 2.
+
+
+### Các hàm mutating join
+
+
+Có 4 hàm mutating join sau:
+
+```{r, echo=FALSE, out.width='80%', fig.align='center', fig.cap="Source: Datacamp"}
+knitr::include_graphics('images/1-5-join-functions.png')
+```
+
+
+Các hàm `left_join`, `right_join` và `full_join` được gọi là "outer joins", nghĩa là khi các observation ở bảng này không match được với bảng kia, các variable mới sẽ nhận giá trị `NA`.
+
+Trong phần này, chúng ta sẽ sử dụng thêm 1 ví dụ đơn giản để minh họa:
+
+```{r}
+df1 <- tibble(x = c('meo', 'cho'), y = 2:1)
+df2 <- tibble(x = c('meo', 'ga'), a = 7, b = "a")
+```
+
+
+#### inner join
+
+
+Function `inner_join` chỉ bao gồm các observation có xuất hiện ở cả 2 data frame: 
+
+```{r}
+df1 %>% inner_join(df2, by = "x") %>% knitr::kable()
+```
+
+Có thể thấy observation 'cho' ở `x` không xuất hiện trong kết quả.
+
+Áp dụng với **czech financial**:
+
+
+```{r}
+account_df %>%
+  inner_join(loan_df, by = c("account_id")) %>%
+  head()
+```
+
+
+#### left join
+
+
+Function `left_join` bao gồm tất cả các observation ở `x` (tức là data frame bên trái), cho dù chúng có khớp với `y` (data frame bên phải) hay không. Đây cũng là hàm join được sử dụng phổ biến nhất vì hàm này đảm bảo rằng người dùng giữ nguyên các observation của table chính.
+
+
+```{r}
+df1 %>% left_join(df2, by = "x") %>% knitr::kable(align='c')
+```
+
+
+Các observation ở `x` không match được với `y` sẽ nhận giá trị `NA` tại các variable mới.
+
+
+```{r}
+account_df %>%
+  left_join(loan_df) %>%
+  head()
+```
+
+
+#### right join
+
+`right_join` tương tự với left join, nhưng ngược lại. Function này ưu tiên data frame ở bên phải, khiến vị trí các cột được sắp xếp khác so với kết quả của `left_join`:
+
+```{r}
+df1 %>% right_join(df2, by = "x") %>% knitr::kable(align='c')
+df2 %>% left_join(df1, by = "x") %>% knitr::kable(align='c')
+```
+
+
+#### full join
+
+`full_join` bao gồm tất cả các observation ở 2 dataframe.
+
+```{r}
+df1 %>% full_join(df2) %>% knitr::kable(align='c')
+```
+
+### Các hàm filtering joins
+
+
+Các hàm filtering joins match dữ liệu giống mutating joins, nhưng chỉ ảnh hưởng đến observation, không ảnh hưởng đến variable (tức là không tạo thêm cột mới).
+
+Có 2 hàm filtering joins:
+
++ `semi_join (x, y)` giữ lại tất cả observation trong `x` khớp với `y`
+
++ `anti_join (x, y)` bỏ đi tất cả observation trong `x` khớp với `y`
+
+Giả sử chúng ta muốn tìm ra tất cả những client có sở hữu credit card:
+
+```{r}
+disp_df %>% 
+  semi_join(card_df, by = "disp_id") %>%
+  glimpse()
+```
+
+`disp_df` ban đầu chứa thông tin của 5349 khách hàng, sau đó được lọc ra chỉ còn 892 khách hàng, đúng bằng số observation trong `card_df`.
+
+Ngược lại, ta có thể lọc ra tất cả client **không** sở hữu credit card:
+
+```{r}
+disp_df %>% 
+  anti_join(card_df, by = "disp_id") %>%
+  glimpse()
+```
+
+
+### Các hàm tập hợp
+
+Các hàm tập hợp (set operations) coi observation trong 2 data frame `x` và `y` là 2 tập hợp:
+
++ `intersect(x, y)`: trả về observation chỉ xuất hiện trong `x` và `y`
+
++ `union(x, y)` trả về tất cả observation *không lặp lại* (unique) trong `x` và `y`, tức là nối 2 data frame lại, sau đó bỏ đi observation bị lặp
+
++ `setdiff(x, y)` trả về observation trong `x`, nhưng không có trong `y`
+
+Tạo ra 2 data frame giả định sau:
+
+```{r}
+(df1 <- tibble(x = 1:2, y = c(1L, 1L)))
+(df2 <- tibble(x = 1:2, y = 1:2))
+```
+
+Có 4 cách áp dụng các set operations:
+
+```{r}
+intersect(df1, df2)
+# Kết quả union trả về có 3 dòng, không phải 4 (bỏ dòng lặp)
+union(df1, df2)
+
+setdiff(df1, df2)
+
+setdiff(df2, df1)
+
+```
+
+
+Chúng ta tạo ra 2 data frame giả định `loan_1` và `loan_2`, sử dụng `loan_df`:
+
+```{r}
+loan_1 <- tibble(loan_id = sample(min(loan_df$loan_id):max(loan_df$loan_id),
+                                  size=200,
+                                  replace=TRUE)) %>%
+  inner_join(loan_df, by = "loan_id")
+loan_2 <- tibble(loan_id = sample(min(loan_df$loan_id):max(loan_df$loan_id),
+                                  size=300,
+                                  replace=TRUE)) %>%
+  inner_join(loan_df, by = "loan_id")
+
+# áp dụng intersect
+intersect(loan_1, loan_2)
+```
+
+
+## Tham khảo
+
++ [Relational data - R for DS](https://r4ds.had.co.nz/relational-data.html)
+
++ [Data wrangling cheatsheet](https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+
+
+
+<!--chapter:end:05_Join.Rmd-->
+
+# Cấu trúc điều khiển (Control flow)
+
+
+```{r, echo=FALSE}
+# Reset môi trường
+rm(list = ls())
+pkgs = names(sessionInfo()$otherPkgs)
+if( length(pkgs > 0)){
+  pkgs = paste('package:', pkgs, sep = "")
+  for( i in 1:length(pkgs)){
+    detach(pkgs[i], character.only = TRUE, force=TRUE)
+  }
+}
+```
+
+
+
+
+
+
+
+```{r, message=FALSE, warning=FALSE, results='hide'}
+# load sẵn tidyverse
+library(tidyverse, quietly = TRUE)
+```
+
+Có 2 kiểu cấu trúc điều khiển (control flow) trong R:
+
+1. Sử dụng các mệnh đề điều kiện `if` và `switch`, trong đó ở phần này, chúng ta sẽ chỉ đề cập đến `if`
+2. Sử dụng các mệnh đề vòng lặp `while`, `repeat` và `for`
+
+
+## Biểu thức & phương thức điều kiện (expressions & operators)
+
+*Biểu thức điều kiện* (logical expressions) bao gồm 1 số biểu thức cơ bản như: `<`, `<=`, `==`, `!=`, `>=`, `>`. Đây là các biểu thức so sánh thường thấy trong toán học, với `!=` tương đương với `<>` trong 1 số ngôn ngữ khác. 
+
+Ngoài ra, như đã giới thiệu ở phần trước, R còn có các *toán tử điều kiện* (logical operators):
+
+|     Kí hiệu                     |  Ý nghĩa                           |  Ghi chú                                      |
+|:-------------------------------:|:----------------------------------:|:---------------------------------------------:|
+| `!x` (exclaimation)             |   not x  (logical negation)        |Chỉ nên dùng với dữ liệu dạng Logical/boolean  |
+| `x & y` (ampersand)             |   x và y (logical AND)             |Trả kết quả là vector                          |
+| `x && y` (double ampersands)    |  x và y (logical AND)              |Trả kết quả không vectorized                   |
+| `x | y` (vertical bar)          |  x hoặc y (logical OR, inclusive)  |Trả kết quả là vector                          |
+| `x || y` (double vertical bars) |  x hoặc y (logical OR, inclusive)  |Trả kết quả không vectorized                   |
+| `xor(x, y)`                     |  exclusive OR                      |                                               |
+
+```{r}
+df <- data.frame(A=1:6, B=5:10)
+df
+
+df %>% mutate(`A==3?`         =  A == 3,
+              `A<=3?`         =  A <= 3,
+              `A!=3?`         =  A != 3,
+              `Not` = ! `A!=3?`)
+```
+
+Ngoài các toán tử trên, R còn có các hàm `any()`, `all()` và `which()`. Các hàm này có ý nghĩa đúng như tên gọi:
+
+```{r}
+any(6:10 <= 7)   # Trả về TRUE nếu có bất kì giá trị nào <= 7 (TRUE)
+all(6:10 <= 7)   # Trả về TRUE nếu tất cả mọi giá trị đều <= 7 (FALSE)
+which(6:10 <= 7) # Trả về vị trí (index) của những giá trị đáp ứng điều kiện
+```
+
+Lưu ý: R đếm (index) bắt đầu từ 1, thể hiện qua kết quả của hàm `which()` ở trên. Trong một số ngôn ngữ khác như Python, index bắt đầu từ 0 (VBA cũng có 1 số chỗ index từ 0).
+
+Ở phần 1.4 trước đó, chúng ta đã làm quen với `%in%`, tương tự như hàm `IN` trong SQL. 
+
+```{r}
+# dùng hàm rep() để repeat các kí tự A B C D
+df <- data.frame(Letter = rep(c('A','B','C','D'), each=2), Value=1:8)
+df
+
+df %>% filter(Letter %in% c('A', 'B'))
+```
+
+
+## Mệnh đề điều kiện
+
+
+### Trong **dplyr**
+
+Ở phần 1.4 - Biến đổi dữ liệu, chúng ta đã lấy khá nhiều ví dụ về mệnh đề điều kiện `if_else()` và `case_when`, vì vậy phần này sẽ không nói quá nhiều nữa. Tuy nhiên, vẫn cần có 1 số lưu ý như sau:
+
+
+#### `if_else()` và `case_when()`
+
+Điểm chung của 2 hàm này là cùng thuộc package **dplyr**, và được tạo ra để làm việc với kiểu dữ liệu vector. Nói chung, 2 hàm này khác nhau không quá nhiều về công dụng (functionality), tuy nhiên qua nhiều thử nghiệm, có thể thấy `if_else()` nhanh hơn `case_when()`:
+
+```{r}
+# Đoạn code này có tham khảo ở rstudio forum, link ở phần tham khảo
+microbenchmark::microbenchmark(
+  case_when(1:1000 < 100 ~ "low", TRUE ~ "high"),
+  if_else(1:1000 < 3, "low", "high"),
+  ifelse(1:1000 < 3, "low", "high")
+)
+```
+
+Như vậy, có thể kết luận là nếu chúng ta chỉ có ý định viết mệnh đề quan hệ với 2 điều kiện `TRUE` hoặc `FALSE`, hãy dùng `if_else()`. Nếu cần dùng nhiều điều kiện, hãy dùng `case_when()` để code dễ đọc hơn (more readability).
+
+#### `if_else()` và `ifelse()`
+
+Trong ví dụ dùng `microbenchmark` ở trên, có thêm 1 hàm là `ifelse()`. Cần phân biệt hàm này với `if_else()`: `?ifelse()` cho ta thấy đây là 1 hàm thuộc base R, với tốc độ chậm và gặp vấn đề trong việc giữ đúng kiểu dữ liệu. Vì vậy, tốt nhất là nên tránh xa hàm này.
+
+
+### Mệnh `if`
+
+Ngoài các mệnh đề điều kiện ở trên, chúng ta còn có thể dùng hàm `if` (khác với `if_else()` hay `ifelse()`) trong các tình huống cần đánh giá điều kiện phức tạp hơn, và với kiểu dữ liệu scalar (vô hướng, tức là 1 giá trị). Cấu trúc chung của mệnh đề `if` như sau:
+
+```{r, eval=FALSE}
+# Cơ bản
+if( kiểm tra điều kiện ){
+  các biểu thức kết quả
+}
+
+# Bao gồm cả mệnh đề else
+if( kiểm tra điều kiện ){
+  các biểu thức kết quả
+}else{
+  các biểu thức kết quả
+}
+```
+
+
+### Tổng hợp lại
+
+1. `if_else()` và `case_when()` áp dụng với dữ liệu kiểu vector, và thường kết hợp với các hàm trong **dplyr**.
+
+2. `if` áp dụng với dữ liệu kiểu scalar (vô hướng).
+
+3. `ifelse()` là một hàm của base R và không hiệu quả bằng `if_else()` hay `case_when()`, vì vậy có thể bỏ qua.
+
+
+
+## Vòng lặp
+
+Chúng ta thường phải viết code để thực hiện 1 công việc lặp đi lặp lại nhiều lần. Để làm được điều này, R cho chúng ta các cách để:
+
+1. Cho R biết khi nào thì dừng thực hiện công việc đó (nếu đáp ứng điều kiện)  
+2. Số lần thực hiện
+
+
+### Vòng lặp `while`
+
+Cấu trúc cơ bản của vòng lặp `while`
+
+```{r, eval=FALSE}
+while( kiểm tra điều kiện ){
+  các biểu thức cần lặp lại
+}
+```
+
+R sẽ bắt đầu bằng việc đánh giá điều kiện: Nếu điều kiện đúng, R sẽ thi hành các biểu thức bên trong ngoặc `{}` một lần. Sau đó, R sẽ lặp lại quá trình này cho đến khi điều kiện không còn đúng nữa.
+
+```{r}
+x <- 2
+while( x < 10 ){
+  print( paste("Giá trị của x hiện đang là:", x) )
+  x <- x + 1 # tăng thêm 1 vào biến x ~ biểu thức cập nhật biến điều kiện
+}
+```
+
+**Lỗi thường gặp**
+
+Người dùng vòng lặp `while` thường gặp 1 lỗi cơ bản là quên không cập nhật biến điều kiện, hay như trong ví dụ ở trên là quên không thêm vào `x <- x + 1`. Khi dùng `while`, luôn cần đến 1 biểu thức để cập nhật biến điều kiện, khiến cho điều kiện có thể đạt kết quả `FALSE`. Nếu không, hàm `while` sẽ chạy mãi mãi (infinite loop) và có thể gây treo máy.
+
+
+### Vòng lặp `for`
+
+Vòng lặp `for` là kiểu vòng lặp phổ biến hơn. Khi dùng `for`, chúng ta cần biết chính xác số lần chạy vòng lặp. cấu trúc chung của `for` loop như sau:
+
+```{r, eval=FALSE}
+for( item in vector ){
+  các biểu thức
+}
+```
+
+Ví dụ:
+
+```{r}
+for(x in 1:10){
+  print( paste("Giá trị của x hiện đang là:", x) )
+}
+```
+
+Trong ví dụ này, x sẽ đi lần lượt từng giá trị trong vector `c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)`, và các biểu thức trong ngoặc `{}` được thi hành mỗi lần x nhận 1 giá trị.
+
+Chúng ta có thể dùng vòng lặp `for` để tạo ra 10 giá trị đầu tiên của dãy số Fibonacci (được định nghĩa là: $F_{n}=F_{n-1}+F_{n-2}$ với $F_{1}=0$ và $F_{2}=1$) như sau:
+
+```{r}
+F <- rep(NA, 10)          # tạo ra 1 dãy 10 giá trị NA
+F[1] <- 0                 # Đặt giá trị cho F1 và F2
+F[2] <- 1   
+
+for( n in 3:10 ){         # Vòng lặp đi từ F3
+  F[n] <- F[n-1] + F[n-2] 
+  print(F)                # in ra quá trình sau mỗi lần tính
+}
+```
+
+### Chú ý
+
+1. Ngoài `for` và `while`, chúng ta còn có thể dùng `repeat` để lặp lại 1 hành động mãi mãi (chúng ta cần cung cấp thêm 1 mệnh đề điều kiện kèm `break` để dừng vòng lặp)
+
+2. Chúng ta có thể viết lại vòng lặp `for` sử dụng `while`, và viết lại `while` sử dụng `repeat`, nhưng không thể làm ngược lại. Điều này là vì `repeat` linh động hơn `while`, và `while` linh động hơn `for`, nhưng linh động cũng đồng nghĩa với việc dễ có lỗ hổng trong điều kiện dẫn đến lỗi hơn. Tốt nhất là chúng ta nên luôn sử dụng những phương pháp chặt chẽ nhất (strict & least flexible) để giải quyết cùng 1 bài toán.
+
+3. Trong các bài toán về data analysis, chúng ta thường sẽ không cần dùng `for` nhiều vì đã có các hàm `map()` và `apply()` cung cấp giải pháp còn chặt chẽ và hiệu quả hơn. Một lý do chủ yếu là do dữ liệu thường luôn ở dạng vector nên về mặt lý thuyết, ta có thể thực hiện 1 lệnh với *toàn bộ* các phần tử của vector đó thay vì dùng vòng lặp để đi qua từng phần tử một.
+
+4. Tham khảo thêm về control flow tại [https://adv-r.hadley.nz/control-flow.html](https://adv-r.hadley.nz/control-flow.html)
+
+
+## Tham khảo
+
++ [`if_else` vs. `ifelse` vs. `case_when`](https://community.rstudio.com/t/case-when-why-not/2685/2)
++ [Scalar in mathematics](https://en.wikipedia.org/wiki/Scalar_%28mathematics%29)
++ [Control flow - Advanced R](https://adv-r.hadley.nz/control-flow.html)
+
+<!--chapter:end:06_FlowControl.Rmd-->
+
+# (PART\*) Misc {-}
+
+# FAQs ngắn gọn về R
+
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(error=TRUE)
+# Reset môi trường
+rm(list = ls())
+pkgs = names(sessionInfo()$otherPkgs)
+if( length(pkgs > 0)){
+  pkgs = paste('package:', pkgs, sep = "")
+  for( i in 1:length(pkgs)){
+    detach(pkgs[i], character.only = TRUE, force=TRUE)
+  }
+}
+```
+
+
+
+
+
+
+
+
+```{r, message=FALSE, warning=FALSE, results='hide'}
+# load sẵn tidyverse
+library(tidyverse, quietly = TRUE)
+```
+
+Phần này có mục đích trả lời 1 số câu hỏi về R, chủ yếu là những quy chuẩn đặc biệt hay những điểm khác biệt của R so với các ngôn gnwx lập trình khác.
+
+
+## Các ký hiệu đặc biệt trong R
+
+
+Một số operator/ký hiệu trong R như `<-`, `.`, `%` và `::` khá đặc biệt, dễ gây ra khó hiểu đối với người lần đầu đọc và học R. Theo cảm nhận cá nhân, tôi thấy code R rất nhiều các ký tự, và khi đọc code, nhiều lúc sẽ thấy ký tự xuất hiện nhiều hơn chữ.
+
+
+### Dấu `<-`
+
+
+Câu hỏi: Tại sao R lại sử dụng dấu `<-` thay vì dấu `=` như ở nhiều ngôn ngữ lập trình khác?
+
+
+#### Nguồn gốc
+
+
+Ngôn ngữ R có nguồn gốc từ một ngôn ngữ lập trình khác là [S](https://en.wikipedia.org/wiki/S_(programming_language)). R thừa hưởng rất nhiều từ S, trong đó có ký hiệu `<-`.
+
+Trước đó, S lại thừa hưởng từ một ngôn ngữ khác là [APL](https://en.wikipedia.org/wiki/APL_(programming_language)). APL sử dụng `<-` vì ngôn ngữ này được phát triển trên một cỗ máy có [sử dụng bàn phím chứa nút `<-`](https://en.wikipedia.org/wiki/APL_syntax_and_symbols). Vì vậy, các nhà phát triển đã sử dụng luôn ký hiệu này cho mục đích gán biến ([Tham khảo thêm tại APL Reference Manual](http://www.softwarepreservation.org/projects/apl/Books/APL360ReferenceManual)).
+
+```{r, echo=FALSE, out.width='50%', fig.align='center', fig.cap="Source: Wikipedia"}
+knitr::include_graphics('images/APL2-nappaimisto.png')
+```
+
+
+#### Cách sử dụng
+
+
+`<-` vốn được sử dụng rộng rãi hơn trong R, và `=` không được sử dụng với mục đích gán biến cho tới 2001. Trước đó, `=` chỉ được dùng để đặt tham số trong function:
+
+```{r, eval=FALSE}
+function(arg = 'value')
+```
+
+Vào [năm 2001](https://developer.r-project.org/equalAssign.html), dấu `=` bắt đầu được đưa vào sử dụng để gán biến, nhằm giúp việc học và dùng R dễ dàng hơn, do rất nhiều các ngôn ngữ lập trình khác cũng dùng dấu `=` với mục đích tương tự.
+
+Ban đầu, dấu `<-` vẫn có ích hơn dấu `=` vì một số chức năng chỉ có thể thực hiện với dấu `<-`, do dấu `=` còn được sử dụng để gán tham số trong function.
+
+Hiện nay, hầu hết các điểm khác biệt giữa 2 dấu `<-` và `=` đã không còn tồn tại, và ta  có thể sử dụng 2 ký hiệu này thay cho nhau ở *hầu hết* mọi chỗ. 
+
+Tuy nhiên, do dấu `=` vẫn được sử dụng để đặt tham số cho function nên luôn có xung đột về chức năng, vì R sẽ luôn hiểu dấu `=` trong code đang được dùng để đặt tham số *trước tiên*, sau đó mới hiểu là dùng để gán biến. Ví dụ:
+
+```{r}
+data.frame(
+  a = rnorm(10),
+  b <- rnorm(10)
+)
+
+#Print a
+a
+#Print b
+b
+```
+
+Để tránh tình trạng này, ta sẽ phải lồng thêm một lần dấu ngoặc nữa như sau:
+
+```{r, eval=FALSE}
+data.frame(
+  (a = rnorm(10)),
+  b <- rnorm(10)
+)
+```
+
+Việc này khiến code dài và khó đọc hơn.
+
+Ngoài ra, khi sử dụng dấu `=` để gán biến trong function, biến sẽ chỉ tồn tại ở function level/function scope, và không thể gọi biến ở global scope:
+
+```{r}
+median(x=1:20)
+x
+```
+
+Tóm lại, có thể sử dụng hai dấu `=` và `<-` tùy thích theo ý muốn, tuy nhiên vẫn cần lưu ý một số điểm liên quan đến tính thống nhất/tính dễ đọc của code:
+
+1. Tốt nhất là nên sử dụng thống nhất một loại dấu duy nhất xuyên suốt trong code, tránh sử dụng cả hai cùng một lúc.
+
+2. Do dấu `<-` là quy chuẩn về style của cộng đồng sử dụng R, vì vậy chúng ta  cũng nên sử dụng thống nhất `<-` để gán biến trong code của mình để khi chia sẻ hoặc hợp tác với người khác sẽ dễ dàng hơn.
+
+3. Khi sử dụng `<-` để gán biến, ta sẽ phân biệt được rõ ràng 3 loại dấu với 3 mục đích khác nhau: dấu `<-` cho assignment (gán biến), dấu `=` cho argument (đặt tham số), và dấu `==` cho logical comparison (so sánh).
+
+4. Dấu `<-` dễ nhìn và dễ hiểu hơn dấu `=` vì nó có chỉ hướng gán biến. Ngược lại với `x <- 5`, ta hoàn toàn có thể 
+gán biến theo chiều `5 -> x`. Tuy nhiên cách thứ 2 [không được khuyến khích sử dụng](https://google.github.io/styleguide/Rguide.html?utm_source=share&utm_medium=ios_app&utm_name=iossmf).
+
+
+### Dấu `.`
+
+
+Dấu chấm `.` trong R xuất hiện rất nhiều, ví dụ như:
+
+```{r, eval=FALSE}
+mean(x, trim = 0, na.rm = FALSE, ...)
+```
+
+Trong đó, `na.rm` có nghĩa là "remove NAs". Dấu `.` trong trường hợp này được dùng để ngăn cách tên biến có nhiều từ. Trong nhiều tài liệu hướng dẫn về R, các tác giả cũng thường chọn đặt tên biến nhiều từ có dấu `.` để ngăn cách, thay vì dùng dấu `_` hoặc đặt tên theo kiểu `FooBarFooBar`, với các chữ cái đầu tiên của từng từ viết hoa.
+
+Đây là một quy chuẩn được thừa hưởng từ ngôn ngữ S. Trong S, và trong các phiên bản cũ của R, dấu `_` được sử dụng để gán biến, giống dấu `<-` ở trên, cho đến phiên bản [R 1.8](https://cran.r-project.org/src/base/NEWS.1). Vì vậy, dấu `.` được dùng để tách các chữ khi đặt tên.
+
+Nếu chuyển từ VBA sang R, chúng ta có thể sẽ thấy lạ vì trong VBA, dấu `.` được sử dụng để [gọi method](https://docs.microsoft.com/en-us/office/vba/language/concepts/getting-started/understanding-objects-properties-methods-and-events#properties).
+
+Hiện tại trong R, chúng ta có thể thoải mái sử dụng dấu `_` khi đặt tên biến và đối tượng, ngoài trừ ký tự đầu tiên. Tuy nhiên, một số tên mặc định trong R như `na.rm` sẽ vẫn tiếp tục sử dụng dấu `.` để giúp code của người dùng có thể chạy được ở các phiên bản khác nhau (backward compatibility).
+
+
+### Dấu `%`
+
+
+Lần đầu đọc code R, nhiều người sẽ thấy khó hiểu và không quen được vì có sự xuất hiện của dấu phần trăm `%`, ví dụ như `%in%`, `%>%`, `%*%`. 
+
+Các operator có cú pháp `%abc%` với hai dấu phần trăm bên ngoài cùng là loại hàm *trung tố* (infix, giống như *hậu tố* là suffix và *tiền tố* là prefix), tức là hàm này sẽ nhận 2 (và chỉ 2) toán hạng (operand) ở trước và ở sau. Ví dụ: dấu `+` là một hàm infix, và có thể được sử dụng theo kiểu `a+b`, tức là nhận `a` ở trước và `b` ở sau.
+
+Tương tự với `%in%`:
+
+```{r}
+1 %in% c(1:5)
+```
+
+Một số infix operator có sẵn trong R:
+
+
+| Operator|  Ý nghĩa           |
+|:-------:|:------------------:|
+| `%%`    |   Modulo           |
+| `%/%`   |   Lấy phần nguyên  |
+| `%*%`   |   Nhân ma trận     |
+| `%in%`  |   Kiểm tra phần tử |
+
+Để tự tạo các infix operator, ta cũng sử dụng 2 dấu `%` giống các operator ở trên:
+
+```{r}
+`%concat%` <- function(x,y) {
+  paste0(x, y)
+}
+
+"Hello" %concat% " World!"
+```
+
+Nhờ vậy mà các package như **magrittr** đã tận dụng dấu `%` và chúng ta nhìn thấy ký hiệu này nhiều như vậy.
+
+Một điểm đặc biệt là dấu phần trăm `%` được sử dụng cho phép toán modulo trong toán học, nên để thống nhất với các operator khác, R dùng `%%` thay thế.
+
+
+### Dấu `:` và `::`
+
+Dấu `:` được dụng cho dãy số; đây cũng là [ý nghĩa chung trong toán học](https://en.wikipedia.org/wiki/Colon_%28punctuation%29#Mathematics_and_logic) của `:`.
+
+```{r}
+1:10
+```
+
+Dấu `::` thực tế không chỉ được áp dụng trong R mà còn có ở 1 số ngôn ngữ khác như C++ và Ruby. `::` dùng để gọi ra các function/method/object có thể gọi được từ một namespace (không gian tên), ví dụ như 1 package. Ví dụ: `dplyr::select`. Cú pháp kiểu này giống với VBA, ví dụ như `Cell(1,1).Select`, thay dấu `.` bằng dấu `::`.
+
+
+## Một số câu hỏi khác
+
+
+### R có thể sử dụng cho các mục đích nào khác ngoài scientific computing không?
+
+
+Ngoài mục đích nghiên cứu và tính toán khoa học, R còn có thể dùng để:
+
++ Tạo các web application bằng R **Shiny**
+
++ Tạo website/blog bằng **blogdown**
+
++ Viết tài liệu/bài báo/nghiên cứu bằng **bookdown**
+
+
+Tuy nhiên R không phù hợp để lập trình các ứng dụng phức tạp như game được (dù có thể dùng Shiny để làm game đơn giản).
+
+
+### Trong R có tồn tại hệ thống/quy chuẩn về "style" (tương đương) PEP8 trong Pythong) không?
+
+
+Vì bản chất của R nên hiện tại không tồn tại một quy chuẩn thống nhất giống PEP8 như Python. Tuy nhiên có thể tham khảo style guide của **tidyverse** và Google:
+
++ [https://style.tidyverse.org](https://style.tidyverse.org)
++ [https://google.github.io/styleguide/Rguide.html](https://google.github.io/styleguide/Rguide.html)
+
+Để tự động hóa việc điều kiểm tra syntax và style, có thể dùng package **[lintr](https://www.google.com/search?client=firefox-b-d&q=lintr)**.
+
+
+### Có nên sử dụng `require` để tải package không?
+
+
+Khi đọc code R, chúng ta sẽ thường thấy nhiều người dùng `require` thay vì dùng `library`.
+
++ function `require` sẽ *thử* load package
+
++ function `library` sẽ trực tiếp load package
+
+Như vậy, nếu muốn load 1 package thì nên dùng `library()`. Nếu có lỗi xảy ra, code sẽ dừng lại ngay lập tức, giúp chúng ta tìm và sửa lỗi dễ hơn.
+
+Nếu dùng `require` và có lỗi khi load package, các đoạn code ở sau sẽ vẫn tiếp tục chạy nếu chưa dùng đến package kia.
+
+
+## Tham khảo
+
++ [Tidyverse style guide](https://style.tidyverse.org)
++ [Google style guide](https://google.github.io/styleguide/Rguide.html)
++ [`library` vs `require`](https://yihui.name/en/2014/07/library-vs-require/)
+
+<!--chapter:end:11_Standards.Rmd-->
+

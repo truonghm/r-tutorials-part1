@@ -44,14 +44,9 @@ Dữ liệu này rất phù hợp để giới thiệu về relational data tron
 
 ```{r, warning=FALSE, message=FALSE}
 # load data
-
-file_path <- "data/czech_financial_formatted/"
-file_list <- list.files(path=file_path)
-
-for(i in 1:length(file_list)) {
-  assign(gsub(".csv", "", file_list[i]), 
-         read.csv(file=paste0(file_path, file_list[i]),
-                  row.names=1) ) }
+load(file="data/czech_financial_formatted/czech-financial.RData")
+lapply(names(df_list),function(x) assign(x,df_list[[x]],.GlobalEnv))
+rm(df_list)
 ```
 
 ### Ý nghĩa của các data frames

@@ -54,7 +54,7 @@ Tài liệu chia ra làm 2 phần (đây sẽ là phần 1): phần 1 giới thi
         1.4.3. Basic transformation  
         1.4.4. Ví dụ thêm  
         1.4.5. Tham khảo  
-    1.5. *Biến đổi dữ liệu phần 2* - 0%  
+    1.5. *Biến đổi dữ liệu phần 2* - 90%  
     1.6. *Control flow (giới thiệu về if-else, for-loop, etc.)* - 90%  
 
 2. **Misc**
